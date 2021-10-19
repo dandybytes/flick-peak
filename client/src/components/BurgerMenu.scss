@@ -1,0 +1,157 @@
+.menu {
+  --menu-line-color: var(--color-2);
+  --menu-background-color: var(--color-1);
+}
+
+.menu-btn {
+  z-index: 1002;
+  position: fixed;
+  top: 4.5vmin;
+  right: 4.5vmin;
+  height: 7.5vmin;
+  width: 7.5vmin;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  border: 0.2vmin solid var(--menu-line-color);
+  background-color: var(--menu-background-color);
+  box-shadow: 0 1.5vmin 4.5vmin rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+}
+
+.menu-icon {
+  position: relative;
+  width: 50%;
+}
+
+.menu-icon,
+.menu-icon::before,
+.menu-icon::after {
+  display: inline-block;
+  border-radius: 20%;
+  height: 0.3vmin;
+  background-color: var(--menu-line-color);
+}
+
+.menu-icon::before,
+.menu-icon::after {
+  width: 100%;
+}
+
+.menu-icon::before,
+.menu-icon::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  transition: all 0.3s;
+}
+
+.menu-icon::before {
+  transform: translateY(-1.2vmin);
+}
+
+.menu-icon::after {
+  transform: translateY(1.2vmin);
+}
+
+.menu-btn:hover .menu-icon::before {
+  transform: translateY(-1.5vmin);
+}
+
+.menu-btn:hover .menu-icon::after {
+  transform: translateY(1.5vmin);
+}
+
+.menu-bg {
+  z-index: 1000;
+  position: fixed;
+  top: 4.5vmin;
+  right: 4.5vmin;
+  height: 7.5vmin;
+  width: 7.5vmin;
+  border-radius: 50%;
+  background-image: radial-gradient(
+    circle at center right,
+    #0e788e 0%,
+    #033750 70%,
+    transparent 100%
+  );
+  opacity: 0;
+  transition: all 0.5s ease-in-out;
+}
+
+.menu-nav {
+  z-index: 1001;
+  position: fixed;
+  top: 0;
+  right: 0;
+  height: 0;
+  width: 0;
+  font-size: 0;
+  opacity: 0;
+  transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.menu-ul {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  list-style-type: none;
+  text-align: center;
+}
+
+.menu-li {
+  margin: 1.5vmin;
+  padding: 0.5vmin 3vmin;
+}
+
+.menu-li:hover,
+.menu-li:active {
+  background-color: rgba(40, 180, 133, 0.3);
+}
+
+.menu-link {
+  font-weight: 300;
+  color: white;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.menu-open .menu-bg {
+  width: 142vmax;
+  height: 142vmax;
+  top: -21vmax;
+  right: -21vmax;
+  transform-origin: top right;
+  opacity: 1;
+}
+
+.menu-open .menu-nav {
+  opacity: 1;
+  width: 100%;
+  height: 100vh;
+}
+
+.menu-open .menu-link {
+  font-size: 5vmin;
+}
+
+.menu-open .menu-btn .menu-icon {
+  background-color: transparent;
+}
+
+.menu-open .menu-btn .menu-icon::before {
+  transform: rotate(135deg) translateY(0);
+}
+
+.menu-open .menu-btn .menu-icon::after {
+  transform: rotate(-135deg) translateY(0);
+}
+
+@media only screen and (min-width: 750px) {
+  [class*='menu'] {
+    display: none;
+  }
+}

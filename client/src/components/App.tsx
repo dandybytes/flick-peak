@@ -6,6 +6,8 @@ import './App.scss'
 import Header from './Header'
 import Footer from './Footer'
 import HomePage from './pages/HomePage'
+import MovieListPage from './pages/MovieListPage'
+import AboutPage from './pages/AboutPage'
 import NotFoundPage from './pages/NotFoundPage'
 
 const App: React.FunctionComponent = () => {
@@ -14,9 +16,11 @@ const App: React.FunctionComponent = () => {
       <div className='app'>
         <Header />
 
-        <main>
+        <main className='main'>
           <Switch>
             <Route path='/' exact component={HomePage} />
+            <Route path='/movies' exact component={MovieListPage} />
+            <Route path='/about' exact component={AboutPage} />
             <Route component={NotFoundPage} />
           </Switch>
         </main>
