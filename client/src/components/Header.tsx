@@ -3,12 +3,15 @@ import {NavLink} from 'react-router-dom'
 
 import './Header.scss'
 
+import Logo from './Logo'
 import BurgerMenu from './BurgerMenu'
 
 const Header: React.FunctionComponent = () => {
   return (
     <header className='header'>
       <div className='header-content'>
+        <Logo />
+
         <BurgerMenu />
 
         <nav className='navbar'>
