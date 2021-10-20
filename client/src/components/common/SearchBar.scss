@@ -1,0 +1,82 @@
+.searchbar-form {
+  --searchbar-background-color: var(--color-1);
+  --searchbar-line-color-idle: var(--color-2b);
+  --searchbar-line-color-active: var(--color-2);
+
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  min-width: 10rem;
+  padding: 1rem;
+  background-color: var(--searchbar-background-color);
+  /* background-color: transparent; */
+}
+
+.searchbar-label {
+  position: relative;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  padding: 0;
+  overflow: hidden;
+  opacity: 0.75;
+}
+
+.searchbar-input {
+  height: 2rem;
+  width: 25vw;
+  min-width: 10rem;
+  border: 2px solid var(--searchbar-line-color-idle);
+  border-radius: 2rem;
+  padding: 0.2rem 2rem;
+  background-color: transparent;
+  color: white;
+  font-size: 1rem;
+  text-align: center;
+  transition: all 0.3s ease-in-out;
+}
+
+.searchbar-input::placeholder {
+  margin: 0 auto;
+}
+
+.searchbar-label svg {
+  position: absolute;
+  left: 0.5rem;
+  height: 1.5rem;
+  width: 1.5rem;
+  margin-right: 1rem;
+  fill: var(--searchbar-line-color-idle);
+  transform: translateY(5%);
+}
+
+.searchbar-input:focus {
+  width: 50vw;
+  outline: none;
+  border: 2px solid var(--searchbar-line-color-active);
+}
+
+.searchbar-input:focus + svg {
+  fill: var(--searchbar-line-color-active);
+}
+
+@media only screen and (max-width: 500px) {
+  .searchbar-label {
+    height: 1.5rem;
+  }
+
+  .searchbar-label svg {
+    height: 1.25rem;
+    width: 1.25rem;
+  }
+
+  .searchbar-input {
+    height: 1.5rem;
+    border: 1px solid var(--searchbar-line-color-idle);
+    font-size: 0.9rem;
+  }
+
+  .searchbar-input:focus {
+    width: 80vw;
+  }
+}
