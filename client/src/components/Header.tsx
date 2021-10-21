@@ -1,55 +1,22 @@
-import React from 'react'
-import {NavLink} from 'react-router-dom'
+import React, {useState} from 'react'
 
 import './Header.scss'
 
 import Logo from './Logo'
+import NavBar from './NavBar'
 import BurgerMenu from './BurgerMenu'
+import SearchBar from './common/SearchBar'
 
 const Header: React.FunctionComponent = () => {
+  const [query, setQuery] = useState<string>('')
+
   return (
     <header className='header'>
-      <div className='header-content'>
-        <Logo />
-
-        <BurgerMenu />
-
-        <nav className='navbar'>
-          <ul className='navbar-list'>
-            <li className='navbar-list-item'>
-              <NavLink
-                to='/'
-                exact
-                className='navbar-list-item-link'
-                activeClassName='navbar-list-item-link-active'
-              >
-                Home
-              </NavLink>
-            </li>
-
-            <li className='navbar-list-item'>
-              <NavLink
-                to='/movies'
-                exact
-                className='navbar-list-item-link'
-                activeClassName='navbar-list-item-link-active'
-              >
-                Movies
-              </NavLink>
-            </li>
-
-            <li className='navbar-list-item'>
-              <NavLink
-                to='/about'
-                className='navbar-list-item-link'
-                activeClassName='navbar-list-item-link-active'
-              >
-                About
-              </NavLink>
-            </li>
-          </ul>
-        </nav>
-      </div>
+      <Logo />
+      <NavBar />
+      <SearchBar query={query} setQuery={setQuery} />
+      <BurgerMenu />
+      <div className='user-profile' style={{minWidth: '4rem'}}></div>
     </header>
   )
 }
