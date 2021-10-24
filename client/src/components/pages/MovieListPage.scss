@@ -1,9 +1,16 @@
 .movie-list-page {
   --movie-list-headline-color: var(--color-1);
 
+  min-height: 90vh;
   display: flex;
   flex-direction: column;
   text-align: center;
+
+  .error-message-box {
+    min-height: 90vh;
+    display: grid;
+    place-items: center;
+  }
 
   .movies {
   transform: translateY(-3.5rem);
