@@ -1,3 +1,7 @@
+export type MovieCategories = 'popular' | 'now-playing' | 'top-rated'
+
+export const movieCategoryList: MovieCategories[] = ['popular', 'now-playing', 'top-rated']
+
 export interface ITMDBMovieData {
   adult: boolean
   backdrop_path: string

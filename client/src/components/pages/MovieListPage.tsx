@@ -8,7 +8,8 @@ import {AiFillHeart} from 'react-icons/ai'
 import {BsStarFill} from 'react-icons/bs'
 import {RiMovie2Fill} from 'react-icons/ri'
 
-import {RootState, fetchMoviePage} from '../../state/'
+import {RootState, fetchMoviePage, getCategorySelector} from '../../state/'
+import {MovieCategories, movieCategoryList} from '../../services/tmdbapi'
 
 import TabBar from '../common/tabs/TabBar'
 import LoadingIndicator from '../common/LoadingIndicator'
@@ -41,25 +42,28 @@ const MovieListPage: FC = () => {
   const location = useLocation()
   const dispatch = useDispatch()
 
-  const fetching = useSelector((state: RootState) => state.movies.fetching)
-  const error = useSelector((state: RootState) => state.movies.error)
-  const movieList = useSelector((state: RootState) => state.movies.movies)
+  const categoryFromHash = location?.hash?.slice(1)
+  const isValidMovieCategory = movieCategoryList.includes(categoryFromHash as MovieCategories)
+  const categorySelector = getCategorySelector(categoryFromHash)
+
+  const fetching = useSelector((state: RootState) => state.movies[categorySelector].fetching)
+  const error = useSelector((state: RootState) => state.movies[categorySelector].error)
+  const movieList = useSelector((state: RootState) => state.movies[categorySelector].movies)
   // const numLastPageAvailable = useSelector((state: RootState) => state.movies.lastPageDownloaded)
 
   const errorMessageToDisplay = typeof error === 'string' ? error : JSON.stringify(error)
 
-  const category = location?.hash?.slice(1)
+  useEffect(() => {
+    if (movieList?.length === 0 && isValidMovieCategory)
+      dispatch(fetchMoviePage(categoryFromHash as MovieCategories, 1))
+  }, [categoryFromHash, dispatch, isValidMovieCategory, movieList?.length])
 
   const onTabClick = (tabId: string): void => {
     history.push(`#${tabId}`)
   }
 
-  useEffect(() => {
-    if (movieList?.length === 0) dispatch(fetchMoviePage(1))
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
-
-  if (!category?.length) return <Redirect to={`${location.pathname}#${movieCategoryTabs[0].id}`} />
+  if (!isValidMovieCategory)
+    return <Redirect to={`${location.pathname}#${movieCategoryTabs[0].id}`} />
 
   return (
     <div className='movie-list-page'>
@@ -73,7 +77,11 @@ const MovieListPage: FC = () => {
             <MovieHero movieList={movieList} />
 
             <div className='movies'>
-              <TabBar tabs={movieCategoryTabs} activeTabId={category} onTabClick={onTabClick} />
+              <TabBar
+                tabs={movieCategoryTabs}
+                activeTabId={categoryFromHash}
+                onTabClick={onTabClick}
+              />
 
               <MovieBoard movieList={movieList} />
             </div>
