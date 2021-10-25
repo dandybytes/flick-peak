@@ -1,4 +1,4 @@
-import React, {FC, useEffect} from 'react'
+import React, {FC, useCallback, useEffect, useMemo} from 'react'
 import {Redirect, useHistory, useLocation} from 'react-router-dom'
 import {useDispatch, useSelector} from 'react-redux'
 
@@ -15,6 +15,7 @@ import TabBar from '../common/tabs/TabBar'
 import LoadingIndicator from '../common/LoadingIndicator'
 import MovieHero from '../MovieHero'
 import MovieBoard from '../MovieBoard'
+import SearchBar from '../common/SearchBar'
 
 const movieCategoryTabs = [
   {
@@ -37,12 +38,18 @@ const movieCategoryTabs = [
   }
 ]
 
+const searchKey = 'search'
+
 const MovieListPage: FC = () => {
   const history = useHistory()
   const location = useLocation()
   const dispatch = useDispatch()
 
-  const categoryFromHash = location?.hash?.slice(1)
+  const {hash, pathname, search} = location
+  const queryParamObj = useMemo(() => new URLSearchParams(search), [search])
+  const movieQueryParam = queryParamObj.get(searchKey)
+
+  const categoryFromHash = hash?.slice(1)
   const isValidMovieCategory = movieCategoryList.includes(categoryFromHash as MovieCategories)
   const categorySelector = getCategorySelector(categoryFromHash)
 
@@ -54,16 +61,25 @@ const MovieListPage: FC = () => {
   const errorMessageToDisplay = typeof error === 'string' ? error : JSON.stringify(error)
 
   useEffect(() => {
-    if (movieList?.length === 0 && isValidMovieCategory)
+    if (!movieList?.length && isValidMovieCategory)
       dispatch(fetchMoviePage(categoryFromHash as MovieCategories, 1))
   }, [categoryFromHash, dispatch, isValidMovieCategory, movieList?.length])
+
+  const setMovieQuery = useCallback(
+    (value: string): void => {
+      queryParamObj.set(searchKey, value)
+      history.push({pathname, search: queryParamObj.toString()})
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [history, pathname, queryParamObj.toString()]
+  )
 
   const onTabClick = (tabId: string): void => {
     history.push(`#${tabId}`)
   }
 
-  if (!isValidMovieCategory)
-    return <Redirect to={`${location.pathname}#${movieCategoryTabs[0].id}`} />
+  if (!movieQueryParam && !isValidMovieCategory)
+    return <Redirect to={`${location.pathname}#${movieCategoryList[0]}`} />
 
   return (
     <div className='movie-list-page'>
@@ -82,6 +98,8 @@ const MovieListPage: FC = () => {
                 activeTabId={categoryFromHash}
                 onTabClick={onTabClick}
               />
+
+              <SearchBar query={movieQueryParam ?? ''} setQuery={setMovieQuery} />
 
               <MovieBoard movieList={movieList} />
             </div>
