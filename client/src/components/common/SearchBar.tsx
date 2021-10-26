@@ -15,7 +15,7 @@ const SearchBar: FC<SearchBarProps> = ({
   query,
   setQuery,
   autoFocus = false,
-  debounceDuration = 200
+  debounceDuration = 300
 }) => {
   const timeoutRef: MutableRefObject<ReturnType<typeof setTimeout> | null> = useRef(null)
   const searchInputRef = useRef<HTMLInputElement>(null)

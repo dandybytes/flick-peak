@@ -8,8 +8,13 @@ import {AiFillHeart} from 'react-icons/ai'
 import {BsStarFill} from 'react-icons/bs'
 import {RiMovie2Fill} from 'react-icons/ri'
 
-import {RootState, fetchMoviePage, getCategorySelector} from '../../state/'
-import {MovieCategories, movieCategoryList} from '../../services/tmdbapi'
+import {
+  RootState,
+  fetchMoviePageByKeyword,
+  fetchMoviePageByCategory,
+  getCategorySelector
+} from '../../state/'
+import {ITMDBMovieData, MovieCategories, movieCategoryList} from '../../services/tmdbapi'
 
 import TabBar from '../common/tabs/TabBar'
 import LoadingIndicator from '../common/LoadingIndicator'
@@ -53,17 +58,31 @@ const MovieListPage: FC = () => {
   const isValidMovieCategory = movieCategoryList.includes(categoryFromHash as MovieCategories)
   const categorySelector = getCategorySelector(categoryFromHash)
 
-  const fetching = useSelector((state: RootState) => state.movies[categorySelector].fetching)
-  const error = useSelector((state: RootState) => state.movies[categorySelector].error)
-  const movieList = useSelector((state: RootState) => state.movies[categorySelector].movies)
-  // const numLastPageAvailable = useSelector((state: RootState) => state.movies.lastPageDownloaded)
+  const fetching: boolean = useSelector((state: RootState) =>
+    movieQueryParam
+      ? state.movies.search?.[movieQueryParam]?.fetching
+      : state.movies[categorySelector].fetching
+  )
+  const error: string = useSelector((state: RootState) =>
+    movieQueryParam
+      ? state.movies.search?.[movieQueryParam]?.error
+      : state.movies[categorySelector].error
+  )
+  const movieList: ITMDBMovieData[] = useSelector((state: RootState) =>
+    movieQueryParam != null
+      ? state.movies.search?.[movieQueryParam]?.movies
+      : state.movies[categorySelector].movies
+  )
 
   const errorMessageToDisplay = typeof error === 'string' ? error : JSON.stringify(error)
 
   useEffect(() => {
-    if (!movieList?.length && isValidMovieCategory)
-      dispatch(fetchMoviePage(categoryFromHash as MovieCategories, 1))
-  }, [categoryFromHash, dispatch, isValidMovieCategory, movieList?.length])
+    if (!movieList?.length && movieQueryParam != null) {
+      dispatch(fetchMoviePageByKeyword(movieQueryParam, 1))
+    } else if (!movieList?.length && isValidMovieCategory) {
+      dispatch(fetchMoviePageByCategory(categoryFromHash as MovieCategories, 1))
+    }
+  }, [movieQueryParam, categoryFromHash])
 
   const setMovieQuery = useCallback(
     (value: string): void => {
@@ -81,31 +100,41 @@ const MovieListPage: FC = () => {
   if (!movieQueryParam && !isValidMovieCategory)
     return <Redirect to={`${location.pathname}#${movieCategoryList[0]}`} />
 
+  if (fetching) {
+    return (
+      <div className='movie-list-page'>
+        <LoadingIndicator />
+      </div>
+    )
+  }
+
+  if (errorMessageToDisplay?.length) {
+    return (
+      <div className='movie-list-page'>
+        <div className='error-message-box'>{errorMessageToDisplay}</div>
+      </div>
+    )
+  }
+
+  if (!movieList?.length) {
+    return (
+      <div className='movie-list-page'>
+        <div className='error-message-box'>There are no movies to display</div>
+      </div>
+    )
+  }
+
   return (
     <div className='movie-list-page'>
-      {fetching ? (
-        <LoadingIndicator />
-      ) : errorMessageToDisplay?.length ? (
-        <div className='error-message-box'>{errorMessageToDisplay}</div>
-      ) : (
-        movieList?.length && (
-          <>
-            <MovieHero movieList={movieList} />
+      <MovieHero movieList={movieList} />
 
-            <div className='movies'>
-              <TabBar
-                tabs={movieCategoryTabs}
-                activeTabId={categoryFromHash}
-                onTabClick={onTabClick}
-              />
+      <div className='movies'>
+        <TabBar tabs={movieCategoryTabs} activeTabId={categoryFromHash} onTabClick={onTabClick} />
 
-              <SearchBar query={movieQueryParam ?? ''} setQuery={setMovieQuery} />
+        <SearchBar query={movieQueryParam ?? ''} setQuery={setMovieQuery} debounceDuration={400} />
 
-              <MovieBoard movieList={movieList} />
-            </div>
-          </>
-        )
-      )}
+        <MovieBoard movieList={movieList} />
+      </div>
     </div>
   )
 }

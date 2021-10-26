@@ -6,10 +6,16 @@ import {
   FetchMoviePageStartPayload,
   FetchMoviePageSuccessPayload,
   FetchMoviePageErrorPayload,
+  FetchMovieByKeywordStartPayload,
+  FetchMovieByKeywordSuccessPayload,
+  FetchMovieByKeywordErrorPayload,
   MovieState,
   fetch_movie_page_start,
   fetch_movie_page_success,
-  fetch_movie_page_error
+  fetch_movie_page_error,
+  fetch_movies_by_keyword_start,
+  fetch_movies_by_keyword_success,
+  fetch_movies_by_keyword_error
 } from './movieTypes'
 
 const initialCategoryState: MovieCategoryData = {
@@ -71,8 +77,7 @@ export const movieReducer = (state = initialState, action: MovieAction): MovieSt
           ...state,
           [categorySelector]: {
             ...state[categorySelector],
-            fetching: false,
-            error: `fetched ${category} movie page ${fetchedPage} has already been added to the list of movies`
+            fetching: false
           }
         }
       }
@@ -102,6 +107,77 @@ export const movieReducer = (state = initialState, action: MovieAction): MovieSt
           error: JSON.stringify(error)
         }
       }
+    }
+
+    case fetch_movies_by_keyword_start: {
+      const {query} = action.payload as FetchMovieByKeywordStartPayload
+
+      const newState = {...state}
+      if (!newState.search[query]) newState.search[query] = {...initialCategoryState}
+
+      newState.search[query] = {...newState.search[query], fetching: true, error: ''}
+
+      return newState
+    }
+
+    case fetch_movies_by_keyword_success: {
+      const {
+        query,
+        movies: newMovies,
+        fetchedPage,
+        totalPages
+      } = action.payload as FetchMovieByKeywordSuccessPayload
+
+      const newState = {...state}
+      if (!newState.search[query]) newState.search[query] = {...initialCategoryState}
+      const lastPageDownloaded = state.search[query].lastPageDownloaded
+
+      // catch cases when fetched movie lists are empty
+      if (!newMovies?.length) {
+        newState.search[query] = {
+          ...newState.search[query],
+          fetching: false,
+          error: `the movie search for keyword "${query}" returned no movies`
+        }
+
+        return newState
+      }
+
+      // prevent duplication by adding the same page of movies repeatedly
+      if (fetchedPage <= lastPageDownloaded) {
+        newState.search[query] = {
+          ...newState.search[query],
+          fetching: false
+        }
+
+        return newState
+      }
+
+      newState.search[query] = {
+        ...newState.search[query],
+        fetching: false,
+        error: '',
+        movies: [...state.search[query].movies, ...newMovies],
+        lastPageDownloaded: fetchedPage,
+        totalPages: totalPages
+      }
+
+      return newState
+    }
+
+    case fetch_movies_by_keyword_error: {
+      const {query, error} = action.payload as FetchMovieByKeywordErrorPayload
+
+      const newState = {...state}
+      if (!newState.search[query]) newState.search[query] = {...initialCategoryState}
+
+      newState.search[query] = {
+        ...newState.search[query],
+        fetching: false,
+        error: JSON.stringify(error)
+      }
+
+      return newState
     }
 
     default:
