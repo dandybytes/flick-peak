@@ -22,6 +22,8 @@ const MovieBoard: FC<MovieBoardProps> = ({movieList}) => (
             id={movie.id}
             img={movie.poster_path ? url_img_poster + movie.poster_path : ''}
             title={movie.title}
+            date={movie.release_date}
+            rating={movie.vote_average}
           />
         ))}
       </>
