@@ -5,6 +5,7 @@ import 'react-animated-slider/build/horizontal.css'
 import './MovieHero.scss'
 
 import {ITMDBMovieData, url_img_backdrop, url_img_poster} from '../services/tmdbapi'
+import {getFullYear, getMonthName} from '../utils/time'
 
 import LoadingIndicator from './common/LoadingIndicator'
 
@@ -28,6 +29,8 @@ const MovieHero: FC<MovieHeroProps> = ({movieList}): JSX.Element => {
               window.innerWidth > 600
                 ? `${url_img_backdrop}${backdrop_path}`
                 : `${url_img_poster}${poster_path}`
+            const dateObject = new Date(release_date)
+            const date = getMonthName(dateObject) + ' ' + getFullYear(dateObject)
 
             return (
               <div key={id}>
@@ -38,7 +41,7 @@ const MovieHero: FC<MovieHeroProps> = ({movieList}): JSX.Element => {
                 <div className='slide-content'>
                   <h2 className='movie-title'>{title}</h2>
                   <div className='movie-details'>
-                    <span className='release-date'>{release_date}</span>
+                    <span className='release-date'>{date}</span>
                   </div>
                 </div>
               </div>
