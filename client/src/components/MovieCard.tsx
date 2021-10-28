@@ -1,6 +1,8 @@
 import React, {FC} from 'react'
 import {Link} from 'react-router-dom'
 
+import {AiFillHeart, AiOutlineHeart} from 'react-icons/ai'
+
 import './MovieCard.scss'
 
 import RadialProgressIndicator from './common/RadialProgressIndicator'
@@ -17,7 +19,7 @@ const MovieCard: FC<MovieCardProps> = ({id, img, title, date, rating}) => {
   const year = new Date(date).getFullYear()
 
   return (
-    <Link to={`/movie/${id}`} className='movie-card'>
+    <div className='movie-card'>
       {img?.length > 0 ? (
         <img className='movie-card-img' src={img} alt={`${title} movie thumbnail`} />
       ) : (
@@ -27,9 +29,6 @@ const MovieCard: FC<MovieCardProps> = ({id, img, title, date, rating}) => {
       )}
 
       <div className='movie-content-overlay'>
-        <p className='title'>{title}</p>
-        <p className='date'>{year}</p>
-
         <div className='rating'>
           <RadialProgressIndicator
             percentage={rating / 10}
@@ -40,8 +39,17 @@ const MovieCard: FC<MovieCardProps> = ({id, img, title, date, rating}) => {
             text={String(rating)}
           />
         </div>
+
+        <Link to={`/movie/${id}`} className='movie-card'></Link>
+
+        <p className='title'>{title}</p>
+        <p className='date'>{year}</p>
+
+        <div className='favorite' data-for='heart' data-tip='hello world'>
+          <AiOutlineHeart style={{width: '2rem', height: '2rem'}} />
+        </div>
       </div>
-    </Link>
+    </div>
   )
 }
 
