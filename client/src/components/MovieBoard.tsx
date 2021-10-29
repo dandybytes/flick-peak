@@ -20,7 +20,7 @@ const MovieBoard: FC<MovieBoardProps> = ({movieList}) => (
           <MovieCard
             key={movie.id}
             id={movie.id}
-            img={movie.poster_path ? url_img_poster + movie.poster_path : ''}
+            imgURL={movie.poster_path ? url_img_poster + movie.poster_path : ''}
             title={movie.title}
             date={movie.release_date}
             rating={movie.vote_average}
