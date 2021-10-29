@@ -61,28 +61,28 @@ const MovieListPage: FC = () => {
 
   const fetching: boolean = useSelector((state: RootState) =>
     movieQueryParam
-      ? state.movies.search?.[movieQueryParam]?.fetching
-      : state.movies[categorySelector].fetching
+      ? state.lists.search?.[movieQueryParam]?.fetching
+      : state.lists[categorySelector].fetching
   )
   const error: string = useSelector((state: RootState) =>
     movieQueryParam
-      ? state.movies.search?.[movieQueryParam]?.error
-      : state.movies[categorySelector].error
+      ? state.lists.search?.[movieQueryParam]?.error
+      : state.lists[categorySelector].error
   )
   const movieList: ITMDBMovieData[] = useSelector((state: RootState) =>
     movieQueryParam != null
-      ? state.movies.search?.[movieQueryParam]?.movies
-      : state.movies[categorySelector].movies
+      ? state.lists.search?.[movieQueryParam]?.movies
+      : state.lists[categorySelector].movies
   )
   const lastPageDownloaded: number = useSelector((state: RootState) =>
     movieQueryParam
-      ? state.movies.search?.[movieQueryParam]?.lastPageDownloaded
-      : state.movies[categorySelector].lastPageDownloaded
+      ? state.lists.search?.[movieQueryParam]?.lastPageDownloaded
+      : state.lists[categorySelector].lastPageDownloaded
   )
   const totalPages: number = useSelector((state: RootState) =>
     movieQueryParam
-      ? state.movies.search?.[movieQueryParam]?.totalPages
-      : state.movies[categorySelector].totalPages
+      ? state.lists.search?.[movieQueryParam]?.totalPages
+      : state.lists[categorySelector].totalPages
   )
 
   const errorMessageToDisplay = typeof error === 'string' ? error : JSON.stringify(error)

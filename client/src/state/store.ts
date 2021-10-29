@@ -3,10 +3,10 @@ import {composeWithDevTools} from 'redux-devtools-extension'
 import thunk from 'redux-thunk'
 import {debounce} from 'debounce'
 
-import {movieReducer} from './movies/movieReducer'
+import {movieListReducer} from './lists/movieListReducer'
 
 const rootReducer = combineReducers({
-  movies: movieReducer
+  lists: movieListReducer
   // test: testReducer
 })
 

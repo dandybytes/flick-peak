@@ -1,4 +1,4 @@
-import {getCategorySelector} from './movieUtils'
+import {getCategorySelector} from './movieListUtils'
 
 import {
   MovieAction,
@@ -16,7 +16,7 @@ import {
   fetch_movies_by_keyword_start,
   fetch_movies_by_keyword_success,
   fetch_movies_by_keyword_error
-} from './movieTypes'
+} from './movieListTypes'
 
 const initialCategoryState: MovieCategoryData = {
   fetching: false,
@@ -33,7 +33,7 @@ const initialState: MovieState = {
   search: {} as Record<string, MovieCategoryData>
 }
 
-export const movieReducer = (state = initialState, action: MovieAction): MovieState => {
+export const movieListReducer = (state = initialState, action: MovieAction): MovieState => {
   switch (action.type) {
     case fetch_movie_page_start: {
       const {category} = action.payload as FetchMoviePageStartPayload

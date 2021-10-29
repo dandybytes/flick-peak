@@ -18,7 +18,7 @@ import {
   fetch_movies_by_keyword_start,
   fetch_movies_by_keyword_success,
   fetch_movies_by_keyword_error
-} from './movieTypes'
+} from './movieListTypes'
 
 export const fetchMoviePageByCategory =
   (category: MovieCategories | '', pageNum?: number) => async (dispatch: Dispatch<MovieAction>) => {
