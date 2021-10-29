@@ -2,11 +2,11 @@ import React, {FC, useCallback, useEffect, useMemo} from 'react'
 import {Redirect, useHistory, useLocation} from 'react-router-dom'
 import {useDispatch, useSelector} from 'react-redux'
 
-import './MovieListPage.scss'
-
 import {AiFillHeart} from 'react-icons/ai'
 import {BsStarFill} from 'react-icons/bs'
 import {RiMovie2Fill} from 'react-icons/ri'
+
+import './MovieListPage.scss'
 
 import {
   RootState,
@@ -21,6 +21,7 @@ import LoadingIndicator from '../common/LoadingIndicator'
 import MovieHero from '../MovieHero'
 import MovieBoard from '../MovieBoard'
 import SearchBar from '../common/SearchBar'
+import {OutlineButton} from '../common/Button'
 
 const movieCategoryTabs = [
   {
@@ -73,6 +74,16 @@ const MovieListPage: FC = () => {
       ? state.movies.search?.[movieQueryParam]?.movies
       : state.movies[categorySelector].movies
   )
+  const lastPageDownloaded: number = useSelector((state: RootState) =>
+    movieQueryParam
+      ? state.movies.search?.[movieQueryParam]?.lastPageDownloaded
+      : state.movies[categorySelector].lastPageDownloaded
+  )
+  const totalPages: number = useSelector((state: RootState) =>
+    movieQueryParam
+      ? state.movies.search?.[movieQueryParam]?.totalPages
+      : state.movies[categorySelector].totalPages
+  )
 
   const errorMessageToDisplay = typeof error === 'string' ? error : JSON.stringify(error)
 
@@ -97,16 +108,28 @@ const MovieListPage: FC = () => {
     history.push(`#${tabId}`)
   }
 
+  const handleLoadMore = () => {
+    if (lastPageDownloaded >= totalPages) return
+
+    if (movieQueryParam != null) {
+      dispatch(fetchMoviePageByKeyword(movieQueryParam, lastPageDownloaded + 1))
+    } else if (isValidMovieCategory) {
+      dispatch(
+        fetchMoviePageByCategory(categoryFromHash as MovieCategories, lastPageDownloaded + 1)
+      )
+    }
+  }
+
   if (!movieQueryParam && !isValidMovieCategory)
     return <Redirect to={`${location.pathname}#${movieCategoryList[0]}`} />
 
-  if (fetching) {
-    return (
-      <div className='movie-list-page'>
-        <LoadingIndicator />
-      </div>
-    )
-  }
+  // if (fetching) {
+  //   return (
+  //     <div className='movie-list-page'>
+  //       <LoadingIndicator />
+  //     </div>
+  //   )
+  // }
 
   if (errorMessageToDisplay?.length) {
     return (
@@ -128,13 +151,17 @@ const MovieListPage: FC = () => {
     <div className='movie-list-page'>
       <MovieHero movieList={movieList} />
 
-      <div className='movies'>
-        <TabBar tabs={movieCategoryTabs} activeTabId={categoryFromHash} onTabClick={onTabClick} />
+      <TabBar tabs={movieCategoryTabs} activeTabId={categoryFromHash} onTabClick={onTabClick} />
 
-        <SearchBar query={movieQueryParam ?? ''} setQuery={setMovieQuery} debounceDuration={400} />
+      <SearchBar query={movieQueryParam ?? ''} setQuery={setMovieQuery} debounceDuration={400} />
 
-        <MovieBoard movieList={movieList} />
-      </div>
+      <MovieBoard movieList={movieList} />
+
+      <section className='movie-load'>
+        <OutlineButton onClick={handleLoadMore}>
+          {fetching ? <LoadingIndicator /> : 'Load more'}
+        </OutlineButton>
+      </section>
     </div>
   )
 }

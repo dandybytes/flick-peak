@@ -2,8 +2,6 @@
   --movie-list-headline-color: var(--color-1);
 
   min-height: 90vh;
-  display: flex;
-  flex-direction: column;
 
   .error-message-box {
     min-height: 90vh;
@@ -11,7 +9,9 @@
     place-items: center;
   }
 
-  .movies {
-    transform: translateY(-3.5rem);
+  .movie-load {
+    display: flex;
+    justify-content: center;
+    padding: 1rem;
   }
 }
