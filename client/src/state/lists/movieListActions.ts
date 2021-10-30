@@ -42,7 +42,7 @@ export const fetchMoviePageByCategory =
 
       const response = await fetchMovieFn(pageNum ?? 1)
       if (response == null)
-        throw new Error(`fetching movie page content for category "${category}"" failed`)
+        throw new Error(`fetching movie page content for category "${category}" failed`)
       const {page, results, total_pages} = response
 
       dispatch({

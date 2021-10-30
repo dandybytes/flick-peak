@@ -4,10 +4,11 @@ import thunk from 'redux-thunk'
 import {debounce} from 'debounce'
 
 import {movieListReducer} from './lists/movieListReducer'
+import {movieDetailReducer} from './details/movieDetailReducer'
 
 const rootReducer = combineReducers({
-  lists: movieListReducer
-  // test: testReducer
+  lists: movieListReducer,
+  movies: movieDetailReducer
 })
 
 const localStorageKey = '_flick_pick'
