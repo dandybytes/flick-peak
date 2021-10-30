@@ -27,8 +27,7 @@
 
         & .rating,
         & .title,
-        & .date,
-        & .favorite {
+        & .date {
           opacity: 1;
         }
 
@@ -39,10 +38,6 @@
         & .title,
         & .date {
           transform: translateY(0);
-        }
-
-        & .favorite svg {
-          animation: heartBeat 1s linear infinite;
         }
       }
     }
@@ -114,34 +109,5 @@
     opacity: 0;
     transform: translateY(2rem);
     transition: transform 0.25s ease 0.125s, opacity 0.25s ease 0.125s;
-  }
-
-  .favorite {
-    position: absolute;
-    bottom: 1rem;
-    right: 1rem;
-    height: 2.5rem;
-    width: 2.5rem;
-    color: red;
-    opacity: 0;
-    transition: transform 0.4s ease 0.3s, opacity 0.4s ease 0.3s;
-  }
-}
-
-@keyframes heartBeat {
-  0% {
-    transform: scale(0.8);
-  }
-  25% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(1.2);
-  }
-  75% {
-    transform: scale(1);
-  }
-  100% {
-    transform: scale(0.8);
   }
 }

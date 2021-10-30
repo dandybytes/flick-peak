@@ -1,8 +1,6 @@
 import React, {FC} from 'react'
 import {Link} from 'react-router-dom'
 
-// import {AiFillHeart, AiOutlineHeart} from 'react-icons/ai'
-
 import './MovieCard.scss'
 
 import RadialProgressIndicator from './common/RadialProgressIndicator'
@@ -45,10 +43,6 @@ const MovieCard: FC<MovieCardProps> = ({id, imgURL, title, date, rating}) => {
 
           <p className='title'>{title}</p>
           <p className='date'>{year}</p>
-
-          {/* <div className='favorite' data-for='heart' data-tip='hello world'>
-            <AiOutlineHeart style={{width: '2rem', height: '2rem'}} />
-          </div> */}
         </div>
       </Link>
     </div>

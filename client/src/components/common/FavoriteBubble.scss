@@ -1,0 +1,46 @@
+.bubble-favorite {
+  height: 2.5rem;
+  width: 2.5rem;
+  display: grid;
+  place-items: center;
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 50%;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+
+  & svg {
+    height: 65%;
+    width: 65%;
+  }
+
+  &.inactive svg {
+    animation: heartBeat 1s linear infinite;
+  }
+
+  &.inactive:hover svg {
+    animation: heartBeat 0.6s linear infinite;
+  }
+
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.4);
+  }
+}
+
+@keyframes heartBeat {
+  0% {
+    transform: scale(0.9);
+  }
+  25% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  75% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(0.9);
+  }
+}
