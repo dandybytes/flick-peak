@@ -73,6 +73,9 @@ export const movieListReducer = (state = initialState, action: MovieAction): Mov
 
       // prevent duplication by adding the same page of movies repeatedly
       if (fetchedPage <= lastPageDownloaded) {
+        console.error(
+          `page ${fetchedPage} of ${category} movies is already stored in state`
+        )
         return {
           ...state,
           [categorySelector]: {
@@ -145,6 +148,9 @@ export const movieListReducer = (state = initialState, action: MovieAction): Mov
 
       // prevent duplication by adding the same page of movies repeatedly
       if (fetchedPage <= lastPageDownloaded) {
+        console.error(
+          `page ${fetchedPage} of movies that match query ${query} is already stored in state`
+        )
         newState.search[query] = {
           ...newState.search[query],
           fetching: false

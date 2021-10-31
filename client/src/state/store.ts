@@ -5,10 +5,12 @@ import {debounce} from 'debounce'
 
 import {movieListReducer} from './lists/movieListReducer'
 import {movieDetailReducer} from './details/movieDetailReducer'
+import {movieRecommendationReducer} from './recommendations/recommendationReducer'
 
 const rootReducer = combineReducers({
   lists: movieListReducer,
-  movies: movieDetailReducer
+  movies: movieDetailReducer,
+  recommendations: movieRecommendationReducer
 })
 
 const localStorageKey = '_flick_pick'

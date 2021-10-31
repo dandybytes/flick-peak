@@ -15,5 +15,8 @@ https://developers.themoviedb.org/3/configuration/get-api-configuration
 explanation working with images:
 https://developers.themoviedb.org/3/getting-started/images
 
+movie recommendations:
+https://developers.themoviedb.org/3/movies/get-movie-recommendations
+
 
 

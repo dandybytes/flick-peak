@@ -6,7 +6,7 @@ import {
   url_details_start,
   url_details_end,
   url_recommendations_beginning,
-  url_recommendations_end
+  url_recommendations_middle
 } from './tmdbUrl'
 
 import {
@@ -50,10 +50,13 @@ export const fetchMovieDetails = (movieId: number): Promise<ITMDBMovieDetails> =
     .then(response => response.json())
     .catch(error => console.error(`ERROR: fetching details for movie ${movieId} failed: `, error))
 
-export const fetchRecommendationsByMovieId = (
-  movieId: number
+export const fetchMovieRecommendations = (
+  movieId: number,
+  pageNum: number
 ): Promise<ITMDBMovieRecommendationsResponse> =>
-  fetch(`${url_recommendations_beginning}${movieId}${url_recommendations_end}`)
+  fetch(
+    url_recommendations_beginning + String(movieId) + url_recommendations_middle + String(pageNum)
+  )
     .then(response => response.json())
     .catch(error =>
       console.error(`ERROR: fetching recommendations for movie ${movieId} failed: `, error)

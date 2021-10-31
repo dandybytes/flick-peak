@@ -5,7 +5,7 @@ const tmdbAPIkey = process.env.REACT_APP_TMDB_API_KEY
 const url_base = 'https://api.themoviedb.org/3'
 const url_suffix_key = `?api_key=${tmdbAPIkey}`
 const url_suffix_lang = '&language=en-US'
-// const url_suffix_page = `&page=${page ?? 1}`
+const url_suffix_page = '&page='
 
 const url_suffix_popular = '/movie/popular'
 const url_popular = url_base + url_suffix_popular + url_suffix_key + url_suffix_lang
@@ -38,9 +38,12 @@ const url_img_backdrop = url_img_base + url_img_backdrop_size
 const url_img_poster = url_img_base + url_img_poster_size
 
 // url structure: get recommendations for movie of specified ID
-// http://api.themoviedb.org/3/movie/630004/recommendations?api_key=<api-key-here>
+// https://api.themoviedb.org/3/movie/{movie_id}/recommendations?api_key=<<api_key>>&language=en-US&page=1
+// documentation:
+// developers.themoviedb.org/3/movies/get-movie-recommendations
 const url_recommendations_beginning = `${url_base}/movie/`
-const url_recommendations_end = url_suffix_key
+const url_recommendations_middle =
+  '/recommendations' + url_suffix_key + url_suffix_lang + url_suffix_page
 
 export {
   url_popular,
@@ -51,7 +54,7 @@ export {
   url_details_start,
   url_details_end,
   url_recommendations_beginning,
-  url_recommendations_end,
+  url_recommendations_middle,
   url_img_backdrop,
   url_img_poster
 }
