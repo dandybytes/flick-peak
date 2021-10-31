@@ -20,7 +20,7 @@ const RadialProgressIndicator: FC<RPIProps> = ({
   fontSize
 }) => {
   const internalRadius = radius - strokeWidth / 3
-  const circumference = 2 * Math.PI * internalRadius
+  const circumference = Math.floor(2 * Math.PI * internalRadius)
 
   return (
     <div className='progress-indicator' style={{height: 2 * radius, width: 2 * radius}}>
@@ -53,7 +53,7 @@ const RadialProgressIndicator: FC<RPIProps> = ({
           r={internalRadius}
           strokeDasharray={`${circumference} ${circumference}`}
           // shifts the stroke dashes by certain amount
-          strokeDashoffset={circumference * (1 - percentage)}
+          strokeDashoffset={Math.floor(circumference * (1 - percentage))}
           strokeLinecap='round'
         />
       </svg>
@@ -63,7 +63,7 @@ const RadialProgressIndicator: FC<RPIProps> = ({
         style={{fontSize: fontSize ? fontSize : 0.65 * radius}}
       >
         <span>
-          {percentage * 100}
+          {Math.round(percentage * 100)}
           <sup>%</sup>
         </span>
       </p>
