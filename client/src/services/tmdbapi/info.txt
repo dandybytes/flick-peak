@@ -1,0 +1,19 @@
+          TMDB API info links:
+
+www.themoviedb.org/documentation/api
+developers.themoviedb.org/3/getting-started/introduction
+
+
+list of GET requests:
+developers.themoviedb.org/3/movies/get-movie-details
+
+
+configuration info (how get images):
+https://developers.themoviedb.org/3/configuration/get-api-configuration
+
+
+explanation working with images:
+https://developers.themoviedb.org/3/getting-started/images
+
+
+

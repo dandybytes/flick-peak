@@ -4,25 +4,38 @@ import {
   url_top_rated,
   url_query,
   url_details_start,
-  url_details_end
+  url_details_end,
+  url_recommendations_beginning,
+  url_recommendations_end
 } from './tmdbUrl'
 
-import {ITMDBMovieDetails, ITMDBMovieListResponse, ITMDBNowPlayingMovieResponse} from './tmdbTypes'
+import {
+  ITMDBMovieDetails,
+  ITMDBMovieListResponse,
+  ITMDBNowPlayingMovieResponse,
+  ITMDBMovieRecommendationsResponse
+} from './tmdbTypes'
 
 export const fetchPopularMovies = (pageNum = 1): Promise<ITMDBMovieListResponse> =>
   fetch(`${url_popular}&page=${pageNum}`)
     .then(response => response.json())
-    .catch(error => console.error('ERROR: fetching popular movies failed: ', error))
+    .catch(error =>
+      console.error(`ERROR: fetching page ${pageNum} of popular movies failed: `, error)
+    )
 
 export const fetchNowPlayingMovies = (pageNum = 1): Promise<ITMDBNowPlayingMovieResponse> =>
   fetch(`${url_now_playing}&page=${pageNum}`)
     .then(response => response.json())
-    .catch(error => console.error('ERROR: fetching now playing movies failed: ', error))
+    .catch(error =>
+      console.error(`ERROR: fetching page ${pageNum} of now playing movies failed: `, error)
+    )
 
 export const fetchTopRatedMovies = (pageNum = 1): Promise<ITMDBMovieListResponse> =>
   fetch(`${url_top_rated}&page=${pageNum}`)
     .then(response => response.json())
-    .catch(error => console.error('ERROR: fetching top rated movies failed: ', error))
+    .catch(error =>
+      console.error(`ERROR: fetching page ${pageNum} of top rated movies failed: `, error)
+    )
 
 export const fetchMoviesByKeyword = (
   keyword: string,
@@ -35,4 +48,13 @@ export const fetchMoviesByKeyword = (
 export const fetchMovieDetails = (movieId: number): Promise<ITMDBMovieDetails> =>
   fetch(`${url_details_start}${movieId}${url_details_end}`)
     .then(response => response.json())
-    .catch(error => console.error('ERROR: fetching movie details failed: ', error))
+    .catch(error => console.error(`ERROR: fetching details for movie ${movieId} failed: `, error))
+
+export const fetchRecommendationsByMovieId = (
+  movieId: number
+): Promise<ITMDBMovieRecommendationsResponse> =>
+  fetch(`${url_recommendations_beginning}${movieId}${url_recommendations_end}`)
+    .then(response => response.json())
+    .catch(error =>
+      console.error(`ERROR: fetching recommendations for movie ${movieId} failed: `, error)
+    )

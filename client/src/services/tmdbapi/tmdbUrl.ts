@@ -37,6 +37,11 @@ const url_img_poster_size = 'w500'
 const url_img_backdrop = url_img_base + url_img_backdrop_size
 const url_img_poster = url_img_base + url_img_poster_size
 
+// url structure: get recommendations for movie of specified ID
+// http://api.themoviedb.org/3/movie/630004/recommendations?api_key=<api-key-here>
+const url_recommendations_beginning = `${url_base}/movie/`
+const url_recommendations_end = url_suffix_key
+
 export {
   url_popular,
   // url_complete_popular,
@@ -45,6 +50,8 @@ export {
   url_query,
   url_details_start,
   url_details_end,
+  url_recommendations_beginning,
+  url_recommendations_end,
   url_img_backdrop,
   url_img_poster
 }
