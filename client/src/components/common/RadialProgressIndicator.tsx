@@ -8,7 +8,6 @@ type RPIProps = {
   strokeWidth: number
   strokeColor: string
   trackColor?: string
-  text?: string
   fontSize?: number
 }
 
@@ -18,7 +17,6 @@ const RadialProgressIndicator: FC<RPIProps> = ({
   strokeWidth,
   strokeColor,
   trackColor = 'rgba(0, 0, 0, 0.1)',
-  text,
   fontSize
 }) => {
   const internalRadius = radius - strokeWidth / 3
@@ -62,9 +60,12 @@ const RadialProgressIndicator: FC<RPIProps> = ({
 
       <p
         className={'progress-indicator-text'}
-        style={{fontSize: fontSize ? fontSize : 0.75 * radius}}
+        style={{fontSize: fontSize ? fontSize : 0.65 * radius}}
       >
-        {text}
+        <span>
+          {percentage * 100}
+          <sup>%</sup>
+        </span>
       </p>
     </div>
   )

@@ -37,7 +37,6 @@ const MovieCard: FC<MovieCardProps> = ({id, imgURL, title, date, rating}) => {
               strokeWidth={3}
               strokeColor={'rgb(0, 255, 67)'}
               trackColor={'transparent'}
-              text={String(rating)}
             />
           </div>
 
