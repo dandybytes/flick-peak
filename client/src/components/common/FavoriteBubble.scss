@@ -1,13 +1,17 @@
 .bubble-favorite {
+  --bubble-background-color: var(--color-dark);
+  --favorite-icon-default-color: var(--color-light);
+  --favorite-icon-accent-color: red;
+
   height: 2.5rem;
   width: 2.5rem;
   display: grid;
   place-items: center;
-  background-color: rgba(0, 0, 0, 0.2);
+  background-color: var(--bubble-background-color);
   border-radius: 50%;
-  color: white;
+  color: var(--favorite-icon-default-color);
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: all 0.3s ease;
 
   & svg {
     height: 65%;
@@ -15,7 +19,7 @@
   }
 
   &.inactive svg {
-    animation: heartBeat 1s linear infinite;
+    animation: heartBeat 1.8s linear infinite;
   }
 
   &.inactive:hover svg {
@@ -23,7 +27,7 @@
   }
 
   &:hover {
-    background-color: rgba(0, 0, 0, 0.4);
+    color: var(--favorite-icon-accent-color);
   }
 }
 
