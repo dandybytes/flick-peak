@@ -11,6 +11,7 @@ import {
   url_img_backdrop,
   url_img_poster
 } from '../../services/tmdbapi'
+import {formattedCurrency} from '../../utils'
 
 import LoadingIndicator from '../common/LoadingIndicator'
 
@@ -54,18 +55,7 @@ const MovieDetailsPage: FC = () => {
     ? `${Math.floor(movieDetails?.runtime / 60)}h ${movieDetails?.runtime % 60}min`
     : 'unknown'
 
-  // budget (number -> comma-separated string preceded by $ sign)
-  let budget: string | string[] = []
-  if ((movieDetails?.budget ?? 0) > 0) {
-    budget[0] = (movieDetails?.budget ?? 0).toString() ?? ''
-    while (budget[0].length > 3) {
-      budget.push(budget[0].slice(budget[0].length - 3))
-      budget[0] = budget[0].slice(0, budget[0].length - 3)
-    }
-    budget = '$' + budget.join(',')
-  } else {
-    budget = 'no info'
-  }
+  const budget = formattedCurrency(movieDetailData?.budget ?? 0)
 
   if (!movieID) return <Redirect to={`${location.pathname}#${movieCategoryList[0]}`} />
 
