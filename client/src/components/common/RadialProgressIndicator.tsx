@@ -6,9 +6,9 @@ type RPIProps = {
   percentage: number
   radius: number
   strokeWidth: number
-  backgroundColor: string
   textColor: string
   strokeColor: string
+  backgroundColor?: string
   trackColor?: string
   fontSize?: number
 }
@@ -28,7 +28,10 @@ const RadialProgressIndicator: FC<RPIProps> = ({
 
   return (
     <div className='progress-indicator' style={{height: 2 * radius, width: 2 * radius}}>
-      <div className='progress-indicator-background' style={{backgroundColor}} />
+      <div
+        className='progress-indicator-background'
+        style={backgroundColor ? {backgroundColor} : {}}
+      />
 
       <svg height={2 * radius} width={2 * radius}>
         <circle

@@ -1,3 +1,7 @@
+@import url("https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,900");
+// @import url("https://fonts.googleapis.com/css?family=Oswald:100,200,300,400,500,600,700,900");
+// @import url("https://fonts.googleapis.com/css?family=Lato:100,200,300,400,500,600,700,900");
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -15,21 +19,24 @@
   --color-2b: rgba(250, 175, 60, 0.5);
   --color-2c: rgba(250, 175, 60, 0.25);
   --color-2d: rgba(250, 175, 60, 0.05);
-  --color-dark: rgba(15, 15, 15, 1);
-  --color-light: white;
+
+  // --color-dark: rgba(15, 15, 15, 1);
+  // --color-dark: rgb(15, 25, 35);
+  --color-dark: rgb(10, 15, 25);
+  --color-light: rgba(255, 255, 255, 0.8);
+  --rgb-dark: 10, 15, 25;
+  --rgb-light: 230, 230, 230
 }
 
 html,
 body {
   width: 100%;
-  background-color: var(--color-dark);
 }
 
 body {
   margin: 0;
-  background-color: #101010;
-  font-family: Oswald, sans-serif;
-  // font-family: "Poppins", sans-serif;
+  background-color: var(--color-dark);
+  font-family: Poppins, sans-serif;
   // font-family: 'Roboto', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;

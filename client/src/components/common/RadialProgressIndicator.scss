@@ -1,4 +1,6 @@
 .progress-indicator {
+  --progress-indicator-background-color: var(--color-dark);
+
   position: relative;
   display: flex;
   justify-content: center;
@@ -22,6 +24,7 @@
   position: absolute;
   inset: 0;
   border-radius: 50%;
+  background-color: var(--progress-indicator-background-color);
   transform: scale(1.2);
   z-index: 1;
 }
