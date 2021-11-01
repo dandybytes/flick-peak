@@ -15,12 +15,13 @@
   --color-2b: rgba(250, 175, 60, 0.5);
   --color-2c: rgba(250, 175, 60, 0.25);
   --color-2d: rgba(250, 175, 60, 0.05);
+  --color-dark: rgba(15, 15, 15, 1);
 }
 
 html,
 body {
   width: 100%;
-  background-color: #ececec;
+  background-color: var(--color-dark);
 }
 
 body {

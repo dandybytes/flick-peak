@@ -6,6 +6,8 @@ type RPIProps = {
   percentage: number
   radius: number
   strokeWidth: number
+  backgroundColor: string
+  textColor: string
   strokeColor: string
   trackColor?: string
   fontSize?: number
@@ -14,6 +16,8 @@ type RPIProps = {
 const RadialProgressIndicator: FC<RPIProps> = ({
   percentage,
   radius,
+  backgroundColor,
+  textColor,
   strokeWidth,
   strokeColor,
   trackColor = 'rgba(0, 0, 0, 0.1)',
@@ -24,15 +28,11 @@ const RadialProgressIndicator: FC<RPIProps> = ({
 
   return (
     <div className='progress-indicator' style={{height: 2 * radius, width: 2 * radius}}>
-      <div className={'progress-indicator-background'} />
+      <div className='progress-indicator-background' style={{backgroundColor}} />
 
       <svg height={2 * radius} width={2 * radius}>
         <circle
           className='progress-indicator-track'
-          // transition from light blue (rgb(157, 213, 244)) to purple (rgb(112, 92, 168))
-          // stroke={`rgb(${Math.floor((157 - 112) * percentageLeft + 112)},${Math.floor(
-          //     (213 - 92) * percentageLeft + 92
-          // )},${Math.floor((224 - 168) * percentageLeft + 168)})`}
           stroke={trackColor}
           fill='transparent'
           strokeWidth={strokeWidth}
@@ -60,7 +60,7 @@ const RadialProgressIndicator: FC<RPIProps> = ({
 
       <p
         className={'progress-indicator-text'}
-        style={{fontSize: fontSize ? fontSize : 0.65 * radius}}
+        style={{fontSize: fontSize ? fontSize : 0.65 * radius, color: textColor}}
       >
         <span>
           {Math.round(percentage * 100)}

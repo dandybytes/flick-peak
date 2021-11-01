@@ -34,6 +34,8 @@ const MovieCard: FC<MovieCardProps> = ({id, imgURL, title, date, rating}) => {
             <RadialProgressIndicator
               percentage={rating / 10}
               radius={20}
+              backgroundColor={'rgb(25, 25, 25)'}
+              textColor='white'
               strokeWidth={3}
               strokeColor={'rgb(0, 255, 67)'}
               trackColor={'transparent'}
