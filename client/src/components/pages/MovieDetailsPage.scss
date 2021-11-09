@@ -3,7 +3,7 @@
   --movie-details-text-rgb: var(--rgb-light);
   --movie-details-background-color: rgb(var(--movie-details-background-rgb));
   --movie-details-text-color: rgb(var(--movie-details-text-rgb));
-
+  --movie-details-alert-color: tomato;
 
   position: relative;
   min-height: 100vh;
@@ -14,7 +14,7 @@
     display: grid;
     place-items: center;
     grid-column: 1 / span 2;
-    color: red;
+    color: var(--movie-details-alert-color);
   }
 }
 
@@ -28,10 +28,7 @@
     content: '';
     position: absolute;
     inset: 0;
-    background-image: linear-gradient(
-        transparent 0%,
-        var(--movie-details-background-color) 100%
-      ),
+    background-image: linear-gradient(transparent 0%, var(--movie-details-background-color) 100%),
       linear-gradient(to top, var(--movie-details-background-color) 0%, transparent 50%);
   }
 }
@@ -39,7 +36,7 @@
 .movie-details-container {
   position: relative;
   max-width: 75rem;
-  margin: -30vh auto 0;
+  margin: -30vh auto 2rem;
   display: grid;
   grid-template-columns: min-content auto;
   column-gap: 2rem;
@@ -139,9 +136,18 @@
 
 .movie-recommendations {
   max-width: 75rem;
-  margin: 0 auto;
+  margin: 0 auto 2rem;
 }
 
-@media only screen and (max-width: 960px) {}
+.recommendation-headline {
+  color: var(--movie-details-text-color);
+  text-align: center;
+  font-weight: 500;
+  font-size: 1.5rem;
+}
 
-@media only screen and (max-width: 650px) {}
+@media only screen and (max-width: 960px) {
+}
+
+@media only screen and (max-width: 650px) {
+}

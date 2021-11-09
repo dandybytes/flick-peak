@@ -1,4 +1,4 @@
-import React, {FC, useEffect} from 'react'
+import {FC, useEffect} from 'react'
 import {Redirect, useLocation, useParams} from 'react-router-dom'
 import {useDispatch, useSelector} from 'react-redux'
 
@@ -21,6 +21,8 @@ import {formattedCurrency} from '../../utils'
 import LoadingIndicator from '../common/LoadingIndicator'
 import RadialProgressIndicator from '../common/RadialProgressIndicator'
 import FavoriteBubble from '../common/FavoriteBubble'
+import Carousel from '../common/Carousel'
+import LandscapeCard from '../LandscapeCard'
 
 type PageParams = {
   movieID?: string
@@ -44,29 +46,34 @@ const MovieDetailsPage: FC = () => {
   const recommendationsAreFetching: boolean = useSelector(
     (state: RootState) => state.recommendations?.[movieID ?? '']?.fetching
   )
-  // const recommendationError: string = useSelector(
-  //   (state: RootState) => state.recommendations?.[movieID ?? '']?.error
-  // )
+  const recommendationError: string = useSelector(
+    (state: RootState) => state.recommendations?.[movieID ?? '']?.error
+  )
   const recommendationData: ITMDBRecommendationMovieData[] | null = useSelector(
     (state: RootState) => state.recommendations?.[movieID ?? '']?.recommendations
   )
 
-  const errorMessageToDisplay =
+  const movieDetailErrorMessage =
     typeof movieDetailError === 'string' ? movieDetailError : JSON.stringify(movieDetailError)
+
+  const recommendationListErrorMessage =
+    typeof recommendationError === 'string'
+      ? recommendationError
+      : JSON.stringify(recommendationError)
 
   useEffect(() => {
     if (movieID && movieDetailData == null && !movieDetailsAreFetching) {
       dispatch(fetchMovieById(Number(movieID)))
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [movieID, movieDetailData])
 
   useEffect(() => {
     if (movieID && recommendationData == null && !recommendationsAreFetching) {
       dispatch(fetchRecommendationsByMovieId(Number(movieID)))
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [movieID, recommendationData])
 
   let tagline = (movieDetailData?.tagline ?? '').toLowerCase()
   // get rid of the trailing period
@@ -98,8 +105,8 @@ const MovieDetailsPage: FC = () => {
       <div className='movie-details-container'>
         {movieDetailsAreFetching ? (
           <LoadingIndicator />
-        ) : errorMessageToDisplay?.length ? (
-          <div className='error-message-box'>{errorMessageToDisplay}</div>
+        ) : movieDetailErrorMessage?.length ? (
+          <div className='error-message-box'>{movieDetailErrorMessage}</div>
         ) : !movieDetailData?.id && !!movieDetailData?.original_title ? (
           <div className='error-message-box'>No data available for this movie</div>
         ) : (
@@ -173,6 +180,37 @@ const MovieDetailsPage: FC = () => {
                 )}
               </ul>
             </div>
+          </>
+        )}
+      </div>
+
+      <div className='movie-recommendations'>
+        {recommendationsAreFetching ? (
+          <LoadingIndicator />
+        ) : recommendationListErrorMessage?.length ? (
+          <div className='error-message-box'>{recommendationListErrorMessage}</div>
+        ) : !(recommendationData ?? []).length ? (
+          <div className='error-message-box'>No recommendations available for this movie</div>
+        ) : (
+          <>
+            <h1 className='recommendation-headline'>Recommended movies:</h1>
+
+            <Carousel>
+              {(recommendationData ?? []).map(recommendedMovie => (
+                <LandscapeCard
+                  key={recommendedMovie.id}
+                  id={recommendedMovie.id}
+                  imgURL={
+                    recommendedMovie.backdrop_path
+                      ? url_img_backdrop + recommendedMovie.backdrop_path
+                      : ''
+                  }
+                  title={recommendedMovie.title}
+                  date={recommendedMovie.release_date}
+                  rating={recommendedMovie.vote_average}
+                />
+              ))}
+            </Carousel>
           </>
         )}
       </div>
