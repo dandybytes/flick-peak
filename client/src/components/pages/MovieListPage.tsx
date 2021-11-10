@@ -1,4 +1,4 @@
-import React, {FC, useCallback, useEffect, useMemo} from 'react'
+import {FC, useCallback, useEffect, useMemo} from 'react'
 import {Redirect, useHistory, useLocation} from 'react-router-dom'
 import {useDispatch, useSelector} from 'react-redux'
 
@@ -8,41 +8,15 @@ import {RiMovie2Fill} from 'react-icons/ri'
 
 import './MovieListPage.scss'
 
-import {
-  RootState,
-  fetchMoviePageByKeyword,
-  fetchMoviePageByCategory,
-  getCategorySelector
-} from '../../state/'
-import {ITMDBMovieData, MovieCategories, movieCategoryList} from '../../services/tmdbapi'
+import {RootState, fetchMoviePageByKeyword, fetchMoviePageByCategory} from '../../state/'
+import {ITMDBMovieData, MovieCategory, movieCategoryList} from '../../services/tmdbapi'
 
-import TabBar from '../common/tabs/TabBar'
 import LoadingIndicator from '../common/LoadingIndicator'
 import MovieHero from '../MovieHero'
 import MovieBoard from '../MovieBoard'
 import SearchBar from '../common/SearchBar'
 import {OutlineButton} from '../common/Button'
-
-const movieCategoryTabs = [
-  {
-    label: 'In Theaters',
-    id: 'now-playing',
-    icon: <RiMovie2Fill />,
-    color: '#67bb67'
-  },
-  {
-    label: 'Popular',
-    id: 'popular',
-    icon: <AiFillHeart />,
-    color: '#f56868'
-  },
-  {
-    label: 'Top Rated',
-    id: 'top-rated',
-    icon: <BsStarFill />,
-    color: '#63a7c7'
-  }
-]
+import MovieCategoryTab from '../MovieCategoryTab'
 
 const searchKey = 'search'
 
@@ -56,33 +30,35 @@ const MovieListPage: FC = () => {
   const movieQueryParam = queryParamObj.get(searchKey)
 
   const categoryFromHash = hash?.slice(1)
-  const isValidMovieCategory = movieCategoryList.includes(categoryFromHash as MovieCategories)
-  const categorySelector = getCategorySelector(categoryFromHash)
+  const isValidMovieCategory = movieCategoryList.includes(categoryFromHash as MovieCategory)
+  const categoryToShow = isValidMovieCategory
+    ? (categoryFromHash as MovieCategory)
+    : movieCategoryList[0]
 
   const fetching: boolean = useSelector((state: RootState) =>
-    movieQueryParam
+    movieQueryParam?.length
       ? state.lists.search?.[movieQueryParam]?.fetching
-      : state.lists[categorySelector].fetching
+      : state.lists[categoryToShow].fetching
   )
   const error: string = useSelector((state: RootState) =>
-    movieQueryParam
+    movieQueryParam?.length
       ? state.lists.search?.[movieQueryParam]?.error
-      : state.lists[categorySelector].error
+      : state.lists[categoryToShow].error
   )
   const movieList: ITMDBMovieData[] = useSelector((state: RootState) =>
-    movieQueryParam != null
+    movieQueryParam?.length
       ? state.lists.search?.[movieQueryParam]?.movies
-      : state.lists[categorySelector].movies
+      : state.lists[categoryToShow].movies
   )
   const lastPageDownloaded: number = useSelector((state: RootState) =>
-    movieQueryParam
+    movieQueryParam?.length
       ? state.lists.search?.[movieQueryParam]?.lastPageDownloaded
-      : state.lists[categorySelector].lastPageDownloaded
+      : state.lists[categoryToShow].lastPageDownloaded
   )
   const totalPages: number = useSelector((state: RootState) =>
-    movieQueryParam
+    movieQueryParam?.length
       ? state.lists.search?.[movieQueryParam]?.totalPages
-      : state.lists[categorySelector].totalPages
+      : state.lists[categoryToShow].totalPages
   )
 
   const errorMessageToDisplay = typeof error === 'string' ? error : JSON.stringify(error)
@@ -91,7 +67,7 @@ const MovieListPage: FC = () => {
     if (!movieList?.length && movieQueryParam != null) {
       dispatch(fetchMoviePageByKeyword(movieQueryParam, 1))
     } else if (!movieList?.length && isValidMovieCategory) {
-      dispatch(fetchMoviePageByCategory(categoryFromHash as MovieCategories, 1))
+      dispatch(fetchMoviePageByCategory(categoryFromHash as MovieCategory, 1))
     }
   }, [movieQueryParam, categoryFromHash])
 
@@ -104,64 +80,76 @@ const MovieListPage: FC = () => {
     [history, pathname, queryParamObj.toString()]
   )
 
-  const onTabClick = (tabId: string): void => {
-    history.push(`#${tabId}`)
-  }
-
   const handleLoadMore = () => {
     if (lastPageDownloaded >= totalPages) return
 
     if (movieQueryParam != null) {
       dispatch(fetchMoviePageByKeyword(movieQueryParam, lastPageDownloaded + 1))
     } else if (isValidMovieCategory) {
-      dispatch(
-        fetchMoviePageByCategory(categoryFromHash as MovieCategories, lastPageDownloaded + 1)
-      )
+      dispatch(fetchMoviePageByCategory(categoryFromHash as MovieCategory, lastPageDownloaded + 1))
     }
   }
 
-  if (!movieQueryParam && !isValidMovieCategory)
+  if (movieQueryParam == null && !isValidMovieCategory)
     return <Redirect to={`${location.pathname}#${movieCategoryList[0]}`} />
-
-  // if (fetching) {
-  //   return (
-  //     <div className='movie-list-page'>
-  //       <LoadingIndicator />
-  //     </div>
-  //   )
-  // }
-
-  if (errorMessageToDisplay?.length) {
-    return (
-      <div className='movie-list-page'>
-        <div className='error-message-box'>{errorMessageToDisplay}</div>
-      </div>
-    )
-  }
-
-  if (!movieList?.length) {
-    return (
-      <div className='movie-list-page'>
-        <div className='error-message-box'>There are no movies to display</div>
-      </div>
-    )
-  }
 
   return (
     <div className='movie-list-page'>
       <MovieHero movieList={movieList} />
 
-      <TabBar tabs={movieCategoryTabs} activeTabId={categoryFromHash} onTabClick={onTabClick} />
+      <nav className='movie-category-tabs'>
+        <ul className='tab-list' role='tablist'>
+          <MovieCategoryTab
+            label='In Theaters'
+            icon={<RiMovie2Fill />}
+            color='#67bb67'
+            isActiveTab={categoryFromHash === 'current'}
+            onTabClick={() => history.push('#current')}
+          />
+          <MovieCategoryTab
+            label='Popular'
+            icon={<AiFillHeart />}
+            color='#f56868'
+            isActiveTab={categoryFromHash === 'popular'}
+            onTabClick={() => history.push('#popular')}
+          />
+          <MovieCategoryTab
+            label='Top Rated'
+            icon={<BsStarFill />}
+            color='#63a7c7'
+            isActiveTab={categoryFromHash === 'top'}
+            onTabClick={() => history.push('#top')}
+          />
 
-      <SearchBar query={movieQueryParam ?? ''} setQuery={setMovieQuery} debounceDuration={400} />
+          <SearchBar
+            query={movieQueryParam}
+            setQuery={setMovieQuery}
+            debounceDuration={400}
+            placeholder='movie title...'
+          />
+        </ul>
+      </nav>
 
-      <MovieBoard movieList={movieList} />
+      {movieList?.length && <MovieBoard movieList={movieList} />}
 
-      <section className='movie-load'>
-        <OutlineButton onClick={handleLoadMore}>
-          {fetching ? <LoadingIndicator /> : 'Load more'}
-        </OutlineButton>
-      </section>
+      {fetching ? (
+        <LoadingIndicator />
+      ) : errorMessageToDisplay?.length ? (
+        <>
+          <div className='error-message-box'>{errorMessageToDisplay}</div>
+          <section className='movie-load'>
+            <OutlineButton onClick={handleLoadMore}>Try Again</OutlineButton>
+          </section>
+        </>
+      ) : !movieList?.length ? (
+        <div className='error-message-box'>There are no movies to display</div>
+      ) : (
+        ((movieQueryParam ?? '').length || isValidMovieCategory) && (
+          <section className='movie-load'>
+            <OutlineButton onClick={handleLoadMore}>Load More</OutlineButton>
+          </section>
+        )
+      )}
     </div>
   )
 }

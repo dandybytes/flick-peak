@@ -1,17 +1,36 @@
 .movie-list-page {
-  --movie-list-headline-color: var(--color-1);
+  --movie-list-alert-color: tomato;
+  --movie-list-border-radius: 2rem;
 
-  min-height: 90vh;
+  min-height: 100vh;
 
   .error-message-box {
-    min-height: 90vh;
+    min-height: 20rem;
     display: grid;
     place-items: center;
+    color: var(--movie-list-alert-color);
   }
 
   .movie-load {
     display: flex;
     justify-content: center;
     padding: 1rem;
+  }
+
+  .movie-category-tabs {
+    width: 100%;
+    padding: 0.5rem 1rem;
+    display: flex;
+    background: transparent;
+    box-shadow: 0 2rem 2rem rgba(0, 0, 0, 0.1);
+  }
+
+  .tab-list {
+    margin: 0 auto;
+    padding: 0;
+    list-style: none;
+    display: inline-flex;
+    flex-shrink: 1;
+    justify-content: center;
   }
 }

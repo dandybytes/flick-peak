@@ -1,4 +1,4 @@
-import {ITMDBMovieData, MovieCategories} from '../../services/tmdbapi'
+import {ITMDBMovieData, MovieCategory} from '../../services/tmdbapi'
 
 export const fetch_movie_page_start = 'fetch_movie_page_start'
 export const fetch_movie_page_success = 'fetch_movie_page_success'
@@ -19,14 +19,14 @@ export interface MovieCategoryData {
 }
 
 export interface MovieState {
-  current: MovieCategoryData
-  popular: MovieCategoryData
-  top: MovieCategoryData
+  ['current']: MovieCategoryData
+  ['popular']: MovieCategoryData
+  ['top']: MovieCategoryData
   search: Record<string, MovieCategoryData>
 }
 
 export interface FetchMoviePageStartPayload {
-  category: MovieCategories
+  category: MovieCategory
 }
 
 interface FetchMoviePageStartAction {
@@ -35,7 +35,7 @@ interface FetchMoviePageStartAction {
 }
 
 export interface FetchMoviePageSuccessPayload {
-  category: MovieCategories
+  category: MovieCategory
   movies: ITMDBMovieData[]
   fetchedPage: number
   totalPages: number
@@ -47,7 +47,7 @@ interface FetchMoviePageSuccessAction {
 }
 
 export interface FetchMoviePageErrorPayload {
-  category: MovieCategories
+  category: MovieCategory
   error: string
 }
 

@@ -1,6 +1,6 @@
-export type MovieCategories = 'popular' | 'now-playing' | 'top-rated'
+export type MovieCategory = 'popular' | 'current' | 'top'
 
-export const movieCategoryList: MovieCategories[] = ['now-playing', 'popular', 'top-rated']
+export const movieCategoryList: MovieCategory[] = ['current', 'popular', 'top']
 
 export interface ITMDBMovieData {
   adult: boolean

@@ -15,7 +15,7 @@ type MovieHeroProps = {
 
 const MovieHero: FC<MovieHeroProps> = ({movieList}): JSX.Element => {
   // filter out movies without images
-  const validMovies = movieList.filter(movie => movie.poster_path && movie.backdrop_path)
+  const validMovies = (movieList ?? []).filter(movie => movie.poster_path && movie.backdrop_path)
 
   return (
     <div className='movie-hero'>

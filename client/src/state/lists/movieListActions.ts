@@ -6,7 +6,7 @@ import {
   fetchPopularMovies,
   fetchTopRatedMovies,
   ITMDBMovieListResponse,
-  MovieCategories,
+  MovieCategory,
   movieCategoryList
 } from '../../services/tmdbapi'
 
@@ -21,23 +21,23 @@ import {
 } from './movieListTypes'
 
 export const fetchMoviePageByCategory =
-  (category: MovieCategories | '', pageNum?: number) => async (dispatch: Dispatch<MovieAction>) => {
-    const validatedCategory = movieCategoryList.includes(category as MovieCategories)
+  (category: MovieCategory | '', pageNum?: number) => async (dispatch: Dispatch<MovieAction>) => {
+    const validatedCategory = movieCategoryList.includes(category as MovieCategory)
       ? category
-      : 'now-playing'
+      : 'current'
 
     try {
       dispatch({
         type: fetch_movie_page_start,
         payload: {
-          category: validatedCategory as MovieCategories
+          category: validatedCategory as MovieCategory
         }
       })
 
-      // fetch 'now-playing' movies by default, if invalid category provided
+      // fetch 'current' movies by default, if invalid category provided
       let fetchMovieFn: (pageNum?: number) => Promise<ITMDBMovieListResponse> =
         fetchNowPlayingMovies
-      if (category === 'top-rated') fetchMovieFn = fetchTopRatedMovies
+      if (category === 'top') fetchMovieFn = fetchTopRatedMovies
       if (category === 'popular') fetchMovieFn = fetchPopularMovies
 
       const response = await fetchMovieFn(pageNum ?? 1)
@@ -48,7 +48,7 @@ export const fetchMoviePageByCategory =
       dispatch({
         type: fetch_movie_page_success,
         payload: {
-          category: validatedCategory as MovieCategories,
+          category: validatedCategory as MovieCategory,
           movies: results,
           fetchedPage: page,
           totalPages: total_pages
@@ -62,7 +62,7 @@ export const fetchMoviePageByCategory =
       dispatch({
         type: fetch_movie_page_error,
         payload: {
-          category: validatedCategory as MovieCategories,
+          category: validatedCategory as MovieCategory,
           error: stringError
         }
       })

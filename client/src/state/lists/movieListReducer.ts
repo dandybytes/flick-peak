@@ -140,7 +140,7 @@ export const movieListReducer = (state = initialState, action: MovieAction): Mov
         newState.search[query] = {
           ...newState.search[query],
           fetching: false,
-          error: `the movie search for keyword "${query}" returned no movies`
+          error: `the movie search for keyword "${query}" returned no results`
         }
 
         return newState
