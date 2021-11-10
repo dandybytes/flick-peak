@@ -1,21 +1,23 @@
-import React, {FC, MutableRefObject, useState, useRef, useEffect} from 'react'
+import {FC, FormEvent, MutableRefObject, useState, useRef, useEffect} from 'react'
+
+import {FaSearch} from 'react-icons/fa'
 
 import './SearchBar.scss'
 
-import MagnifyingGlassIcon from '../icons/MagnifyingGlassIcon'
-
 type SearchBarProps = {
-  query: string
+  query: string | null
   setQuery: (query: string) => void
-  autoFocus?: boolean
   debounceDuration?: number
+  autoFocus?: boolean
+  placeholder: string
 }
 
 const SearchBar: FC<SearchBarProps> = ({
   query,
   setQuery,
+  debounceDuration = 300,
   autoFocus = false,
-  debounceDuration = 300
+  placeholder
 }) => {
   const timeoutRef: MutableRefObject<ReturnType<typeof setTimeout> | null> = useRef(null)
   const searchInputRef = useRef<HTMLInputElement>(null)
@@ -23,28 +25,46 @@ const SearchBar: FC<SearchBarProps> = ({
   const [inputValue, setInputValue] = useState(query)
 
   const updateQuery = () => {
+    if (inputValue == null) return
     const trimmedValue = inputValue.trim()
     // update query only if different from the trimmed value typed in the input field
     if (trimmedValue !== query) setQuery(trimmedValue)
     // if only spaces entered in input field, clear the input
-    if (trimmedValue?.length === 0) setInputValue('')
+    if (trimmedValue?.length === 0 && inputValue !== trimmedValue) setInputValue('')
   }
 
-  const handleSubmit = (event: React.FormEvent): void => {
+  const handleSubmit = (event: FormEvent): void => {
     event.preventDefault()
     updateQuery()
   }
 
-  // if the query has been cancelled, clear the search input value
-  useEffect(() => {
-    if (query === '' && inputValue !== query) setInputValue('')
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [query])
+  /**
+   * when search input focused update the query value from null to empty string, thereby...
+   * ...switching from category route to search route
+   */
+  const handleInputFocus = () => {
+    if (inputValue == null) setInputValue('')
+  }
+
+  /**
+   * when the user leaves the search bar and there is no query value entered...
+   * ... set the query value to null in order to deactivate search and allow movie category display
+   */
+  const handleInputBlur = () => {
+    if (!inputValue?.length) setInputValue(null)
+  }
 
   // focus on the search bar when the component renders for the first time
   useEffect(() => {
     if (autoFocus && searchInputRef?.current != null) searchInputRef.current?.focus()
-  }, [autoFocus])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  // if the query has been cancelled, clear the search input value
+  useEffect(() => {
+    if (query == null && inputValue !== query) setInputValue(null)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [query])
 
   // update query based on input value changes only after debounce interval
   useEffect(() => {
@@ -61,18 +81,22 @@ const SearchBar: FC<SearchBarProps> = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [inputValue])
 
+  const isActive = inputValue != null
+
   return (
     <form className='searchbar-form' onSubmit={handleSubmit}>
       <label className='searchbar-label'>
         <input
           type='search'
-          className='searchbar-input'
-          placeholder='movie title...'
-          value={inputValue}
+          className={'searchbar-input' + (isActive ? ' active' : '')}
+          placeholder={placeholder}
+          value={inputValue ?? ''}
           onChange={event => setInputValue(event.target.value)}
           ref={searchInputRef}
+          onFocus={handleInputFocus}
+          onBlur={handleInputBlur}
         />
-        <MagnifyingGlassIcon />
+        <FaSearch />
       </label>
     </form>
   )
