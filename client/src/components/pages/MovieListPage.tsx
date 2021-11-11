@@ -1,10 +1,6 @@
-import {FC, useCallback, useEffect, useMemo} from 'react'
-import {Redirect, useHistory, useLocation} from 'react-router-dom'
+import {FC, useEffect, useMemo} from 'react'
+import {Redirect, useLocation} from 'react-router-dom'
 import {useDispatch, useSelector} from 'react-redux'
-
-import {AiFillHeart} from 'react-icons/ai'
-import {BsStarFill} from 'react-icons/bs'
-import {RiMovie2Fill} from 'react-icons/ri'
 
 import './MovieListPage.scss'
 
@@ -15,18 +11,15 @@ import PageContainer from './PageContainer'
 import LoadingIndicator from '../common/LoadingIndicator'
 import MovieHero from '../MovieHero'
 import MovieBoard from '../MovieBoard'
-import SearchBar from '../common/SearchBar'
 import {OutlineButton} from '../common/Button'
-import MovieCategoryTab from '../MovieCategoryTab'
 
 const searchKey = 'search'
 
 const MovieListPage: FC = () => {
-  const history = useHistory()
   const location = useLocation()
   const dispatch = useDispatch()
 
-  const {hash, pathname, search} = location
+  const {hash, search} = location
   const queryParamObj = useMemo(() => new URLSearchParams(search), [search])
   const movieQueryParam = queryParamObj.get(searchKey)
 
@@ -72,15 +65,6 @@ const MovieListPage: FC = () => {
     }
   }, [movieQueryParam, categoryFromHash, movieList?.length, isValidMovieCategory, dispatch])
 
-  const setMovieQuery = useCallback(
-    (value: string): void => {
-      queryParamObj.set(searchKey, value)
-      history.push({pathname, search: queryParamObj.toString()})
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [history, pathname, queryParamObj.toString()]
-  )
-
   const handleLoadMore = () => {
     if (lastPageDownloaded >= totalPages) return
 
@@ -97,39 +81,6 @@ const MovieListPage: FC = () => {
   return (
     <PageContainer classNames='movie-list-page'>
       <MovieHero movieList={movieList} />
-
-      <nav className='movie-category-tabs'>
-        <ul className='tab-list' role='tablist'>
-          <MovieCategoryTab
-            label='In Theaters'
-            icon={<RiMovie2Fill />}
-            color='#67bb67'
-            isActiveTab={categoryFromHash === 'current'}
-            onTabClick={() => history.push('#current')}
-          />
-          <MovieCategoryTab
-            label='Popular'
-            icon={<AiFillHeart />}
-            color='#f56868'
-            isActiveTab={categoryFromHash === 'popular'}
-            onTabClick={() => history.push('#popular')}
-          />
-          <MovieCategoryTab
-            label='Top Rated'
-            icon={<BsStarFill />}
-            color='#63a7c7'
-            isActiveTab={categoryFromHash === 'top'}
-            onTabClick={() => history.push('#top')}
-          />
-
-          <SearchBar
-            query={movieQueryParam}
-            setQuery={setMovieQuery}
-            debounceDuration={400}
-            placeholder='movie title...'
-          />
-        </ul>
-      </nav>
 
       {movieList?.length && <MovieBoard movieList={movieList} />}
 

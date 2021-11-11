@@ -20,21 +20,4 @@
     justify-content: center;
     padding: 1rem;
   }
-
-  .movie-category-tabs {
-    width: 100%;
-    padding: 0.5rem 1rem;
-    display: flex;
-    background: transparent;
-    box-shadow: 0 2rem 2rem rgba(var(--movie-list-background-rgb), 0.1);
-  }
-
-  .tab-list {
-    margin: 0 auto;
-    padding: 0;
-    list-style: none;
-    display: inline-flex;
-    flex-shrink: 1;
-    justify-content: center;
-  }
 }

@@ -2,8 +2,9 @@
   --searchbar-background-color: var(--color-1);
   --searchbar-content-color-idle: var(--color-light);
   --searchbar-content-rgb-active: 250, 175, 60;
-  --searchbar-border-radius: var(--movie-list-border-radius);
+  --searchbar-border-radius: 2rem;
 
+  height: 2.5rem;
   display: flex;
 }
 
@@ -37,6 +38,7 @@
     fill: var(--searchbar-content-color-idle);
     transform: translateY(5%);
     transition: all 0.3s ease;
+    cursor: pointer;
   }
 
   &::placeholder {

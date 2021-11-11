@@ -1,52 +1,16 @@
-.navbar {
-  --neutral-color: white;
-  --accent-color: var(--color-2);
-
-  --navlink-border-idle-color: transparent;
-  --navlink-border-active-color: var(--accent-color);
-  --navlink-text-idle-color: var(--neutral-color);
-  --navlink-text-active-color: var(--neutral-color);
-  --navlink-hover-text-color: var(--neutral-color);
-  --navlink-hover-background-color: var(--accent-color);
-
-  display: none;
-}
-
-@media only screen and (min-width: 750px) {
-  .navbar {
-    display: block;
-  }
-
-  .navbar-list {
-    height: 100%;
+  .navigation-tabs {
+    width: 100%;
+    padding: 0.5rem 1rem;
     display: flex;
-    align-items: center;
-    margin: 0 1rem;
+    background: transparent;
+    box-shadow: 0 2rem 2rem rgba(var(--movie-list-background-rgb), 0.1);
+  }
+
+  .tab-list {
+    margin: 0 auto;
+    padding: 0;
     list-style: none;
+    display: inline-flex;
+    flex-shrink: 1;
+    justify-content: center;
   }
-
-  .navbar-list-item {
-    margin: 0;
-  }
-
-  .navbar-list-item-link {
-    border: 2px solid var(--navlink-border-idle-color);
-    border-radius: 0.5rem;
-    padding: 0.25rem 0.5rem;
-    font-size: 0.9rem;
-    text-decoration: none;
-    color: var(--navlink-text-idle-color);
-    opacity: 0.7;
-  }
-
-  .navbar-list-item-link:hover {
-    opacity: 1;
-    color: var(--navlink-hover-text-color);
-    background-color: var(--navlink-hover-background-color);
-  }
-
-  .navbar-list-item-link-active {
-    border: 2px solid var(--navlink-border-active-color);
-    color: var(--navlink-text-active-color);
-  }
-}

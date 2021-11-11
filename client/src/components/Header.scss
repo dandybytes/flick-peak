@@ -1,14 +1,24 @@
 .header {
-  --header-background-color: var(--color-1);
+  --header-background-rgb: var(--rgb-dark);
 
   width: 100vw;
   position: fixed;
   top: 0;
   left: 0;
   display: grid;
-  grid-template-columns: fit-content(250px) fit-content(350px) auto fit-content(4rem);
-  padding: 1.5rem 3rem;
-  background: linear-gradient(to bottom, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0.2) 80%, transparent 100%);
+  grid-template-columns: fit-content(250px) auto fit-content(4rem);
+  padding: 1rem 2rem;
   box-sizing: border-box;
   z-index: 5;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 8rem;
+    background: linear-gradient(to bottom, rgba(var(--header-background-rgb), 1) 0%, rgba(var(--header-background-rgb), 0.2) 80%, transparent 100%);
+    z-index: 0;
+  }
 }

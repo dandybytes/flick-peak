@@ -1,6 +1,8 @@
 import {FC, FormEvent, MutableRefObject, useState, useRef, useEffect} from 'react'
 
 import {FaSearch} from 'react-icons/fa'
+import Tooltip from 'rc-tooltip'
+import 'rc-tooltip/assets/bootstrap.css'
 
 import './SearchBar.scss'
 
@@ -96,7 +98,14 @@ const SearchBar: FC<SearchBarProps> = ({
           onFocus={handleInputFocus}
           onBlur={handleInputBlur}
         />
-        <FaSearch />
+
+        {isActive ? (
+          <FaSearch />
+        ) : (
+          <Tooltip trigger={['hover', 'focus']} overlay={<p>Find movies</p>} placement='bottom'>
+            <FaSearch />
+          </Tooltip>
+        )}
       </label>
     </form>
   )
