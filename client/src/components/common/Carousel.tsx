@@ -20,7 +20,7 @@ const Carousel: FC<CarouselProps> = ({children}) => {
       infinite={true}
       pauseOnHover={true}
       speed={500}
-      slidesToShow={3}
+      slidesToShow={children?.length >= 3 ? 3 : 1}
       slidesToScroll={1}
       swipeToSlide={true}
       accessibility={true}
