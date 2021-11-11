@@ -1,10 +1,11 @@
 .movie-hero {
-  --title-text-color: white;
-  --release-text-color: white;
-  --release-background-color: transparent;
-  --genre-text-color: black;
+  --movie-hero-background-rgb: var(--rgb-dark);
+  --movie-hero-text-rgb: var(--rgb-light);
+  --movie-hero-background-color: rgb(var(--movie-hero-background-rgb));
+  --movie-hero-text-color: rgb(var(--movie-hero-text-rgb));
 
   height: 60vh;
+  color: var(--movie-hero-text-color);
 
   @media (min-width: 768px) {
     height: 80vh;
@@ -26,14 +27,15 @@
   .slide-overlay {
     position: absolute;
     inset: 0;
-    background: linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.5)),
-      linear-gradient(to top right, rgba(0, 0, 0, 0.3), transparent),
+    background: linear-gradient(to bottom, transparent, rgba(var(--movie-hero-background-rgb), 1)),
+      linear-gradient(to top, var(--movie-hero-background-color) 0%, transparent 50%),
+      linear-gradient(to top right, rgba(var(--movie-hero-background-rgb), 0.3), transparent),
       linear-gradient(
         to right,
-        rgba(0, 0, 0, 0.8) 0%,
+        rgba(var(--movie-hero-background-rgb), 0.8) 0%,
         transparent 10%,
         transparent 90%,
-        rgba(0, 0, 0, 0.8) 100%
+        rgba(var(--movie-hero-background-rgb), 0.8) 100%
       );
     z-index: 0;
   }
@@ -59,7 +61,6 @@
 
   .movie-title {
     margin: 0 3rem 0.5rem 0;
-    color: var(--title-text-color);
     text-transform: uppercase;
     font-size: 2.5rem;
     transition: all 0.5s ease;
@@ -69,11 +70,8 @@
 
   .release-date {
     margin: 0 5px;
-    // padding: 0.25rem 1rem;
     border-radius: 3rem;
     font-size: 1rem;
-    color: var(--release-text-color);
-    background: var(--release-background-color);
   }
 
   .slide.animateIn.next,

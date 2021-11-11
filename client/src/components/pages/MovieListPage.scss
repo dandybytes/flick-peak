@@ -1,4 +1,8 @@
 .movie-list-page {
+  --movie-list-background-rgb: var(--rgb-dark);
+  --movie-list-text-rgb: var(--rgb-light);
+  --movie-list-background-color: rgb(var(--movie-list-background-rgb));
+  --movie-list-text-color: rgb(var(--movie-list-text-rgb));
   --movie-list-alert-color: tomato;
   --movie-list-border-radius: 2rem;
 
@@ -22,7 +26,7 @@
     padding: 0.5rem 1rem;
     display: flex;
     background: transparent;
-    box-shadow: 0 2rem 2rem rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2rem 2rem rgba(var(--movie-list-background-rgb), 0.1);
   }
 
   .tab-list {
