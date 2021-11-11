@@ -18,6 +18,7 @@ import {
 } from '../../services/tmdbapi'
 import {formattedCurrency} from '../../utils'
 
+import PageContainer from './PageContainer'
 import LoadingIndicator from '../common/LoadingIndicator'
 import RadialProgressIndicator from '../common/RadialProgressIndicator'
 import FavoriteBubble from '../common/FavoriteBubble'
@@ -90,7 +91,7 @@ const MovieDetailsPage: FC = () => {
   if (!movieID) return <Redirect to={`${location.pathname}#${movieCategoryList[0]}`} />
 
   return (
-    <div className='movie-details-page'>
+    <PageContainer classNames='movie-details-page'>
       <div
         className='movie-details-background'
         style={
@@ -214,7 +215,7 @@ const MovieDetailsPage: FC = () => {
           </>
         )}
       </div>
-    </div>
+    </PageContainer>
   )
 }
 
