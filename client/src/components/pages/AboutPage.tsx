@@ -2,11 +2,13 @@ import React from 'react'
 
 import './AboutPage.scss'
 
+import PageContainer from './PageContainer'
+
 const AboutPage: React.FunctionComponent = () => {
   return (
-    <div className='about-page'>
+    <PageContainer classNames='about-page'>
       <p>about page</p>
-    </div>
+    </PageContainer>
   )
 }
 

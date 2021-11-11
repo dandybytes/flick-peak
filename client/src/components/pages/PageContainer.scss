@@ -1,0 +1,10 @@
+.page {
+  --page-background-rgb: var(--rgb-dark);
+  --page-text-rgb: var(--rgb-light);
+  --page-background-color: rgb(var(--page-background-rgb));
+  --page-text-color: rgb(var(--page-text-rgb));
+
+  min-height: 100vh;
+  text-align: center;
+  color: var(--page-text-color);
+}

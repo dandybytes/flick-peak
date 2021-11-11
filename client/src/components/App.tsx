@@ -1,10 +1,11 @@
 import React from 'react'
-import {BrowserRouter, Switch, Route} from 'react-router-dom'
+import {Route, Switch, useLocation} from 'react-router-dom'
+import {AnimatePresence} from 'framer-motion'
 
 import './App.scss'
 
 import Header from './Header'
-import Footer from './Footer'
+// import Footer from './Footer'
 import HomePage from './pages/HomePage'
 import MovieListPage from './pages/MovieListPage'
 import MovieDetailsPage from './pages/MovieDetailsPage'
@@ -12,24 +13,26 @@ import AboutPage from './pages/AboutPage'
 import NotFoundPage from './pages/NotFoundPage'
 
 const App: React.FunctionComponent = () => {
-  return (
-    <BrowserRouter>
-      <div className='app'>
-        <Header />
+  const location = useLocation()
 
-        <main className='main'>
-          <Switch>
+  return (
+    <div className='app'>
+      <Header />
+
+      <main className='main'>
+        <AnimatePresence exitBeforeEnter>
+          <Switch location={location} key={location.key}>
             <Route path='/' exact component={HomePage} />
-            <Route path='/movies' exact component={MovieListPage} />
-            <Route path='/movie/:movieID' exact component={MovieDetailsPage} />
-            <Route path='/about' exact component={AboutPage} />
+            <Route path='/movies' component={MovieListPage} />
+            <Route path='/movie/:movieID' component={MovieDetailsPage} />
+            <Route path='/about' component={AboutPage} />
             <Route component={NotFoundPage} />
           </Switch>
-        </main>
+        </AnimatePresence>
+      </main>
 
-        <Footer />
-      </div>
-    </BrowserRouter>
+      {/* <Footer /> */}
+    </div>
   )
 }
 

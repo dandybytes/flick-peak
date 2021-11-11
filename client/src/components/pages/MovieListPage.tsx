@@ -11,6 +11,7 @@ import './MovieListPage.scss'
 import {RootState, fetchMoviePageByKeyword, fetchMoviePageByCategory} from '../../state/'
 import {ITMDBMovieData, MovieCategory, movieCategoryList} from '../../services/tmdbapi'
 
+import PageContainer from './PageContainer'
 import LoadingIndicator from '../common/LoadingIndicator'
 import MovieHero from '../MovieHero'
 import MovieBoard from '../MovieBoard'
@@ -69,7 +70,7 @@ const MovieListPage: FC = () => {
     } else if (!movieList?.length && isValidMovieCategory) {
       dispatch(fetchMoviePageByCategory(categoryFromHash as MovieCategory, 1))
     }
-  }, [movieQueryParam, categoryFromHash])
+  }, [movieQueryParam, categoryFromHash, movieList?.length, isValidMovieCategory, dispatch])
 
   const setMovieQuery = useCallback(
     (value: string): void => {
@@ -94,7 +95,7 @@ const MovieListPage: FC = () => {
     return <Redirect to={`${location.pathname}#${movieCategoryList[0]}`} />
 
   return (
-    <div className='movie-list-page'>
+    <PageContainer classNames='movie-list-page'>
       <MovieHero movieList={movieList} />
 
       <nav className='movie-category-tabs'>
@@ -150,7 +151,7 @@ const MovieListPage: FC = () => {
           </section>
         )
       )}
-    </div>
+    </PageContainer>
   )
 }
 
