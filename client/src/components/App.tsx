@@ -1,15 +1,15 @@
 import React from 'react'
-import {Route, Switch, useLocation} from 'react-router-dom'
+import {Redirect, Route, Switch, useLocation} from 'react-router-dom'
 import {AnimatePresence} from 'framer-motion'
 
 import './App.scss'
 
 import Header from './Header'
 // import Footer from './Footer'
-import HomePage from './pages/HomePage'
+// import HomePage from './pages/HomePage'
 import MovieListPage from './pages/MovieListPage'
 import MovieDetailsPage from './pages/MovieDetailsPage'
-import AboutPage from './pages/AboutPage'
+// import AboutPage from './pages/AboutPage'
 import NotFoundPage from './pages/NotFoundPage'
 
 const App: React.FunctionComponent = () => {
@@ -22,10 +22,11 @@ const App: React.FunctionComponent = () => {
       <main className='main'>
         <AnimatePresence exitBeforeEnter>
           <Switch location={location} key={location.key}>
-            <Route path='/' exact component={HomePage} />
+            <Redirect from='/' exact to='/movies' />
+            {/* <Route path='/' exact component={HomePage} /> */}
             <Route path='/movies' component={MovieListPage} />
             <Route path='/movie/:movieID' component={MovieDetailsPage} />
-            <Route path='/about' component={AboutPage} />
+            {/* <Route path='/about' component={AboutPage} /> */}
             <Route component={NotFoundPage} />
           </Switch>
         </AnimatePresence>

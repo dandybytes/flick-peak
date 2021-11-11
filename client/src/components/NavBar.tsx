@@ -1,11 +1,11 @@
 import {FC, useCallback, useMemo} from 'react'
 import {useHistory, useLocation} from 'react-router-dom'
 
-import {AiFillHome} from 'react-icons/ai'
+// import {AiFillHome} from 'react-icons/ai'
 import {RiMovie2Fill} from 'react-icons/ri'
 import {AiFillHeart} from 'react-icons/ai'
 import {BsStarFill} from 'react-icons/bs'
-import {RiInformationFill} from 'react-icons/ri'
+// import {RiInformationFill} from 'react-icons/ri'
 
 import './NavBar.scss'
 
@@ -36,12 +36,12 @@ const NavBar: FC = () => {
   return (
     <nav className='navigation-tabs'>
       <ul className='tab-list' role='tablist'>
-        <NavTab
+        {/* <NavTab
           label='Home'
           icon={<AiFillHome />}
           isActive={pathname === '/'}
           onClick={() => history.push('/')}
-        />
+        /> */}
         <NavTab
           label='In Theaters'
           icon={<RiMovie2Fill />}
@@ -62,12 +62,12 @@ const NavBar: FC = () => {
           isActive={categoryFromHash === 'top'}
           onClick={() => history.push('/movies/#top')}
         />
-        <NavTab
+        {/* <NavTab
           label='About'
           icon={<RiInformationFill />}
           isActive={pathname === '/about'}
           onClick={() => history.push('/about')}
-        />
+        /> */}
 
         <SearchBar
           query={movieQueryParam}
