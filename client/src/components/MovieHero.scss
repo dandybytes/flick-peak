@@ -5,6 +5,8 @@
   --movie-hero-text-color: rgb(var(--movie-hero-text-rgb));
 
   height: 60vh;
+  display: grid;
+  place-items: center;
   color: var(--movie-hero-text-color);
 
   @media (min-width: 768px) {

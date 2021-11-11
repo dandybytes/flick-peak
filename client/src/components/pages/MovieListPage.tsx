@@ -54,9 +54,16 @@ const MovieListPage: FC = () => {
       ? state.lists.search?.[movieQueryParam]?.totalPages
       : state.lists[categoryToShow].totalPages
   )
+  const fallbackMovieList: ITMDBMovieData[] = useSelector(
+    (state: RootState) => state.lists.current.movies
+  )
 
   const errorMessageToDisplay = typeof error === 'string' ? error : JSON.stringify(error)
 
+  /**
+   * if the main movie list is empty, get the first page of movies matching either the search query...
+   * ... or the selected category
+   */
   useEffect(() => {
     if (!movieList?.length && movieQueryParam != null) {
       dispatch(fetchMoviePageByKeyword(movieQueryParam, 1))
@@ -64,6 +71,16 @@ const MovieListPage: FC = () => {
       dispatch(fetchMoviePageByCategory(categoryFromHash as MovieCategory, 1))
     }
   }, [movieQueryParam, categoryFromHash, movieList?.length, isValidMovieCategory, dispatch])
+
+  /**
+   * if no movies could be retrieved for the current query or selected category, make sure...
+   * ... there is at least a fallback list of movie from the "now playing" (i.e. current) category
+   */
+  useEffect(() => {
+    if (!movieList?.length && error?.length && !fallbackMovieList?.length) {
+      dispatch(fetchMoviePageByCategory('current', 1))
+    }
+  }, [error, movieList?.length, fallbackMovieList?.length, dispatch])
 
   const handleLoadMore = () => {
     if (lastPageDownloaded >= totalPages) return
@@ -80,9 +97,9 @@ const MovieListPage: FC = () => {
 
   return (
     <PageContainer classNames='movie-list-page'>
-      <MovieHero movieList={movieList} />
+      <MovieHero movieList={movieList?.length ? movieList : fallbackMovieList} />
 
-      {movieList?.length && <MovieBoard movieList={movieList} />}
+      {!!movieList?.length && <MovieBoard movieList={movieList} />}
 
       {fetching ? (
         <LoadingIndicator />
