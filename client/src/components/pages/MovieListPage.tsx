@@ -5,15 +5,32 @@ import {useDispatch, useSelector} from 'react-redux'
 import './MovieListPage.scss'
 
 import {RootState, fetchMoviePageByKeyword, fetchMoviePageByCategory} from '../../state/'
-import {ITMDBMovieData, MovieCategory, movieCategoryList} from '../../services/tmdbapi'
+import {
+  ITMDBMovieData,
+  MovieCategory,
+  movieCategoryList,
+  url_img_poster
+} from '../../services/tmdbapi'
 
 import PageContainer from './PageContainer'
 import LoadingIndicator from '../common/LoadingIndicator'
 import MovieHero from '../MovieHero'
-import MovieBoard from '../MovieBoard'
+import InfiniteGrid from '../common/infinite-grid/InfiniteGrid'
 import {OutlineButton} from '../common/Button'
+import MovieCard from '../MovieCard'
 
 const searchKey = 'search'
+
+const movieCardRenderer = (movie: ITMDBMovieData) => (
+  <MovieCard
+    key={movie.id}
+    id={movie.id}
+    imgURL={movie.poster_path ? url_img_poster + movie.poster_path : ''}
+    title={movie.title}
+    date={movie.release_date}
+    rating={movie.vote_average}
+  />
+)
 
 const MovieListPage: FC = () => {
   const location = useLocation()
@@ -99,7 +116,17 @@ const MovieListPage: FC = () => {
     <PageContainer classNames='movie-list-page'>
       <MovieHero movieList={movieList?.length ? movieList : fallbackMovieList} />
 
-      {!!movieList?.length && <MovieBoard movieList={movieList} />}
+      {!!movieList?.length && (
+        <InfiniteGrid
+          itemList={movieList}
+          itemWidth={352}
+          itemHeight={528}
+          itemRenderer={movieCardRenderer}
+          moreItemsAvailable={lastPageDownloaded < totalPages}
+          isFetching={fetching}
+          fetchItems={handleLoadMore}
+        />
+      )}
 
       {fetching ? (
         <LoadingIndicator />
