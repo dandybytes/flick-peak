@@ -12,6 +12,8 @@ import {
 } from './InfiniteGrid.utils'
 
 type InfiniteGridProps<I> = {
+  parentWidth: number
+  parentHeight: number
   itemList: I[]
   itemHeight: number
   itemWidth: number
@@ -22,6 +24,8 @@ type InfiniteGridProps<I> = {
 }
 
 const InfiniteGrid: FC<InfiniteGridProps<any>> = ({
+  parentWidth,
+  parentHeight,
   itemList,
   itemHeight,
   itemWidth,
@@ -32,19 +36,14 @@ const InfiniteGrid: FC<InfiniteGridProps<any>> = ({
 }) => {
   const infiniteLoaderRef = useRef(null)
 
-  /**
-   * TODO: compute width & height based on parent element sizes instead of window sizes
-   */
-  const listContainerWidth = window.innerWidth
-  const listContainerHeight = window.innerHeight
-  const rowCount = getNumberRows(listContainerWidth, itemWidth, itemList.length, moreItemsAvailable)
+  const rowCount = getNumberRows(parentWidth, itemWidth, itemList.length, moreItemsAvailable)
 
   const loadMoreItems = () => {
     if (!isFetching) fetchItems()
   }
 
-  const renderInfiniteGridRow = ({index, style}: {index: number; style: CSSProperties}) => {
-    const numItemsPerRow = getNumberItemsPerRow(listContainerWidth, itemWidth)
+  const renderGridRow = ({index, style}: {index: number; style: CSSProperties}) => {
+    const numItemsPerRow = getNumberItemsPerRow(parentWidth, itemWidth)
     const itemIndexesCurrentRow = getIndexesItemsInCurrentRow(
       index,
       numItemsPerRow,
@@ -64,7 +63,7 @@ const InfiniteGrid: FC<InfiniteGridProps<any>> = ({
       ref={infiniteLoaderRef}
       itemCount={rowCount}
       isItemLoaded={index => {
-        const numItemsPerRow = getNumberItemsPerRow(listContainerWidth, itemWidth)
+        const numItemsPerRow = getNumberItemsPerRow(parentWidth, itemWidth)
         const allItemsLoaded =
           getIndexesItemsInCurrentRow(index, numItemsPerRow, itemList.length).length > 0
 
@@ -76,13 +75,13 @@ const InfiniteGrid: FC<InfiniteGridProps<any>> = ({
         <FixedSizeList
           className='infinite-list'
           ref={ref}
-          height={listContainerHeight}
-          width={listContainerWidth}
+          height={parentHeight}
+          width={parentWidth}
           itemCount={rowCount}
           itemSize={itemHeight}
           onItemsRendered={onItemsRendered}
         >
-          {renderInfiniteGridRow}
+          {renderGridRow}
         </FixedSizeList>
       )}
     </InfiniteLoader>

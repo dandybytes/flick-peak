@@ -1,4 +1,4 @@
-import {FunctionComponent, ReactNode} from 'react'
+import {forwardRef, ReactNode} from 'react'
 import {motion} from 'framer-motion'
 
 import './PageContainer.scss'
@@ -10,9 +10,10 @@ type PCProps = {
   classNames?: string
 }
 
-const PageContainer: FunctionComponent<PCProps> = ({children, classNames}) => {
+const PageContainer = forwardRef<HTMLDivElement, PCProps>(({children, classNames}, ref) => {
   return (
     <motion.div
+      ref={ref}
       className={`page ${classNames ? classNames : ''}`}
       variants={pageContainerVariants}
       initial='before'
@@ -22,6 +23,6 @@ const PageContainer: FunctionComponent<PCProps> = ({children, classNames}) => {
       {children}
     </motion.div>
   )
-}
+})
 
 export default PageContainer

@@ -1,4 +1,4 @@
-import {FC, useEffect, useMemo} from 'react'
+import {FC, useEffect, useMemo, useRef} from 'react'
 import {Redirect, useLocation} from 'react-router-dom'
 import {useDispatch, useSelector} from 'react-redux'
 
@@ -11,6 +11,7 @@ import {
   movieCategoryList,
   url_img_poster
 } from '../../services/tmdbapi'
+import {useElementSize} from '../../hooks'
 
 import PageContainer from './PageContainer'
 import LoadingIndicator from '../common/LoadingIndicator'
@@ -34,6 +35,9 @@ const movieCardRenderer = (movie: ITMDBMovieData) => (
 const MovieListPage: FC = () => {
   const location = useLocation()
   const dispatch = useDispatch()
+
+  const pageContainerRef = useRef<HTMLDivElement>(null)
+  const pageContainerSize = useElementSize(pageContainerRef, 1000)
 
   const {hash, search} = location
   const queryParamObj = useMemo(() => new URLSearchParams(search), [search])
@@ -112,11 +116,13 @@ const MovieListPage: FC = () => {
     return <Redirect to={`${location.pathname}#${movieCategoryList[0]}`} />
 
   return (
-    <PageContainer classNames='movie-list-page'>
+    <PageContainer classNames='movie-list-page' ref={pageContainerRef}>
       <MovieHero movieList={movieList?.length ? movieList : fallbackMovieList} />
 
-      {!!movieList?.length && (
+      {pageContainerRef?.current != null && !!movieList?.length && (
         <InfiniteGrid
+          parentWidth={pageContainerSize?.width ?? 0}
+          parentHeight={pageContainerSize?.width ?? 0}
           itemList={movieList}
           itemWidth={352}
           itemHeight={512}
