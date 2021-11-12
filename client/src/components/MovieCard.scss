@@ -6,8 +6,8 @@
   --movie-card-padding: 1rem;
 
   position: relative;
-  height: 33rem;
-  width: 22rem;
+  height: 512px;
+  width: 352px;
   box-sizing: border-box;
   padding: var(--movie-card-padding);
 
@@ -46,6 +46,12 @@
       transform: scale(0.95);
       opacity: 0.9;
     }
+  }
+
+  &-image {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
   }
 }
 

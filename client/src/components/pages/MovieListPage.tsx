@@ -120,7 +120,7 @@ const MovieListPage: FC = () => {
         <InfiniteGrid
           itemList={movieList}
           itemWidth={352}
-          itemHeight={528}
+          itemHeight={512}
           itemRenderer={movieCardRenderer}
           moreItemsAvailable={lastPageDownloaded < totalPages}
           isFetching={fetching}

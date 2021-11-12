@@ -1,4 +1,4 @@
-import React, {FC} from 'react'
+import {FC, memo} from 'react'
 import {Link} from 'react-router-dom'
 
 import './MovieCard.scss'
@@ -13,17 +13,20 @@ type MovieCardProps = {
   rating: number
 }
 
-const MovieCard: FC<MovieCardProps> = ({id, imgURL, title, date, rating}) => {
+const MovieCard: FC<MovieCardProps> = memo(({id, imgURL, title, date, rating}) => {
   const year = new Date(date).getFullYear()
 
   return (
     <div className='movie-card'>
-      <Link
-        to={`/movie/${id}`}
-        className='movie-card-content'
-        style={imgURL ? {backgroundImage: `url(${imgURL})`} : undefined}
-      >
-        {!imgURL?.length && (
+      <Link to={`/movie/${id}`} className='movie-card-content'>
+        {imgURL?.length ? (
+          <img
+            src={imgURL} // prettier-ignore
+            className='movie-card-image'
+            loading='lazy'
+            alt='movie thumbnail'
+          />
+        ) : (
           <div className='movie-card-placeholder'>
             <p>{title?.length > 0 ? title : `movie ID ${id}`}</p>
           </div>
@@ -48,6 +51,6 @@ const MovieCard: FC<MovieCardProps> = ({id, imgURL, title, date, rating}) => {
       </Link>
     </div>
   )
-}
+})
 
 export default MovieCard
