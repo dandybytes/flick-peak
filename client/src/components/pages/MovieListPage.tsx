@@ -16,7 +16,6 @@ import PageContainer from './PageContainer'
 import LoadingIndicator from '../common/LoadingIndicator'
 import MovieHero from '../MovieHero'
 import InfiniteGrid from '../common/infinite-grid/InfiniteGrid'
-import {OutlineButton} from '../common/Button'
 import MovieCard from '../MovieCard'
 
 const searchKey = 'search'
@@ -131,21 +130,10 @@ const MovieListPage: FC = () => {
       {fetching ? (
         <LoadingIndicator />
       ) : errorMessageToDisplay?.length ? (
-        <>
-          <div className='error-message-box'>{errorMessageToDisplay}</div>
-          <section className='movie-load'>
-            <OutlineButton onClick={handleLoadMore}>Try Again</OutlineButton>
-          </section>
-        </>
+        <div className='error-message-box'>{errorMessageToDisplay}</div>
       ) : !movieList?.length ? (
         <div className='error-message-box'>There are no movies to display</div>
-      ) : (
-        ((movieQueryParam ?? '').length || isValidMovieCategory) && (
-          <section className='movie-load'>
-            <OutlineButton onClick={handleLoadMore}>Load More</OutlineButton>
-          </section>
-        )
-      )}
+      ) : null}
     </PageContainer>
   )
 }
