@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,900");
+@import url('https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,900');
 // @import url("https://fonts.googleapis.com/css?family=Oswald:100,200,300,400,500,600,700,900");
 // @import url("https://fonts.googleapis.com/css?family=Lato:100,200,300,400,500,600,700,900");
 
@@ -62,6 +62,25 @@ a {
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+}
+
+::-webkit-scrollbar-track {
+  background-color: var(--color-dark);
+}
+
+::-webkit-scrollbar {
+  width: 0.25rem;
+  background-color: rgba(var(--rgb-primary), 0.2);
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 0.25rem;
+  background-color: rgba(var(--rgb-primary), 0.2);
+}
+
+::-webkit-scrollbar-thumb:hover,
+::-webkit-scrollbar-thumb:active {
+  background-color: rgba(var(--rgb-primary), 0.8);
 }
 
 /* disable screen rotation */
