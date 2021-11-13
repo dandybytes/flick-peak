@@ -55,6 +55,17 @@
   }
 }
 
+.movie-image-load-indicator {
+  position: absolute;
+  inset: 0;
+  opacity: 1;
+  transition: opacity 0.2s ease-out;
+
+  &.hidden {
+    opacity: 0;
+  }
+}
+
 .movie-card-placeholder {
   box-sizing: border-box;
   width: 100%;

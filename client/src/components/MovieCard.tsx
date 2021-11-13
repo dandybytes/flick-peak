@@ -1,9 +1,10 @@
-import {FC, memo} from 'react'
+import {FC, memo, useState} from 'react'
 import {Link} from 'react-router-dom'
 
 import './MovieCard.scss'
 
 import RadialProgressIndicator from './common/RadialProgressIndicator'
+import LoadingIndicator from './common/LoadingIndicator'
 
 type MovieCardProps = {
   id: number
@@ -14,18 +15,26 @@ type MovieCardProps = {
 }
 
 const MovieCard: FC<MovieCardProps> = memo(({id, imgURL, title, date, rating}) => {
+  const [isImageLoaded, setIsImageLoaded] = useState(false)
+
   const year = new Date(date).getFullYear()
 
   return (
     <div className='movie-card'>
       <Link to={`/movie/${id}`} className='movie-card-content'>
         {imgURL?.length ? (
-          <img
-            src={imgURL} // prettier-ignore
-            className='movie-card-image'
-            loading='lazy'
-            alt='movie thumbnail'
-          />
+          <>
+            <img
+              src={imgURL}
+              className={`movie-card-image ${isImageLoaded ? ' loaded' : ''}`}
+              loading='lazy'
+              alt={`${title} movie poster`}
+              onLoad={() => setIsImageLoaded(true)}
+            />
+            <div className={`movie-image-load-indicator ${isImageLoaded ? ' hidden' : ''}`}>
+              <LoadingIndicator />
+            </div>
+          </>
         ) : (
           <div className='movie-card-placeholder'>
             <p>{title?.length > 0 ? title : `movie ID ${id}`}</p>
