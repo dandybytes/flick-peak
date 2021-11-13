@@ -1,5 +1,3 @@
-import React from 'react'
-
 import cinemaIcon from '../assets/img/cinema.png'
 
 import './FilmStrip.scss'
@@ -13,19 +11,19 @@ const FilmStrip = () => {
           <div className='filmstrip-frame'>
             <img src={cinemaIcon} alt='cinema logo' />
           </div>
-          <div className='filmstrip-frame blank-frame'></div>
+          <div className='filmstrip-frame'></div>
           <div className='filmstrip-frame'>Flick</div>
-          <div className='filmstrip-frame blank-frame'></div>
-          <div className='filmstrip-frame'>Peek</div>
-          <div className='filmstrip-frame blank-frame'></div>
+          <div className='filmstrip-frame'></div>
+          <div className='filmstrip-frame'>Pick</div>
+          <div className='filmstrip-frame'></div>
           <div className='filmstrip-frame'>
             <img src={cinemaIcon} alt='cinema logo' />
           </div>
-          <div className='filmstrip-frame blank-frame'></div>
+          <div className='filmstrip-frame'></div>
           <div className='filmstrip-frame'>Flick</div>
-          <div className='filmstrip-frame blank-frame'></div>
-          <div className='filmstrip-frame'>Peek</div>
-          <div className='filmstrip-frame blank-frame'></div>
+          <div className='filmstrip-frame'></div>
+          <div className='filmstrip-frame'>Pick</div>
+          <div className='filmstrip-frame'></div>
         </div>
         <div className='filmstrip-perforations' />
       </div>

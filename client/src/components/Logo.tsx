@@ -1,17 +1,15 @@
-import React from 'react'
+import {FunctionComponent} from 'react'
 import {Link} from 'react-router-dom'
 
 import './Logo.scss'
 
 import FilmStrip from './FilmStrip'
 
-const Logo: React.FunctionComponent = () => {
+const Logo: FunctionComponent = () => {
   return (
-    <div className='logo'>
-      <Link className='logo-link' to='/movies'>
-        <FilmStrip />
-      </Link>
-    </div>
+    <Link className='logo' to='/'>
+      <FilmStrip />
+    </Link>
   )
 }
 
