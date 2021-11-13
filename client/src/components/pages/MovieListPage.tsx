@@ -36,8 +36,8 @@ const MovieListPage: FC = () => {
   const location = useLocation()
   const dispatch = useDispatch()
 
-  const pageContainerRef = useRef<HTMLDivElement>(null)
-  const pageContainerSize = useElementSize(pageContainerRef, 1000)
+  const movieListContainerRef = useRef<HTMLDivElement>(null)
+  const movieListContainerSize = useElementSize(movieListContainerRef, 1000)
 
   const {hash, search} = location
   const queryParamObj = useMemo(() => new URLSearchParams(search), [search])
@@ -116,22 +116,24 @@ const MovieListPage: FC = () => {
     return <Redirect to={`${location.pathname}#${movieCategoryList[0]}`} />
 
   return (
-    <PageContainer classNames='movie-list-page' ref={pageContainerRef}>
+    <PageContainer classNames='movie-list-page'>
       <MovieHero movieList={movieList?.length ? movieList : fallbackMovieList} />
 
-      {pageContainerRef?.current != null && !!movieList?.length && (
-        <InfiniteGrid
-          parentWidth={pageContainerSize?.width ?? 0}
-          parentHeight={pageContainerSize?.width ?? 0}
-          itemList={movieList}
-          itemWidth={352}
-          itemHeight={512}
-          itemRenderer={movieCardRenderer}
-          moreItemsAvailable={lastPageDownloaded < totalPages}
-          isFetching={fetching}
-          fetchItems={handleLoadMore}
-        />
-      )}
+      <section className='movie-list' ref={movieListContainerRef}>
+        {!!movieList?.length && (
+          <InfiniteGrid
+            parentWidth={movieListContainerSize?.width ?? 0}
+            parentHeight={movieListContainerSize?.width ?? 0}
+            itemList={movieList}
+            itemWidth={352}
+            itemHeight={512}
+            itemRenderer={movieCardRenderer}
+            moreItemsAvailable={lastPageDownloaded < totalPages}
+            isFetching={fetching}
+            fetchItems={handleLoadMore}
+          />
+        )}
+      </section>
 
       {fetching ? (
         <LoadingIndicator />

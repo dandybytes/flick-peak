@@ -6,7 +6,18 @@
   --movie-list-alert-color: tomato;
   --movie-list-border-radius: 2rem;
 
-  min-height: 100vh;
+  overflow-y: auto;
+  scroll-snap-type: y mandatory;
+
+  & .movie-hero {
+    scroll-snap-align: start;
+  }
+
+  & .movie-list {
+    scroll-snap-align: start;
+    margin-top: -4rem;
+    padding-top: 4rem;
+  }
 
   .error-message-box {
     min-height: 20rem;

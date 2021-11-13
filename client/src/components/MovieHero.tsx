@@ -19,7 +19,7 @@ const MovieHero: FC<MovieHeroProps> = ({movieList}): JSX.Element => {
   const validMovies = (movieList ?? []).filter(movie => movie.poster_path && movie.backdrop_path)
 
   return (
-    <div className='movie-hero'>
+    <section className='movie-hero'>
       {!movieList?.length ? (
         <LoadingIndicator />
       ) : (
@@ -50,7 +50,7 @@ const MovieHero: FC<MovieHeroProps> = ({movieList}): JSX.Element => {
           })}
         </Slider>
       )}
-    </div>
+    </section>
   )
 }
 

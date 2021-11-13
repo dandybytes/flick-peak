@@ -19,18 +19,16 @@ const App: React.FunctionComponent = () => {
     <div className='app'>
       <Header />
 
-      <main className='main'>
-        <AnimatePresence exitBeforeEnter>
-          <Switch location={location} key={location.key}>
-            <Redirect from='/' exact to='/movies' />
-            {/* <Route path='/' exact component={HomePage} /> */}
-            <Route path='/movies' component={MovieListPage} />
-            <Route path='/movie/:movieID' component={MovieDetailsPage} />
-            {/* <Route path='/about' component={AboutPage} /> */}
-            <Route component={NotFoundPage} />
-          </Switch>
-        </AnimatePresence>
-      </main>
+      <AnimatePresence exitBeforeEnter>
+        <Switch location={location} key={location.key}>
+          <Redirect from='/' exact to='/movies' />
+          {/* <Route path='/' exact component={HomePage} /> */}
+          <Route path='/movies' component={MovieListPage} />
+          <Route path='/movie/:movieID' component={MovieDetailsPage} />
+          {/* <Route path='/about' component={AboutPage} /> */}
+          <Route component={NotFoundPage} />
+        </Switch>
+      </AnimatePresence>
 
       {/* <Footer /> */}
     </div>
