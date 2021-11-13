@@ -31,9 +31,9 @@ const url_details_end = url_suffix_key + url_suffix_lang
 // image url:
 const url_img_base = 'https://image.tmdb.org/t/p/'
 // "backdrop_sizes": ["w300", "w780", "w1280", "original"]
-const url_img_backdrop_size = 'w1280'
+const url_img_backdrop_size = 'original'
 // "poster_sizes": ["w92", "w154", "w185", "w342", "w500", "w780", "original"]
-const url_img_poster_size = 'w500'
+const url_img_poster_size = 'w342'
 const url_img_backdrop = url_img_base + url_img_backdrop_size
 const url_img_poster = url_img_base + url_img_poster_size
 
