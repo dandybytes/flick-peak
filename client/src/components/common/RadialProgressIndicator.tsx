@@ -1,4 +1,4 @@
-import React, {FC} from 'react'
+import {FC} from 'react'
 
 import './RadialProgressIndicator.scss'
 
@@ -6,8 +6,8 @@ type RPIProps = {
   percentage: number
   radius: number
   strokeWidth: number
-  textColor: string
-  strokeColor: string
+  textColor?: string
+  strokeColor?: string
   backgroundColor?: string
   trackColor?: string
   fontSize?: number
@@ -20,7 +20,7 @@ const RadialProgressIndicator: FC<RPIProps> = ({
   textColor,
   strokeWidth,
   strokeColor,
-  trackColor = 'rgba(0, 0, 0, 0.1)',
+  trackColor,
   fontSize
 }) => {
   const internalRadius = radius - strokeWidth / 3
@@ -36,7 +36,6 @@ const RadialProgressIndicator: FC<RPIProps> = ({
       <svg height={2 * radius} width={2 * radius}>
         <circle
           className='progress-indicator-track'
-          stroke={trackColor}
           fill='transparent'
           strokeWidth={strokeWidth}
           cy={radius}
@@ -45,10 +44,10 @@ const RadialProgressIndicator: FC<RPIProps> = ({
           // breaks the circle stroke into dashes and gaps
           strokeDasharray={`${circumference} ${circumference}`}
           strokeLinecap='round'
+          style={trackColor ? {stroke: trackColor} : {}}
         />
         <circle
           className='progress-indicator-line'
-          stroke={strokeColor}
           fill='transparent'
           strokeWidth={strokeWidth}
           cy={radius}
@@ -58,12 +57,16 @@ const RadialProgressIndicator: FC<RPIProps> = ({
           // shifts the stroke dashes by certain amount
           strokeDashoffset={Math.floor(circumference * (1 - percentage))}
           strokeLinecap='round'
+          style={strokeColor ? {stroke: strokeColor} : {}}
         />
       </svg>
 
       <p
         className={'progress-indicator-text'}
-        style={{fontSize: fontSize ? fontSize : 0.65 * radius, color: textColor}}
+        style={{
+          fontSize: fontSize ? fontSize : 0.65 * radius,
+          color: textColor ? textColor : undefined
+        }}
       >
         <span>
           {Math.round(percentage * 100)}

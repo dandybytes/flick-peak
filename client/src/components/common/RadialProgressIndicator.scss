@@ -1,5 +1,17 @@
 .progress-indicator {
-  --progress-indicator-background-color: var(--color-dark);
+  --rgb-black: 0, 0, 0;
+  --circular-indicator-rgb-dark: var(--rgb-dark, --rgb-black);
+  --circular-indicator-color-dark: rgb(var(--circular-indicator-rgb-dark));
+  --rgb-white: 255, 255, 255;
+  --circular-indicator-rgb-light: var(--rgb-light, --rgb-white);
+  --circular-indicator-color-light: rgb(var(--circular-indicator-rgb-light));
+  --circular-indicator-rgb-primary: var(--rgb-primary, --rgb-black);
+  --circular-indicator-color-primary: rgb(var(--circular-indicator-rgb-primary));
+
+  --circular-indicator-background-color: rgba(var(--circular-indicator-rgb-dark), 0.1);
+  --circular-indicator-progress-track-color: rgba(var(--circular-indicator-rgb-light), 0.05);
+  --circular-indicator-progress-line-color: var(--circular-indicator-color-primary, --circular-indicator-color-light);
+  --circular-indicator-text-color: var(--circular-indicator-color-light);
 
   position: relative;
   display: flex;
@@ -11,6 +23,19 @@
   }
 }
 
+.progress-indicator-background {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background-color: var(--circular-indicator-background-color);
+  transform: scale(1.2);
+  z-index: 1;
+}
+
+.progress-indicator-track {
+  stroke: var(--circular-indicator-progress-track-color);
+}
+
 .progress-indicator-line {
   transform-origin: center;
   /* scaleX(-1) flips the shape (yield mirror image) */
@@ -18,15 +43,7 @@
   // transform: scaleX(-1) rotate(-90deg);
   transform: rotate(-90deg);
   transition: stroke-dashoffset 0.3s;
-}
-
-.progress-indicator-background {
-  position: absolute;
-  inset: 0;
-  border-radius: 50%;
-  background-color: var(--progress-indicator-background-color);
-  transform: scale(1.2);
-  z-index: 1;
+  stroke: var(--circular-indicator-progress-line-color);
 }
 
 .progress-indicator-text {
@@ -34,9 +51,11 @@
   inset: 0;
   display: grid;
   place-items: center;
+  transform: translate(1px, -1px);
   z-index: 1;
+  color: var(--circular-indicator-text-color);
 
   & sup {
-    font-size: 65%;
+    font-size: 70%;
   }
 }
