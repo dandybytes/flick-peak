@@ -23,7 +23,7 @@ import LoadingIndicator from '../common/LoadingIndicator'
 import RadialProgressIndicator from '../common/RadialProgressIndicator'
 import FavoriteBubble from '../common/FavoriteBubble'
 import Carousel from '../common/Carousel'
-import LandscapeCard from '../LandscapeCard'
+import MovieCard from '../MovieCard'
 
 type PageParams = {
   movieID?: string
@@ -198,7 +198,7 @@ const MovieDetailsPage: FC = () => {
 
             <Carousel>
               {(recommendationData ?? []).map(recommendedMovie => (
-                <LandscapeCard
+                <MovieCard
                   key={recommendedMovie.id}
                   id={recommendedMovie.id}
                   imgURL={
@@ -209,6 +209,7 @@ const MovieDetailsPage: FC = () => {
                   title={recommendedMovie.title}
                   date={recommendedMovie.release_date}
                   rating={recommendedMovie.vote_average}
+                  orientation='landscape'
                 />
               ))}
             </Carousel>
