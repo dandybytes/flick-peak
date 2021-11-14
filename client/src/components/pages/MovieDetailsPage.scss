@@ -8,6 +8,7 @@
   position: relative;
   min-height: 100vh;
   background-color: var(--movie-details-background-color);
+  overflow-x: hidden;
 
   .error-message-box {
     min-height: 20rem;
@@ -21,6 +22,7 @@
 .movie-details-background {
   position: relative;
   height: 65vh;
+  width: 100%;
   background-size: cover;
   background-position: center;
 
@@ -35,6 +37,7 @@
 
 .movie-details-container {
   position: relative;
+  width: 100%;
   max-width: 75rem;
   margin: -30vh auto 2rem;
   display: grid;
@@ -135,6 +138,7 @@
 }
 
 .movie-recommendations {
+  width: 100%;
   max-width: 75rem;
   margin: 0 auto 2rem;
 }
@@ -146,8 +150,8 @@
   font-size: 1.5rem;
 }
 
-@media only screen and (max-width: 960px) {
-}
+// @media only screen and (max-width: 960px) {
+// }
 
-@media only screen and (max-width: 650px) {
-}
+// @media only screen and (max-width: 650px) {
+// }
