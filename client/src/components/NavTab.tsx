@@ -21,19 +21,19 @@ const NavTab: FunctionComponent<NavTabProps> = ({label, icon, color, isActive, o
   return (
     <li
       className={'tab' + (isActive ? ' active' : '')}
-      role='presentation'
+      tabIndex={0}
       style={{width: tabWidth}}
       onClick={onClick}
     >
       <span className='tab-background' style={isActive && color ? {background: color} : {}} />
 
       {isActive ? (
-        <span className='tab-icon' style={isActive && color ? {fill: color} : {}}>
+        <span className='tab-icon' style={color ? {fill: color} : {}}>
           {icon}
         </span>
       ) : (
         <Tooltip trigger={['hover', 'focus']} overlay={<p>{label}</p>} placement='bottom'>
-          <span className='tab-icon' style={isActive && color ? {fill: color} : {}}>
+          <span className='tab-icon' style={color ? {fill: color} : {}}>
             {icon}
           </span>
         </Tooltip>

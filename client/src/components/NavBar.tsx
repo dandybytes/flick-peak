@@ -2,6 +2,7 @@ import {FC, useCallback, useMemo} from 'react'
 import {useHistory, useLocation} from 'react-router-dom'
 
 // import {AiFillHome} from 'react-icons/ai'
+import {AiFillLike} from 'react-icons/ai'
 import {RiMovie2Fill} from 'react-icons/ri'
 import {AiFillHeart} from 'react-icons/ai'
 import {BsStarFill} from 'react-icons/bs'
@@ -51,16 +52,23 @@ const NavBar: FC = () => {
         />
         <NavTab
           label='Popular'
-          icon={<AiFillHeart />}
-          color='#f56868'
+          icon={<AiFillLike />}
           isActive={categoryFromHash === 'popular'}
           onClick={() => history.push('/movies/#popular')}
         />
         <NavTab
           label='Top Rated'
           icon={<BsStarFill />}
+          color='#faaf3c'
           isActive={categoryFromHash === 'top'}
           onClick={() => history.push('/movies/#top')}
+        />
+        <NavTab
+          label='Favorite'
+          icon={<AiFillHeart />}
+          color='#f56868'
+          isActive={categoryFromHash === 'favorite'}
+          onClick={() => history.push('/movies/#favorite')}
         />
         {/* <NavTab
           label='About'

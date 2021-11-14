@@ -1,11 +1,15 @@
 .searchbar-form {
-  --searchbar-background-color: var(--color-1);
   --searchbar-content-color-idle: var(--color-light);
-  --searchbar-content-rgb-active: 250, 175, 60;
+  --searchbar-content-rgb-active: var(--rgb-primary);
+  --searchbar-content-color-active: var(--color-primary);
   --searchbar-border-radius: 2rem;
 
   height: 2.5rem;
   display: flex;
+
+  &:hover svg {
+    fill: var(--searchbar-content-color-active);
+  }
 }
 
 .searchbar-label {
@@ -59,13 +63,13 @@
     width: calc(1rem + 1.5rem + 1rem + 18rem + 1rem);
     padding: 0 1rem 0 calc(1rem + 1.5rem + 1rem);
     outline: none;
-    color: rgb(var(--searchbar-content-rgb-active));
+    color: var(--searchbar-content-color-active);
     background-color: rgba(var(--searchbar-content-rgb-active), 0.2);
 
     &::placeholder {
       width: auto;
       margin: 0 auto;
-      color: rgb(var(--searchbar-content-rgb-active));
+      color: var(--searchbar-content-color-active);
       opacity: 1;
     }
 
@@ -79,7 +83,7 @@
     }
 
     & + svg {
-      fill: rgb(var(--searchbar-content-rgb-active));
+      fill: var(--searchbar-content-color-active);
     }
   }
 }
