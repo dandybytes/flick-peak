@@ -1,9 +1,12 @@
-import React from 'react'
+import {FunctionComponent, useEffect, useState} from 'react'
 import {Redirect, Route, Switch, useLocation} from 'react-router-dom'
 import {AnimatePresence} from 'framer-motion'
 
 import './App.scss'
 
+import {isMobileDevice, isSmallScreen} from '../utils'
+
+import Modal from './common/Modal'
 import Header from './Header'
 // import Footer from './Footer'
 // import HomePage from './pages/HomePage'
@@ -12,8 +15,14 @@ import MovieDetailsPage from './pages/MovieDetailsPage'
 // import AboutPage from './pages/AboutPage'
 import NotFoundPage from './pages/NotFoundPage'
 
-const App: React.FunctionComponent = () => {
+const App: FunctionComponent = () => {
   const location = useLocation()
+
+  const [showModal, setShowModal] = useState(false)
+
+  useEffect(() => {
+    if (isMobileDevice() || isSmallScreen()) setShowModal(true)
+  }, [])
 
   return (
     <div className='app'>
@@ -31,6 +40,26 @@ const App: React.FunctionComponent = () => {
       </AnimatePresence>
 
       {/* <Footer /> */}
+
+      {showModal && (
+        <Modal hideModal={() => setShowModal(false)} status='warning'>
+          <div
+            style={{
+              margin: '0 0 1em',
+              fontSize: '4vmin',
+              fontWeight: 500,
+              letterSpacing: 0,
+              textTransform: 'none',
+              textAlign: 'justify'
+            }}
+          >
+            <p>
+              This site doesn't yet support mobile devices. Please give us a try on a computer while
+              our team works hard to provide you with seamless user experience on mobile devices!
+            </p>
+          </div>
+        </Modal>
+      )}
     </div>
   )
 }
