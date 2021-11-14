@@ -1,0 +1,66 @@
+.modal-backdrop {
+  --rgb-black: 0, 0, 0;
+  --color-black: rgb(0, 0, 0);
+  --rgb-white: 255, 255, 255;
+  --color-white: rgb(255, 255, 255);
+  --modal-backdrop-color: rgba(var(--rgb-dark, --rgb-black), 0.9);
+  --modal-content-background-color: var(--color-light, --color-white);
+  --modal-content-text-color: var(--color-dark, --color-black);
+  --modal-close-button-color: var(--color-dark, --color-black);
+  --modal-title-color: var(--color-primary, --color-dark, --color-black);
+  --modal-accent-color: var(--color-accent, tomato);
+
+  position: fixed;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  z-index: 100;
+  width: 100vw;
+  height: 100vh;
+  background-color: var(--modal-backdrop-color);
+
+  &.warning {
+    --modal-content-background-color: var(--color-secondary, --color-light, --color-white);
+  }
+
+  &.alert {
+    --modal-content-background-color: var(--modal-accent-color, --color-light, --color-white);
+  }
+}
+
+.modal-backdrop,
+.modal-content {
+  opacity: 1;
+  visibility: visible;
+}
+
+.modal-content {
+  position: fixed;
+  height: clamp(260px, 80vw, 900px);
+  width: clamp(260px, 80vw, 900px);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  padding: 2.5rem;
+  background-color: var(--modal-content-background-color);
+  color: var(--modal-content-text-color);
+  font-size: 1vmin;
+  font-weight: 400;
+  letter-spacing: 0;
+}
+
+.modal-close {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  color: var(--modal-close-button-color);
+  font-size: 2rem;
+  line-height: 1.5rem;
+}
+
+.modal-title {
+  margin-bottom: 1em;
+  color: var(--modal-title-color);
+  font-weight: 400;
+  text-transform: none;
+}
