@@ -5,6 +5,7 @@ import './MovieCard.scss'
 
 import RadialProgressIndicator from './common/RadialProgressIndicator'
 import LoadingIndicator from './common/LoadingIndicator'
+import FavoriteBubble from './common/FavoriteBubble'
 
 type MovieCardProps = {
   id: number
@@ -50,6 +51,10 @@ const MovieCard: FC<MovieCardProps> = memo(
                 radius={orientation === 'portrait' ? 20 : 14}
                 strokeWidth={orientation === 'portrait' ? 3 : 2}
               />
+            </div>
+
+            <div className='favorite'>
+              <FavoriteBubble isFavorite={false} size='3rem' />
             </div>
 
             <p className='title'>{title}</p>
