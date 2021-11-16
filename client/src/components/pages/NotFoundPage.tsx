@@ -1,12 +1,16 @@
-import React from 'react'
+import {FunctionComponent} from 'react'
 
 import './NotFoundPage.scss'
 
-const NotFoundPage: React.FunctionComponent = () => {
+import PageContainer from './PageContainer'
+
+const NotFoundPage: FunctionComponent = () => {
   return (
-    <div className='not-found-page'>
-      <p>not-found page</p>
-    </div>
+    <PageContainer classNames='not-found-page'>
+      <div className='error-message-box'>
+        <p>Ooops... This page doesn't exist.</p>
+      </div>
+    </PageContainer>
   )
 }
 
