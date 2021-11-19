@@ -1,4 +1,4 @@
-import React, {FC} from 'react'
+import {FC} from 'react'
 
 import {AiFillHeart, AiOutlineHeart} from 'react-icons/ai'
 import Tooltip from 'rc-tooltip'

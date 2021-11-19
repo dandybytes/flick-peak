@@ -1,12 +1,12 @@
-import {ITMDBMovieData} from '../../services/tmdbapi'
+import {ITMDBMovieData, ITMDBMovieDetails} from '../../services/tmdbapi'
 
 export const add_movie_to_favorites = 'add_movie_to_favorites'
 export const remove_movie_from_favorites = 'remove_movie_from_favorites'
 
-export type FavoriteMovieState = Record<string, ITMDBMovieData>
+export type FavoriteMovieState = Record<string, ITMDBMovieData | ITMDBMovieDetails>
 
 export interface AddMovieToFavoritesActionPayload {
-  movie: ITMDBMovieData
+  movie: ITMDBMovieData | ITMDBMovieDetails
 }
 
 export interface AddMovieToFavoritesAction {

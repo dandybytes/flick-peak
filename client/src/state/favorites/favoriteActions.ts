@@ -1,5 +1,5 @@
 import {Dispatch} from 'redux'
-import {ITMDBMovieData} from '../../services/tmdbapi'
+import {ITMDBMovieData, ITMDBMovieDetails} from '../../services/tmdbapi'
 
 import {
   AddMovieToFavoritesAction,
@@ -9,7 +9,8 @@ import {
 } from './favoriteTypes'
 
 export const addMovieToFavorites =
-  (movie: ITMDBMovieData) => async (dispatch: Dispatch<AddMovieToFavoritesAction>) => {
+  (movie: ITMDBMovieData | ITMDBMovieDetails) =>
+  async (dispatch: Dispatch<AddMovieToFavoritesAction>) => {
     try {
       dispatch({
         type: add_movie_to_favorites,

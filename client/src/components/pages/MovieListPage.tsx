@@ -5,12 +5,7 @@ import {useDispatch, useSelector} from 'react-redux'
 import './MovieListPage.scss'
 
 import {RootState, fetchMoviePageByKeyword, fetchMoviePageByCategory} from '../../state/'
-import {
-  ITMDBMovieData,
-  MovieCategory,
-  movieCategoryList,
-  url_img_poster
-} from '../../services/tmdbapi'
+import {ITMDBMovieData, MovieCategory, movieCategoryList} from '../../services/tmdbapi'
 import {useElementSize} from '../../hooks'
 
 import PageContainer from './PageContainer'
@@ -21,16 +16,7 @@ import MovieCard from '../MovieCard'
 
 const searchKey = 'search'
 
-const movieCardRenderer = (movie: ITMDBMovieData) => (
-  <MovieCard
-    key={movie.id}
-    id={movie.id}
-    imgURL={movie.poster_path ? url_img_poster + movie.poster_path : ''}
-    title={movie.title}
-    date={movie.release_date}
-    rating={movie.vote_average}
-  />
-)
+const movieCardRenderer = (movie: ITMDBMovieData) => <MovieCard key={movie.id} movie={movie} />
 
 const MovieListPage: FC = () => {
   const location = useLocation()

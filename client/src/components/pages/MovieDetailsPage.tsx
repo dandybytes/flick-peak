@@ -8,8 +8,16 @@ import {GoCalendar} from 'react-icons/go'
 
 import './MovieDetailsPage.scss'
 
-import {RootState, fetchMovieById, fetchRecommendationsByMovieId} from '../../state/'
 import {
+  RootState,
+  fetchMovieById,
+  fetchRecommendationsByMovieId,
+  addMovieToFavorites,
+  removeMovieFromFavorites
+} from '../../state/'
+
+import {
+  ITMDBMovieData,
   ITMDBMovieDetails,
   ITMDBRecommendationMovieData,
   movieCategoryList,
@@ -53,6 +61,9 @@ const MovieDetailsPage: FC = () => {
   const recommendationData: ITMDBRecommendationMovieData[] | null = useSelector(
     (state: RootState) => state.recommendations?.[movieID ?? '']?.recommendations
   )
+  const favoriteMovieData: ITMDBMovieData | ITMDBMovieDetails | null = useSelector(
+    (state: RootState) => state.favorites?.[movieID ?? '']
+  )
 
   const movieDetailErrorMessage =
     typeof movieDetailError === 'string' ? movieDetailError : JSON.stringify(movieDetailError)
@@ -87,6 +98,13 @@ const MovieDetailsPage: FC = () => {
     : null
 
   const budget = movieDetailData?.budget ? formattedCurrency(movieDetailData.budget) : null
+
+  const isFavorite = favoriteMovieData != null
+
+  const toggleFavorite = (movie: ITMDBMovieData | ITMDBMovieDetails | null) => {
+    if (movie == null) return
+    isFavorite ? dispatch(removeMovieFromFavorites(movie.id)) : dispatch(addMovieToFavorites(movie))
+  }
 
   if (!movieID) return <Redirect to={`${location.pathname}#${movieCategoryList[0]}`} />
 
@@ -137,7 +155,11 @@ const MovieDetailsPage: FC = () => {
                 </div>
 
                 <div className='heading-right'>
-                  <FavoriteBubble isFavorite={false} size='4rem' />
+                  <FavoriteBubble
+                    isFavorite={isFavorite}
+                    size='3rem'
+                    onClick={() => toggleFavorite(movieDetailData)}
+                  />
                 </div>
               </div>
 
@@ -200,15 +222,7 @@ const MovieDetailsPage: FC = () => {
               {(recommendationData ?? []).map(recommendedMovie => (
                 <MovieCard
                   key={recommendedMovie.id}
-                  id={recommendedMovie.id}
-                  imgURL={
-                    recommendedMovie.backdrop_path
-                      ? url_img_backdrop + recommendedMovie.backdrop_path
-                      : ''
-                  }
-                  title={recommendedMovie.title}
-                  date={recommendedMovie.release_date}
-                  rating={recommendedMovie.vote_average}
+                  movie={recommendedMovie}
                   orientation='landscape'
                 />
               ))}
