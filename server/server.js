@@ -4,6 +4,7 @@ import morgan from 'morgan'
 
 import connectDB from './services/db.js'
 import {notFoundHandler, errorHandler} from './middleware/error.js'
+import userRoutes from './routes/userRoutes.js'
 
 dotenv.config()
 
@@ -20,6 +21,8 @@ app.use(express.json())
 app.get('/api', (req, res) => {
   res.send('API running')
 })
+
+app.use('/api/users', userRoutes)
 
 if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'))
