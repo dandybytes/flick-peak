@@ -2,9 +2,14 @@ import express from 'express'
 import dotenv from 'dotenv'
 import morgan from 'morgan'
 
-const port = process.env.PORT || 5005
+import connectDB from './services/db.js'
 
 dotenv.config()
+
+const port = process.env.PORT || 5000
+const databaseURL = process.env.DATABASE_URL
+
+connectDB(databaseURL)
 
 const app = express()
 
