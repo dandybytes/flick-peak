@@ -3,6 +3,7 @@ import dotenv from 'dotenv'
 import morgan from 'morgan'
 
 import connectDB from './services/db.js'
+import {notFoundHandler, errorHandler} from './middleware/error.js'
 
 dotenv.config()
 
@@ -33,5 +34,11 @@ if (process.env.NODE_ENV === 'production') {
     res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'))
   })
 }
+
+// handle routes that don't exist
+app.use(notFoundHandler)
+
+// error-handling middleware
+app.use(errorHandler)
 
 app.listen(port, console.log(`server running in ${process.env.NODE_ENV} mode on port ${port}`))
