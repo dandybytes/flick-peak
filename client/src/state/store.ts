@@ -3,12 +3,14 @@ import {composeWithDevTools} from 'redux-devtools-extension'
 import thunk from 'redux-thunk'
 import {debounce} from 'debounce'
 
+import {userReducer} from './user/userReducer'
 import {movieListReducer} from './lists/movieListReducer'
 import {movieDetailReducer} from './details/movieDetailReducer'
 import {favoriteReducer} from './favorites/favoriteReducer'
 import {movieRecommendationReducer} from './recommendations/recommendationReducer'
 
 const rootReducer = combineReducers({
+  user: userReducer,
   lists: movieListReducer,
   movies: movieDetailReducer,
   recommendations: movieRecommendationReducer,
