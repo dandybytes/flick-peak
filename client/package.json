@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@types/react-slick": "^0.23.7",
+    "@types/uuid": "^8.3.3",
     "debounce": "^1.2.1",
     "framer-motion": "^5.3.0",
     "rc-tooltip": "^5.1.1",
@@ -27,6 +28,7 @@
     "redux-devtools-extension": "^2.13.9",
     "redux-thunk": "^2.3.0",
     "slick-carousel": "^1.8.1",
+    "uuid": "^8.3.2",
     "web-vitals": "^1.0.1"
   },
   "devDependencies": {
