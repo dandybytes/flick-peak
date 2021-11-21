@@ -1,14 +1,15 @@
-import {FC, FormEvent, useState} from 'react'
+import {FC, SyntheticEvent, useState} from 'react'
 import {Link} from 'react-router-dom'
 
 import './AuthForm.scss'
 
 type AuthFormProps = {
   isLoginForm: boolean
-  handleSubmit: (event: FormEvent) => Promise<void>
+  handleSubmit: (event: SyntheticEvent) => void
+  isDisabled?: boolean
 }
 
-const AuthForm: FC<AuthFormProps> = ({handleSubmit, isLoginForm}) => {
+const AuthForm: FC<AuthFormProps> = ({handleSubmit, isLoginForm, isDisabled = false}) => {
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -17,7 +18,13 @@ const AuthForm: FC<AuthFormProps> = ({handleSubmit, isLoginForm}) => {
   return (
     <div className='form-container'>
       <h1 className='form-headline'>{isLoginForm ? 'Log In' : 'Create Account'}</h1>
-      <form className='form-body' onSubmit={handleSubmit}>
+      <form
+        className='form-body'
+        onSubmit={event => {
+          if (isDisabled) return
+          handleSubmit(event)
+        }}
+      >
         {!isLoginForm && (
           <input
             name='name'
@@ -54,7 +61,7 @@ const AuthForm: FC<AuthFormProps> = ({handleSubmit, isLoginForm}) => {
             onChange={event => setConfirmedPassword(event.target.value)}
           />
         )}
-        <button className='submit-button' type='submit'>
+        <button className='submit-button' type='submit' disabled={isDisabled}>
           {isLoginForm ? 'Sign In' : 'Sign Up'}
         </button>
       </form>
