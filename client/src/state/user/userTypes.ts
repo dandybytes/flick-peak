@@ -3,20 +3,6 @@ export const user_login_success = 'user_login_success'
 export const user_login_error = 'user_login_error'
 export const user_logout = 'user_logout'
 
-// type ErrorType1 = {
-//   message: string
-// }
-
-// type ErrorType2 = {
-//   response: {
-//     data: {
-//       message: string
-//     }
-//   }
-// }
-
-// export type ErrorData = ErrorType1 | ErrorType2
-
 export type UserData = {
   name: string
   email: string
@@ -29,14 +15,8 @@ export type UserState = {
   error: string
 }
 
-// export interface UserLoginStartPayload {
-//   email: string
-//   password: string
-// }
-
 export interface UserLoginStartAction {
   type: typeof user_login_start
-  // payload: UserLoginStartPayload
 }
 
 export interface UserLoginSuccessPayload {

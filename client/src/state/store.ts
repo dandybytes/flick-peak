@@ -7,6 +7,7 @@ import {userReducer} from './user/userReducer'
 import {movieListReducer} from './lists/movieListReducer'
 import {movieDetailReducer} from './details/movieDetailReducer'
 import {favoriteReducer} from './favorites/favoriteReducer'
+import {notificationReducer} from './notifications/notificationReducer'
 import {movieRecommendationReducer} from './recommendations/recommendationReducer'
 
 const rootReducer = combineReducers({
@@ -14,7 +15,8 @@ const rootReducer = combineReducers({
   lists: movieListReducer,
   movies: movieDetailReducer,
   recommendations: movieRecommendationReducer,
-  favorites: favoriteReducer
+  favorites: favoriteReducer,
+  notifications: notificationReducer
 })
 
 const localStorageKey = '_flick_pick'
