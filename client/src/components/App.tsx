@@ -6,6 +6,7 @@ import './App.scss'
 
 import {isMobileDevice, isSmallScreen} from '../utils'
 
+import NotificationContainer from './common/notifications/NotificationContainer'
 import Modal from './common/Modal'
 import Header from './Header'
 // import Footer from './Footer'
@@ -40,6 +41,8 @@ const App: FunctionComponent = () => {
       </AnimatePresence>
 
       {/* <Footer /> */}
+
+      <NotificationContainer />
 
       {showModal && (
         <Modal hideModal={() => setShowModal(false)} status='warning'>
