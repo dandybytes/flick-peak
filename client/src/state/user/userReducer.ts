@@ -10,7 +10,7 @@ import {
 } from './userTypes'
 
 const initialState: UserState = {
-  user: null,
+  data: null,
   fetching: false,
   error: ''
 }
@@ -18,24 +18,24 @@ const initialState: UserState = {
 export const userReducer = (state = initialState, action: UserAction): UserState => {
   switch (action.type) {
     case user_login_start: {
-      return {user: null, fetching: true, error: ''}
+      return {data: null, fetching: true, error: ''}
     }
 
     case user_login_success: {
       const {user} = action.payload as UserLoginSuccessPayload
 
-      if (user == null) return {user: null, fetching: false, error: ''}
-      return {user, fetching: false, error: ''}
+      if (user == null) return {data: null, fetching: false, error: ''}
+      return {data: user, fetching: false, error: ''}
     }
 
     case user_login_error: {
       const {error} = action.payload as UserLoginErrorPayload
 
-      return {user: null, fetching: false, error}
+      return {data: null, fetching: false, error}
     }
 
     case user_logout: {
-      return {user: null, fetching: false, error: ''}
+      return {data: null, fetching: false, error: ''}
     }
 
     default:

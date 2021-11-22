@@ -4,13 +4,14 @@ export const user_login_error = 'user_login_error'
 export const user_logout = 'user_logout'
 
 export type UserData = {
+  id: string
   name: string
   email: string
-  isAdmin: boolean
+  token: string
 }
 
 export type UserState = {
-  user: UserData | null
+  data: UserData | null
   fetching: boolean
   error: string
 }

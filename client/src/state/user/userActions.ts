@@ -1,7 +1,6 @@
 import {Dispatch} from 'redux'
 
 import {
-  UserData,
   UserAction,
   user_login_start,
   user_login_success,
@@ -9,7 +8,7 @@ import {
   user_logout
 } from './userTypes'
 import {NotificationAction, create_notification} from '..'
-import {FPResponseError} from '../../services/fpapi'
+import {FPResponseError, FPUserLoginResponseData} from '../../services/fpapi'
 import {getErrorObjectMessage} from '../../utils'
 
 export const logUserIn =
@@ -28,15 +27,28 @@ export const logUserIn =
       })
 
       if (!response.ok) {
-        const data: FPResponseError = await response.json()
-        // console.error(`Error ${response.status} (${response.statusText}): ${data?.message}`)
-        throw new Error(data?.message ? data.message : response.statusText)
+        const parsedResponse: FPResponseError = await response.json()
+        const errorMessage = parsedResponse?.message
+          ? getErrorObjectMessage(parsedResponse.message, 'User login error')
+          : response.statusText
+
+        dispatch({
+          type: user_login_error,
+          payload: {error: errorMessage}
+        })
+
+        dispatch({
+          type: create_notification,
+          payload: {message: errorMessage, type: 'error', lifeSpan: 15000}
+        })
+
+        return
       }
 
-      const data: UserData = await response.json()
-      dispatch({type: user_login_success, payload: {user: data}})
+      const parsedResponse: FPUserLoginResponseData = await response.json()
+      dispatch({type: user_login_success, payload: {user: parsedResponse?.user}})
     } catch (error: any) {
-      const errorMessage = getErrorObjectMessage(error, 'Unknown user login error')
+      const errorMessage = getErrorObjectMessage(error, 'User login error')
 
       dispatch({
         type: user_login_error,
