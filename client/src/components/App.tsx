@@ -17,6 +17,8 @@ import RegistrationPage from './pages/RegistrationPage'
 import LoginPage from './pages/LoginPage'
 // import AboutPage from './pages/AboutPage'
 import NotFoundPage from './pages/NotFoundPage'
+import PublicOnlyRoute from '../routes/PublicOnlyRoute'
+// import PrivateOnlyRoute from '../routes/PrivateOnlyRoute'
 
 const App: FunctionComponent = () => {
   const location = useLocation()
@@ -37,8 +39,8 @@ const App: FunctionComponent = () => {
           {/* <Route path='/' exact component={HomePage} /> */}
           <Route path='/movies' component={MovieListPage} />
           <Route path='/movie/:movieID' component={MovieDetailsPage} />
-          <Route path='/signup' component={RegistrationPage} />
-          <Route path='/login' component={LoginPage} />
+          <PublicOnlyRoute path='/signup' component={RegistrationPage} />
+          <PublicOnlyRoute path='/login' component={LoginPage} />
           {/* <Route path='/about' component={AboutPage} /> */}
           <Route component={NotFoundPage} />
         </Switch>
