@@ -3,13 +3,15 @@ import {Link} from 'react-router-dom'
 
 import './AuthForm.scss'
 
+import LoadingIndicator from './common/LoadingIndicator'
+
 type AuthFormProps = {
   isLoginForm: boolean
   handleSubmit: (event: SyntheticEvent) => void
-  isDisabled?: boolean
+  isBusy?: boolean
 }
 
-const AuthForm: FC<AuthFormProps> = ({handleSubmit, isLoginForm, isDisabled = false}) => {
+const AuthForm: FC<AuthFormProps> = ({handleSubmit, isLoginForm, isBusy = false}) => {
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -21,7 +23,7 @@ const AuthForm: FC<AuthFormProps> = ({handleSubmit, isLoginForm, isDisabled = fa
       <form
         className='form-body'
         onSubmit={event => {
-          if (isDisabled) return
+          if (isBusy) return event.preventDefault()
           handleSubmit(event)
         }}
       >
@@ -61,7 +63,7 @@ const AuthForm: FC<AuthFormProps> = ({handleSubmit, isLoginForm, isDisabled = fa
             onChange={event => setConfirmedPassword(event.target.value)}
           />
         )}
-        <button className='submit-button' type='submit' disabled={isDisabled}>
+        <button className='submit-button' type='submit' disabled={isBusy}>
           {isLoginForm ? 'Sign In' : 'Sign Up'}
         </button>
       </form>
@@ -74,6 +76,10 @@ const AuthForm: FC<AuthFormProps> = ({handleSubmit, isLoginForm, isDisabled = fa
           Already have an account? <Link to={'/login'}>Log In</Link>
         </p>
       )}
+
+      <div className={`form-overlay ${isBusy ? ' visible' : ''}`}>
+        <LoadingIndicator />
+      </div>
     </div>
   )
 }

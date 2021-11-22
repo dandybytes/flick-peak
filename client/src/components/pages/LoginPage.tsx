@@ -27,8 +27,8 @@ const LoginPage: FunctionComponent = () => {
     if (!email || !password) {
       return dispatch(
         createNotification(
-          'Missing email or password', //message
-          'error', // notification type
+          'Missing email or password. Please fill in all fields!', //message
+          'warning', // notification type
           10000 // duration (setting to 0 will make it never expire)
         )
       )
@@ -39,7 +39,7 @@ const LoginPage: FunctionComponent = () => {
 
   return (
     <PageContainer classNames='login-page'>
-      <AuthForm handleSubmit={handleLogin} isLoginForm={true} isDisabled={isFetching} />
+      <AuthForm handleSubmit={handleLogin} isLoginForm={true} isBusy={isFetching} />
     </PageContainer>
   )
 }

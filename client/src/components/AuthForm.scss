@@ -4,7 +4,9 @@
   --auth-form-accent-color: var(--color-primary);
   --auth-form-background-color: var(--color-dark);
   --auth-form-box-glow: 0 0 5px 5px rgba(210, 245, 235, 0.2);
+  --auth-form-overlay-color: rgba(var(--rgb-dark), 0.9);
 
+  position: relative;
   width: clamp(20rem, 30rem, 80vw);
   margin: 1rem auto;
   padding: 5rem;
@@ -85,5 +87,24 @@
 
   & a {
     color: var(--auth-form-accent-color);
+  }
+}
+
+.form-overlay {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background-color: var(--auth-form-overlay-color);
+  cursor: not-allowed;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.2s ease-in-out;
+
+  &.visible {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: all;
   }
 }
