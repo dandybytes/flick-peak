@@ -8,7 +8,7 @@ export type NotificationData = {
   id: string
   type: NotificationType
   message: string
-  lifeSpan: number
+  lifeSpan: number | null | undefined
 }
 
 export type NotificationState = {
@@ -18,7 +18,7 @@ export type NotificationState = {
 export interface CreateNotificationPayload {
   type: NotificationType
   message: string
-  lifeSpan: number
+  lifeSpan?: number
 }
 
 export interface CreateNotificationAction {

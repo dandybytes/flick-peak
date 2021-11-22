@@ -40,15 +40,15 @@ const NotificationItem: FC<NotificationItemProps> = ({id, type, message, lifeSpa
     }
   }, [dispatch, id, lifeSpan])
 
+  const isLarge = message.length > messageThreshold
+
   return (
     <li className={`notification ${type}`}>
       <FaRegWindowClose
-        className={`close-button${message.length > messageThreshold ? ' large' : ''}`}
+        className={`close-button${isLarge ? ' large' : ''}`}
         onClick={() => dispatch(destroyNotification(id))}
       />
-      <div className={`notification-icon${message.length > messageThreshold ? ' large' : ''}`}>
-        {notificationIcon[type]}
-      </div>
+      <div className={`notification-icon${isLarge ? ' large' : ''}`}>{notificationIcon[type]}</div>
       <div className='notification-content'>
         <p className='notification-message'>{message}</p>
       </div>

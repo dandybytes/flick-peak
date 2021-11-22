@@ -45,7 +45,7 @@ export const logUserIn =
 
       dispatch({
         type: create_notification,
-        payload: {message: errorMessage, type: 'error', lifeSpan: 10000}
+        payload: {message: errorMessage, type: 'error', lifeSpan: 15000}
       })
     }
   }

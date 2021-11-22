@@ -5,13 +5,9 @@ import {
   clear_all_notifications
 } from './notificationTypes'
 
-export const createNotification = (
-  message: string,
-  type?: NotificationType,
-  lifeSpan?: number
-) => ({
+export const createNotification = (message: string, type?: NotificationType, lifeSpan?: number) => ({
   type: create_notification,
-  payload: {message, type: type ?? 'warning', lifeSpan: lifeSpan ?? 5000}
+  payload: {message, type: type ?? 'warning', lifeSpan}
 })
 
 export const destroyNotification = (id: string) => ({type: remove_notification, payload: {id}})
