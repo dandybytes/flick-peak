@@ -8,9 +8,13 @@ import {
   user_login_error,
   user_logout
 } from './userTypes'
+import {NotificationAction, create_notification} from '..'
+import {FPResponseError} from '../../services/fpapi'
+import {getErrorObjectMessage} from '../../utils'
 
 export const logUserIn =
-  (email: string, password: string) => async (dispatch: Dispatch<UserAction>) => {
+  (email: string, password: string) =>
+  async (dispatch: Dispatch<UserAction | NotificationAction>) => {
     try {
       dispatch({type: user_login_start})
 
@@ -22,22 +26,26 @@ export const logUserIn =
         },
         body: JSON.stringify({email, password})
       })
-      const data: UserData = await response.json()
 
+      if (!response.ok) {
+        const data: FPResponseError = await response.json()
+        // console.error(`Error ${response.status} (${response.statusText}): ${data?.message}`)
+        throw new Error(data?.message ? data.message : response.statusText)
+      }
+
+      const data: UserData = await response.json()
       dispatch({type: user_login_success, payload: {user: data}})
     } catch (error: any) {
-      const errorMessage =
-        typeof error?.response?.data?.message === 'string'
-          ? error.response.data.message
-          : typeof error?.message === 'string'
-          ? error.message
-          : typeof error === 'string'
-          ? error
-          : 'Unknown user login error'
+      const errorMessage = getErrorObjectMessage(error, 'Unknown user login error')
 
       dispatch({
         type: user_login_error,
         payload: {error: errorMessage}
+      })
+
+      dispatch({
+        type: create_notification,
+        payload: {message: errorMessage, type: 'error', lifeSpan: 10000}
       })
     }
   }

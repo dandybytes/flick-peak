@@ -22,7 +22,7 @@ router.route('/').post(async (req, res) => {
     if (existingUser) {
       return res.status(409).json({
         success: false,
-        message: `user with email ${email} already exists`
+        message: `User with email ${email} already exists.`
       })
     }
 
@@ -30,10 +30,10 @@ router.route('/').post(async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, salt)
 
     if (!hashedPassword) {
-      console.error('password hashing failed')
+      console.error('Password hashing failed.')
       return res.status(500).json({
         success: false,
-        message: 'internal server error'
+        message: 'Internal server error.'
       })
     }
 
@@ -45,16 +45,16 @@ router.route('/').post(async (req, res) => {
     })
 
     if (newUser == null) {
-      console.error(`DB failed to create new user ${email}`)
+      console.error(`DB failed to create new user ${email}.`)
       return res.status(500).json({
         success: false,
-        message: 'saving the user failed'
+        message: 'Saving the user failed.'
       })
     }
 
     return res.status(201).json({
       success: true,
-      message: `user ${email} created`,
+      message: `User ${email} created.`,
       user: {
         id: newUser._id,
         name: newUser.name,
@@ -84,26 +84,26 @@ router.route('/login').post(async (req, res) => {
     const existingUser = await User.findOne({email})
 
     if (!existingUser) {
-      console.log(`user ${email} could not be found`)
+      console.log(`User ${email} could not be found.`)
       return res.status(401).json({
         success: false,
-        message: `wrong user name or password`
+        message: `Wrong user name or password.`
       })
     }
 
     const passwordMatched = await bcrypt.compare(password, existingUser.password)
 
     if (!passwordMatched) {
-      console.log(`wrong password provided for ${email}`)
+      console.log(`Wrong password provided for ${email}.`)
       return res.status(401).json({
         success: false,
-        message: `wrong user name or password`
+        message: `Wrong user name or password.`
       })
     }
 
     return res.status(200).json({
       success: true,
-      message: 'authentication successful',
+      message: 'Authentication successful.',
       user: {
         id: existingUser._id,
         name: existingUser.name,
@@ -116,7 +116,7 @@ router.route('/login').post(async (req, res) => {
       }
     })
   } catch (error) {
-    console.error('sign-in failed: ', error)
+    console.error('Sign-in failed: ', error)
     return res.status(500).json({success: false, message: error})
   }
 })
@@ -133,23 +133,23 @@ router.route('/profile').get(authMiddleware, async (req, res) => {
       console.log(`Missing user data. Not authorized to get profile info.`)
       return res.status(401).json({
         success: false,
-        message: `Not authorized`
+        message: `Not authorized.`
       })
     }
 
     const existingUser = await User.findById(req?.user?._id)
 
     if (!existingUser) {
-      console.log(`The user could not be found in the database`)
+      console.log(`The user could not be found in the database.`)
       return res.status(404).json({
         success: false,
-        message: `User not found`
+        message: `User not found.`
       })
     }
 
     return res.status(200).json({
       success: true,
-      message: `Data for user ${existingUser._id} successfully retrieved`,
+      message: `Data for user ${existingUser._id} successfully retrieved.`,
       user: {
         id: existingUser._id,
         name: existingUser.name,
@@ -158,7 +158,7 @@ router.route('/profile').get(authMiddleware, async (req, res) => {
       }
     })
   } catch (error) {
-    console.error(`retrieving user profile has failed: `, error)
+    console.error(`Retrieving user profile has failed: `, error)
     return res.status(500).json({success: false, message: error})
   }
 })
