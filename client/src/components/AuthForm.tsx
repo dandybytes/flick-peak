@@ -8,10 +8,10 @@ import LoadingIndicator from './common/LoadingIndicator'
 type AuthFormProps = {
   isLoginForm: boolean
   handleSubmit: (event: SyntheticEvent) => void
-  isBusy?: boolean
+  isBusy: boolean
 }
 
-const AuthForm: FC<AuthFormProps> = ({handleSubmit, isLoginForm, isBusy = false}) => {
+const AuthForm: FC<AuthFormProps> = ({handleSubmit, isLoginForm, isBusy}) => {
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')

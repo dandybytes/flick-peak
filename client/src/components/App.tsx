@@ -13,6 +13,7 @@ import Header from './Header'
 // import HomePage from './pages/HomePage'
 import MovieListPage from './pages/MovieListPage'
 import MovieDetailsPage from './pages/MovieDetailsPage'
+import RegistrationPage from './pages/RegistrationPage'
 import LoginPage from './pages/LoginPage'
 // import AboutPage from './pages/AboutPage'
 import NotFoundPage from './pages/NotFoundPage'
@@ -36,6 +37,7 @@ const App: FunctionComponent = () => {
           {/* <Route path='/' exact component={HomePage} /> */}
           <Route path='/movies' component={MovieListPage} />
           <Route path='/movie/:movieID' component={MovieDetailsPage} />
+          <Route path='/signup' component={RegistrationPage} />
           <Route path='/login' component={LoginPage} />
           {/* <Route path='/about' component={AboutPage} /> */}
           <Route component={NotFoundPage} />

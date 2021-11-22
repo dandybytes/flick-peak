@@ -11,7 +11,7 @@ import AuthForm from '../AuthForm'
 const LoginPage: FunctionComponent = () => {
   const dispatch = useDispatch()
 
-  const isFetching: boolean = useSelector((state: RootState) => state?.user?.fetching)
+  const isFetching: boolean = useSelector((state: RootState) => state?.user?.login?.fetching)
 
   const handleLogin = async (event: SyntheticEvent) => {
     event.preventDefault()

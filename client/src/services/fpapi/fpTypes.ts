@@ -15,3 +15,5 @@ export type FPUserLoginResponseData = {
   message: string
   user: FPUserData
 }
+
+export type FPUserRegistrationResponseData = FPUserLoginResponseData
