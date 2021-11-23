@@ -1,5 +1,8 @@
 .header {
   --header-background-rgb: var(--rgb-dark);
+  --user-icon-color-initial: var(--color-primary);
+  --user-icon-color-hover: var(--color-secondary);
+  --user-icon-size: 1.5rem;
 
   width: 100vw;
   position: fixed;
@@ -15,7 +18,39 @@
     content: '';
     position: absolute;
     inset: 0;
-    background: linear-gradient(to bottom, rgba(var(--header-background-rgb), 1) 0%, rgba(var(--header-background-rgb), 0.2) 90%, transparent 100%);
+    background: linear-gradient(
+      to bottom,
+      rgba(var(--header-background-rgb), 1) 0%,
+      rgba(var(--header-background-rgb), 0.2) 90%,
+      transparent 100%
+    );
     z-index: 0;
+  }
+
+  .user {
+    display: grid;
+    place-items: center;
+  }
+
+  .user-icon {
+    height: var(--user-icon-size);
+    width: var(--user-icon-size);
+    min-width: var(--user-icon-size);
+    z-index: 1;
+    cursor: pointer;
+
+    & svg {
+      height: 100%;
+      width: 100%;
+      fill: var(--user-icon-color-initial);
+      transition: all 0.5s ease;
+    }
+
+    &:hover {
+      & svg {
+        fill: var(--user-icon-color-hover);
+        transform: scale(1.1);
+      }
+    }
   }
 }

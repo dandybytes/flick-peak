@@ -68,7 +68,7 @@ const NavBar: FC = () => {
           icon={<AiFillHeart />}
           color='#f56868'
           isActive={categoryFromHash === 'favorite'}
-          onClick={() => history.push('/movies/#favorite')}
+          onClick={() => history.push('/favorite')}
         />
         {/* <NavTab
           label='About'
