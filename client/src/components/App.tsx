@@ -11,6 +11,7 @@ import Modal from './common/Modal'
 import Header from './Header'
 // import Footer from './Footer'
 // import HomePage from './pages/HomePage'
+import FavoriteMoviePage from './pages/FavoriteMoviePage'
 import MovieListPage from './pages/MovieListPage'
 import MovieDetailsPage from './pages/MovieDetailsPage'
 import RegistrationPage from './pages/RegistrationPage'
@@ -39,6 +40,7 @@ const App: FunctionComponent = () => {
           {/* <Route path='/' exact component={HomePage} /> */}
           <Route path='/movies' component={MovieListPage} />
           <Route path='/movie/:movieID' component={MovieDetailsPage} />
+          <Route path='/favorite' component={FavoriteMoviePage} />
           <PublicOnlyRoute path='/signup' component={RegistrationPage} />
           <PublicOnlyRoute path='/login' component={LoginPage} />
           {/* <Route path='/about' component={AboutPage} /> */}

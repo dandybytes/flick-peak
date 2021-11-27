@@ -11,7 +11,7 @@ import {RootState, addMovieToFavorites, removeMovieFromFavorites} from '../state
 import {ITMDBMovieData, ITMDBMovieDetails, url_img_poster} from '../services/tmdbapi'
 
 type MovieCardProps = {
-  movie: ITMDBMovieData
+  movie: ITMDBMovieData | ITMDBMovieDetails
   orientation?: 'landscape' | 'portrait'
 }
 
@@ -34,7 +34,7 @@ const MovieCard: FC<MovieCardProps> = memo(({movie, orientation = 'portrait'}) =
 
   const year = new Date(date).getFullYear()
 
-  const toggleFavorite = (movie: ITMDBMovieData) => {
+  const toggleFavorite = (movie: ITMDBMovieData | ITMDBMovieDetails) => {
     isFavorite ? dispatch(removeMovieFromFavorites(movie.id)) : dispatch(addMovieToFavorites(movie))
   }
 
