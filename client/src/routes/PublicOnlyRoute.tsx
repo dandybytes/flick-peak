@@ -1,32 +1,33 @@
-import {FC, ComponentType} from 'react'
-import {Route, Redirect} from 'react-router-dom'
+import {Redirect, Route, RouteProps, useLocation} from 'react-router'
 import {useSelector} from 'react-redux'
 
 import {isAuthenticated} from './auth'
 import {RootState, UserData} from '../state'
 
-type PublicOnlyRouteProps = {
-  component: ComponentType<any>
-  path: string
+interface StateType {
+  referrer: {
+    pathname: string
+    search: string
+    hash: string
+  }
 }
 
-const PublicOnlyRoute: FC<PublicOnlyRouteProps> = ({component: RouteComponent, path}) => {
+const PublicOnlyRoute = ({...routeProps}: RouteProps) => {
+  const location = useLocation<StateType>()
   const userData: UserData | null = useSelector((state: RootState) => state?.user?.data)
+  const currentReferrer = location?.state?.referrer
 
-  return (
-    <Route
-      path={path}
-      render={routeProps =>
-        // if already logged in, redirect from sign(up/in) to home
-        isAuthenticated(userData) ? (
-          <Redirect to={'/'} />
-        ) : (
-          // otherwise show the sign(up/in) page
-          <RouteComponent {...routeProps} />
-        )
-      }
-    />
-  )
+  if (isAuthenticated(userData))
+    return (
+      <Redirect
+        to={{
+          pathname: currentReferrer?.pathname ?? '/',
+          state: {referrer: currentReferrer ?? location}
+        }}
+      />
+    )
+
+  return <Route {...routeProps} />
 }
 
 export default PublicOnlyRoute

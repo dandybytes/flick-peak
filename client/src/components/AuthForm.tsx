@@ -23,7 +23,8 @@ const AuthForm: FC<AuthFormProps> = ({handleSubmit, isLoginForm, isBusy}) => {
       <form
         className='form-body'
         onSubmit={event => {
-          if (isBusy) return event.preventDefault()
+          event.preventDefault()
+          if (isBusy) return
           handleSubmit(event)
         }}
       >

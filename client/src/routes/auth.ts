@@ -4,5 +4,5 @@ import {UserData} from './../state/user/userTypes'
  */
 export const isAuthenticated = (userData: UserData | null | undefined): boolean => {
   // temporarily consider authenticated if JWT token present in state
-  return !!userData?.token
+  return userData != null
 }

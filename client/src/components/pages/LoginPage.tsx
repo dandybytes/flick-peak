@@ -14,8 +14,6 @@ const LoginPage: FunctionComponent = () => {
   const isFetching: boolean = useSelector((state: RootState) => state?.user?.login?.fetching)
 
   const handleLogin = async (event: SyntheticEvent) => {
-    event.preventDefault()
-
     const target = event.target as typeof event.target & {
       email: {value: string}
       password: {value: string}

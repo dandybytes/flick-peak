@@ -17,8 +17,6 @@ const RegistrationPage: FunctionComponent = () => {
   const isFetching: boolean = useSelector((state: RootState) => state?.user?.registration?.fetching)
 
   const handleSignUp = async (event: SyntheticEvent) => {
-    event.preventDefault()
-
     const target = event.target as typeof event.target & {
       name: {value: string}
       email: {value: string}
