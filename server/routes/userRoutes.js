@@ -101,18 +101,21 @@ router.route('/login').post(async (req, res) => {
       })
     }
 
+    const token = generateJWT({
+      id: existingUser._id,
+      name: existingUser.name,
+      email: existingUser.email
+    })
+
     return res.status(200).json({
       success: true,
       message: 'Authentication successful.',
+      // should detailed user info be sent in the response?
       user: {
         id: existingUser._id,
         name: existingUser.name,
         email: existingUser.email,
-        token: generateJWT({
-          id: existingUser._id,
-          name: existingUser.name,
-          email: existingUser.email
-        })
+        token
       }
     })
   } catch (error) {

@@ -1,6 +1,8 @@
 import express from 'express'
 import dotenv from 'dotenv'
 import morgan from 'morgan'
+import cors from 'cors'
+import cookieParser from 'cookie-parser'
 
 import connectDB from './services/db.js'
 import {notFoundHandler, errorHandler} from './middleware/error.js'
@@ -9,13 +11,20 @@ import userRoutes from './routes/userRoutes.js'
 dotenv.config()
 
 const port = process.env.PORT || 5000
-const databaseURL = process.env.DATABASE_URL
 
-connectDB(databaseURL)
+connectDB(process.env.DATABASE_URL)
 
 const app = express()
 
-// enable accepting JSON data in the body
+app.use(cookieParser())
+
+app.use(
+  cors({
+    credentials: true,
+    origin: process.env.CLIENT_URL
+  })
+)
+
 app.use(express.json())
 
 app.get('/api', (req, res) => {
