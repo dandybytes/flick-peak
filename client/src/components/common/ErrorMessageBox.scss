@@ -1,0 +1,9 @@
+.error-message-box {
+  --error-message-box-color: tomato;
+
+  min-height: 20rem;
+  display: grid;
+  place-items: center;
+  grid-column: 1 / span 2;
+  color: var(--error-message-box-color);
+}
