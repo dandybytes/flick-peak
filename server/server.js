@@ -7,6 +7,7 @@ import cookieParser from 'cookie-parser'
 import connectDB from './services/db.js'
 import {notFoundHandler, errorHandler} from './middleware/error.js'
 import userRoutes from './routes/userRoutes.js'
+import favoriteRoutes from './routes/favoriteRoutes.js'
 
 dotenv.config()
 
@@ -32,6 +33,7 @@ app.get('/api', (req, res) => {
 })
 
 app.use('/api/users', userRoutes)
+app.use('/api/favorites', favoriteRoutes)
 
 if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'))
