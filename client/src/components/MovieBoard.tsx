@@ -4,20 +4,19 @@ import './MovieBoard.scss'
 
 import LoadingIndicator from './common/LoadingIndicator'
 import MovieCard from './MovieCard'
-import {ITMDBMovieData, ITMDBMovieDetails} from '../services/tmdbapi'
 
 type MovieBoardProps = {
-  movieList: (ITMDBMovieData | ITMDBMovieDetails)[]
+  movieIDs: string[]
 }
 
-const MovieBoard: FC<MovieBoardProps> = ({movieList}) => (
+const MovieBoard: FC<MovieBoardProps> = ({movieIDs}) => (
   <div className='movie-board'>
-    {!movieList?.length ? (
+    {!movieIDs?.length ? (
       <LoadingIndicator />
     ) : (
       <>
-        {movieList.map(movie => (
-          <MovieCard key={movie.id} movie={movie} />
+        {movieIDs.map(movieID => (
+          <MovieCard key={movieID} movieID={movieID} />
         ))}
       </>
     )}

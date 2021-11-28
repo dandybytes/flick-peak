@@ -11,11 +11,11 @@ import MovieBoard from '../MovieBoard'
 const FavoriteMoviePage: FunctionComponent = () => {
   const favorites: FavoriteMovieState = useSelector((state: RootState) => state?.favorites)
 
-  const favoriteMovies = Object.values(favorites)
+  const idsFavoriteMovies = Object.keys(favorites)
 
   return (
     <PageContainer classNames='favorite-page'>
-      <MovieBoard movieList={favoriteMovies} />
+      <MovieBoard movieIDs={idsFavoriteMovies} />
     </PageContainer>
   )
 }

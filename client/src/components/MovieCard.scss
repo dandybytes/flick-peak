@@ -72,7 +72,7 @@
       font-size: 0.8rem;
     }
 
-    & .movie-image-load-indicator .spinner {
+    & .movie-load-indicator .spinner {
       transform: scale(0.5) translateY(-64px);
     }
 
@@ -134,7 +134,7 @@
   }
 }
 
-.movie-image-load-indicator {
+.movie-load-indicator {
   position: absolute;
   inset: 0;
   display: flex;

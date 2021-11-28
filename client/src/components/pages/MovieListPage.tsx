@@ -16,7 +16,9 @@ import MovieCard from '../MovieCard'
 
 const searchKey = 'search'
 
-const movieCardRenderer = (movie: ITMDBMovieData) => <MovieCard key={movie.id} movie={movie} />
+const movieCardRenderer = (movie: ITMDBMovieData) => (
+  <MovieCard key={movie.id} movieID={String(movie.id)} />
+)
 
 const MovieListPage: FC = () => {
   const location = useLocation()

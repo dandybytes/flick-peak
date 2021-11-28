@@ -222,7 +222,7 @@ const MovieDetailsPage: FC = () => {
               {(recommendationData ?? []).map(recommendedMovie => (
                 <MovieCard
                   key={recommendedMovie.id}
-                  movie={recommendedMovie}
+                  movieID={String(recommendedMovie.id)}
                   orientation='landscape'
                 />
               ))}
