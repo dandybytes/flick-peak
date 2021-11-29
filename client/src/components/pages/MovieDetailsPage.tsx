@@ -236,6 +236,7 @@ const MovieDetailsPage: FC = () => {
                   key={recommendedMovie.id}
                   movieID={String(recommendedMovie.id)}
                   orientation='landscape'
+                  isAnimated={false}
                 />
               ))}
             </Carousel>

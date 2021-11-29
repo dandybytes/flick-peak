@@ -1,4 +1,5 @@
-import React, {FC} from 'react'
+import {FC} from 'react'
+import {AnimatePresence} from 'framer-motion'
 
 import './MovieBoard.scss'
 
@@ -10,9 +11,11 @@ type MovieBoardProps = {
 
 const MovieBoard: FC<MovieBoardProps> = ({movieIDs}) => (
   <div className='movie-board'>
-    {(movieIDs ?? []).map(movieID => (
-      <MovieCard key={movieID} movieID={movieID} />
-    ))}
+    <AnimatePresence>
+      {(movieIDs ?? []).map((movieID, index) => (
+        <MovieCard key={movieID} movieID={movieID} index={index} isAnimated={true} />
+      ))}
+    </AnimatePresence>
   </div>
 )
 
