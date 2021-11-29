@@ -1,35 +1,43 @@
 import {
   FavoriteMovieState,
   FavoriteMovieAction,
-  add_movie_to_favorites,
-  remove_movie_from_favorites,
-  AddMovieToFavoritesActionPayload,
-  RemoveMovieFromFavoritesActionPayload
+  set_favorite_movie_list,
+  fetch_favorite_movie_list_start,
+  fetch_favorite_movie_list_success,
+  fetch_favorite_movie_list_error,
+  SetFavoriteMovieListPayload,
+  FetchFavoriteMovieListErrorPayload,
+  FetchFavoriteMovieListSuccessPayload
 } from './favoriteTypes'
 
-const initialState: FavoriteMovieState = {}
+const initialState: FavoriteMovieState = {
+  fetching: false,
+  error: '',
+  data: []
+}
 
 export const favoriteReducer = (
   state = initialState,
   action: FavoriteMovieAction
 ): FavoriteMovieState => {
   switch (action.type) {
-    case add_movie_to_favorites: {
-      const {movie} = action.payload as AddMovieToFavoritesActionPayload
-
-      const newState = {...state}
-      newState[String(movie.id)] = movie
-      return newState
+    case set_favorite_movie_list: {
+      const {data} = action.payload as SetFavoriteMovieListPayload
+      return {...state, data, error: '', fetching: false}
     }
 
-    case remove_movie_from_favorites: {
-      const {id} = action.payload as RemoveMovieFromFavoritesActionPayload
+    case fetch_favorite_movie_list_start: {
+      return {...state, fetching: true, error: ''}
+    }
 
-      if (state[id] == null) return state
-      return Object.entries(state).reduce(
-        (acc, [key, value]) => (key === String(id) ? acc : {...acc, [key]: value}),
-        {}
-      )
+    case fetch_favorite_movie_list_success: {
+      const {data} = action.payload as FetchFavoriteMovieListSuccessPayload
+      return {fetching: false, error: '', data}
+    }
+
+    case fetch_favorite_movie_list_error: {
+      const {error} = action.payload as FetchFavoriteMovieListErrorPayload
+      return {...state, fetching: false, error}
     }
 
     default:

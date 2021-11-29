@@ -73,7 +73,7 @@ router.route('/').get(authMiddleware, async (req, res) => {
       console.log(`No favorite movies found for user ${userID}`)
       return res.status(404).json({
         success: false,
-        message: `No favorite movies found for user ${userID}`
+        message: `No favorite movies found.`
       })
     }
 

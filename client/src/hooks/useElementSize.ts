@@ -56,7 +56,6 @@ export const useElementSize = <T extends HTMLElement>(
   const observerRef = useRef(
     new ResizeObserver(entries => {
       // watch only the first element (entries[0]), as only one will be provided
-      console.log('updating element size from observer')
       updateElementSize(entries[0]?.contentRect)
     })
   )

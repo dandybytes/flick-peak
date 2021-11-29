@@ -8,8 +8,14 @@ import RadialProgressIndicator from './common/RadialProgressIndicator'
 import LoadingIndicator from './common/LoadingIndicator'
 import ErrorMessageBox from './common/ErrorMessageBox'
 import FavoriteBubble from './common/FavoriteBubble'
-import {RootState, addMovieToFavorites, removeMovieFromFavorites, fetchMovieById} from '../state'
-import {ITMDBMovieData, ITMDBMovieDetails, url_img_poster} from '../services/tmdbapi'
+import {
+  RootState,
+  addMovieToFavorites,
+  removeMovieFromFavorites,
+  fetchMovieById,
+  createNotification
+} from '../state'
+import {ITMDBMovieDetails, url_img_poster} from '../services/tmdbapi'
 
 type MovieCardProps = {
   movieID: string
@@ -19,6 +25,7 @@ type MovieCardProps = {
 const MovieCard: FC<MovieCardProps> = memo(({movieID, orientation = 'portrait'}) => {
   const dispatch = useDispatch()
 
+  const token = useSelector((state: RootState) => state?.user?.data?.token)
   const movieDetailsAreFetching: boolean = useSelector(
     (state: RootState) => state.movies?.[movieID ?? '']?.fetching
   )
@@ -29,8 +36,8 @@ const MovieCard: FC<MovieCardProps> = memo(({movieID, orientation = 'portrait'})
     (state: RootState) => state.movies?.[movieID ?? '']?.details
   )
 
-  const favoriteMovieData: ITMDBMovieData | ITMDBMovieDetails | null = useSelector(
-    (state: RootState) => state.favorites?.[movieID ?? '']
+  const idsFavoriteMovies: string[] | null = useSelector(
+    (state: RootState) => state.favorites?.data
   )
 
   const movieDetailErrorMessage =
@@ -45,18 +52,28 @@ const MovieCard: FC<MovieCardProps> = memo(({movieID, orientation = 'portrait'})
 
   const [isImageLoaded, setIsImageLoaded] = useState(false)
 
-  const toggleFavorite = (movieID: string) => {
-    isFavorite
-      ? dispatch(removeMovieFromFavorites(Number(movieID)))
-      : dispatch(addMovieToFavorites(movieDetailData as ITMDBMovieDetails))
-  }
-
   const title = movieDetailData?.title ?? ''
   const date = movieDetailData?.release_date
   const year = date != null ? new Date(date).getFullYear() : null
   const imgURL = movieDetailData?.poster_path ? url_img_poster + movieDetailData.poster_path : ''
   const rating = movieDetailData?.vote_average ?? 0
-  const isFavorite = Object.keys(favoriteMovieData ?? {}).includes(movieID)
+  const isFavorite = (idsFavoriteMovies ?? []).includes(movieID)
+
+  const toggleFavorite = (movieID: string) => {
+    if (!token) {
+      dispatch(
+        createNotification(
+          'To be able to save favorite movies, please log in!', //message
+          'info', // notification type
+          5000 // duration (setting to 0 will make it never expire)
+        )
+      )
+      return
+    }
+    isFavorite
+      ? dispatch(removeMovieFromFavorites(movieID, token))
+      : dispatch(addMovieToFavorites(movieID, token))
+  }
 
   const movieCardContent = (
     <>
@@ -112,7 +129,7 @@ const MovieCard: FC<MovieCardProps> = memo(({movieID, orientation = 'portrait'})
         {movieDetailsAreFetching ? (
           <LoadingIndicator />
         ) : movieDetailErrorMessage ? (
-          <ErrorMessageBox message={''} />
+          <ErrorMessageBox message={movieDetailErrorMessage} />
         ) : (
           movieCardContent
         )}

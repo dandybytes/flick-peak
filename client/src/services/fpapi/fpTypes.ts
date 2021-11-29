@@ -17,3 +17,9 @@ export type FPUserLoginResponseData = {
 }
 
 export type FPUserRegistrationResponseData = FPUserLoginResponseData
+
+export type FPFavoritesResponseData = {
+  success: boolean
+  message: string
+  favorites: string[]
+}

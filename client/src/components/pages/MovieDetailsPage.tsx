@@ -13,11 +13,11 @@ import {
   fetchMovieById,
   fetchRecommendationsByMovieId,
   addMovieToFavorites,
-  removeMovieFromFavorites
+  removeMovieFromFavorites,
+  createNotification
 } from '../../state/'
 
 import {
-  ITMDBMovieData,
   ITMDBMovieDetails,
   ITMDBRecommendationMovieData,
   movieCategoryList,
@@ -42,6 +42,7 @@ const MovieDetailsPage: FC = () => {
   const location = useLocation()
   const dispatch = useDispatch()
 
+  const token = useSelector((state: RootState) => state?.user?.data?.token)
   const movieDetailsAreFetching: boolean = useSelector(
     (state: RootState) => state.movies?.[movieID ?? '']?.fetching
   )
@@ -61,8 +62,8 @@ const MovieDetailsPage: FC = () => {
   const recommendationData: ITMDBRecommendationMovieData[] | null = useSelector(
     (state: RootState) => state.recommendations?.[movieID ?? '']?.recommendations
   )
-  const favoriteMovieData: ITMDBMovieData | ITMDBMovieDetails | null = useSelector(
-    (state: RootState) => state.favorites?.[movieID ?? '']
+  const favoriteMovieData: string[] | null = useSelector(
+    (state: RootState) => state.favorites?.data
   )
 
   const movieDetailErrorMessage =
@@ -99,11 +100,22 @@ const MovieDetailsPage: FC = () => {
 
   const budget = movieDetailData?.budget ? formattedCurrency(movieDetailData.budget) : null
 
-  const isFavorite = favoriteMovieData != null
+  const isFavorite = movieID != null && favoriteMovieData.includes(movieID)
 
-  const toggleFavorite = (movie: ITMDBMovieData | ITMDBMovieDetails | null) => {
-    if (movie == null) return
-    isFavorite ? dispatch(removeMovieFromFavorites(movie.id)) : dispatch(addMovieToFavorites(movie))
+  const toggleFavorite = (movieID: string) => {
+    if (!token) {
+      dispatch(
+        createNotification(
+          'To be able to save favorite movies, please log in!', //message
+          'info', // notification type
+          5000 // duration (setting to 0 will make it never expire)
+        )
+      )
+      return
+    }
+    isFavorite
+      ? dispatch(removeMovieFromFavorites(movieID, token))
+      : dispatch(addMovieToFavorites(movieID, token))
   }
 
   if (!movieID) return <Redirect to={`${location.pathname}#${movieCategoryList[0]}`} />
@@ -158,7 +170,7 @@ const MovieDetailsPage: FC = () => {
                   <FavoriteBubble
                     isFavorite={isFavorite}
                     size='3rem'
-                    onClick={() => toggleFavorite(movieDetailData)}
+                    onClick={() => toggleFavorite(movieID)}
                   />
                 </div>
               </div>
