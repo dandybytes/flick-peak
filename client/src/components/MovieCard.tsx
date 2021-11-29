@@ -16,7 +16,7 @@ import {
   fetchMovieById,
   createNotification
 } from '../state'
-import {ITMDBMovieDetails, url_img_poster} from '../services/tmdbapi'
+import {ITMDBMovieDetails, url_img_backdrop, url_img_poster} from '../services/tmdbapi'
 
 type MovieCardProps = {
   movieID: string
@@ -83,7 +83,12 @@ const MovieCard: FC<MovieCardProps> = memo(
     const title = movieDetailData?.title ?? ''
     const date = movieDetailData?.release_date
     const year = date != null ? new Date(date).getFullYear() : null
-    const imgURL = movieDetailData?.poster_path ? url_img_poster + movieDetailData.poster_path : ''
+    const imgURL =
+      orientation === 'portrait' && movieDetailData?.poster_path
+        ? url_img_poster + movieDetailData.poster_path
+        : orientation === 'landscape' && movieDetailData?.backdrop_path
+        ? url_img_backdrop + movieDetailData.backdrop_path
+        : ''
     const rating = movieDetailData?.vote_average ?? 0
     const isFavorite = (idsFavoriteMovies ?? []).includes(movieID)
 
