@@ -9,6 +9,7 @@ import {movieDetailReducer} from './details/movieDetailReducer'
 import {favoriteReducer} from './favorites/favoriteReducer'
 import {notificationReducer} from './notifications/notificationReducer'
 import {movieRecommendationReducer} from './recommendations/recommendationReducer'
+import {UserData} from '.'
 
 const rootReducer = combineReducers({
   user: userReducer,
@@ -22,9 +23,9 @@ const rootReducer = combineReducers({
 const localStorageKey = '_flick_pick'
 const debounceDuration = 1000
 
-const saveToLocalStorage = (state: unknown) => {
+const saveToLocalStorage = (state: RootState) => {
   try {
-    localStorage.setItem(localStorageKey, JSON.stringify(state))
+    localStorage.setItem(localStorageKey, JSON.stringify(state.user.data))
   } catch (error) {
     console.error('saving to local storage failed: ', error)
   }
@@ -46,11 +47,16 @@ const loadFromLocalStorage = () => {
  * Frequently changing data (e.g. movies currently in theaters) should be retrieved anew...
  * ...from the API rather than cached or be cached for only a reasonably short time (e.g. 24 hours)
  */
-const storeFromLocalStorage = loadFromLocalStorage()
+const initialState = {
+  user: {
+    data: loadFromLocalStorage() as UserData
+  }
+}
 
 export const store = createStore(
   rootReducer,
-  storeFromLocalStorage,
+  // @ts-ignore
+  initialState,
   composeWithDevTools(applyMiddleware(thunk))
 )
 
