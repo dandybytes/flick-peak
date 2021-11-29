@@ -7,7 +7,7 @@ import {ImExit} from 'react-icons/im'
 
 import './Header.scss'
 
-import {logUserOut, RootState, UserData} from '../state'
+import {logUserOut, RootState, set_favorite_movie_list, UserData} from '../state'
 import {isAuthenticated} from '../routes/auth'
 
 import Logo from './Logo'
@@ -21,6 +21,20 @@ const Header: React.FunctionComponent = () => {
 
   const isLoggedIn = isAuthenticated(userData)
 
+  const handleLogout = () => {
+    /**
+     * At this point, only user data and favorites must be cleared on logout.
+     * If state grows to encompass more data that will need to be deleted on logout,
+     * a full state reset solution might make more sense, as in the example below:
+     * https://stackoverflow.com/questions/35622588/how-to-reset-the-state-of-a-redux-store
+     */
+    dispatch({
+      type: set_favorite_movie_list,
+      payload: {data: []}
+    })
+    dispatch(logUserOut())
+  }
+
   return (
     <header className='header'>
       <Logo />
@@ -33,7 +47,7 @@ const Header: React.FunctionComponent = () => {
             className='user-icon'
             onClick={() => {
               if (isLoggedIn) {
-                dispatch(logUserOut())
+                handleLogout()
               } else {
                 history.push('/login')
               }
