@@ -55,6 +55,19 @@
   filter: var(--filmstrip-icon-filter);
 }
 
+.filmstrip.hover-glow:hover {
+  box-shadow: 0 0 15px var(--filmstrip-color);
+
+  & .filmstrip-perforations {
+    box-shadow: 0 0 3px var(--filmstrip-color), inset 0 0 3px var(--filmstrip-color);
+  }
+
+  & .filmstrip-frame {
+    box-shadow: 0 0 3px var(--filmstrip-color), inset 0 0 3px var(--filmstrip-color);
+    text-shadow: 0 0 1px var(--filmstrip-color);
+  }
+}
+
 @keyframes filmroll {
   0% {
     transform: translateX(0);
