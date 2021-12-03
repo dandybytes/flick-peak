@@ -9,7 +9,8 @@ import {
   fetch_favorite_movie_list_start,
   fetch_favorite_movie_list_success,
   fetch_favorite_movie_list_error,
-  set_favorite_movie_list
+  add_movie_to_favorites,
+  remove_movie_from_favorites
 } from './favoriteTypes'
 import {getErrorObjectMessage} from '../../utils'
 
@@ -71,6 +72,11 @@ export const fetchFavoriteMovies =
 export const addMovieToFavorites =
   (id: string, token: string) =>
   async (dispatch: Dispatch<FavoriteMovieAction | NotificationAction>) => {
+    dispatch({
+      type: add_movie_to_favorites,
+      payload: {id}
+    })
+
     try {
       const response = await fetch('/api/favorites', {
         method: 'POST',
@@ -90,29 +96,29 @@ export const addMovieToFavorites =
             )
           : response.statusText
 
-        dispatch({
-          type: create_notification,
-          payload: {message: errorMessage, type: 'error', lifeSpan: 10000}
-        })
-
-        return
+        throw new Error(errorMessage)
       }
 
       const parsedResponse: FPFavoritesResponseData = await response.json()
       if (parsedResponse == null) throw new Error(`Adding movie ${id} to favorites has failed.`)
 
-      const {favorites} = parsedResponse
-      if (favorites?.length) {
-        dispatch({
-          type: set_favorite_movie_list,
-          payload: {data: favorites}
-        })
-      }
+      // const {favorites} = parsedResponse
+      // if (favorites?.length) {
+      //   dispatch({
+      //     type: set_favorite_movie_list,
+      //     payload: {data: favorites}
+      //   })
+      // }
     } catch (error) {
       const errorMessage = getErrorObjectMessage(
         error,
         `Adding movie ${id} to favorites has failed.`
       )
+
+      dispatch({
+        type: remove_movie_from_favorites,
+        payload: {id}
+      })
 
       dispatch({
         type: create_notification,
@@ -124,6 +130,11 @@ export const addMovieToFavorites =
 export const removeMovieFromFavorites =
   (id: string, token: string) =>
   async (dispatch: Dispatch<FavoriteMovieAction | NotificationAction>) => {
+    dispatch({
+      type: remove_movie_from_favorites,
+      payload: {id}
+    })
+
     try {
       const response = await fetch('/api/favorites', {
         method: 'PATCH',
@@ -143,29 +154,29 @@ export const removeMovieFromFavorites =
             )
           : response.statusText
 
-        dispatch({
-          type: create_notification,
-          payload: {message: errorMessage, type: 'error', lifeSpan: 10000}
-        })
-
-        return
+        throw new Error(errorMessage)
       }
 
       const parsedResponse: FPFavoritesResponseData = await response.json()
       if (parsedResponse == null) throw new Error(`Removing movie ${id} from favorites has failed.`)
 
-      const {favorites} = parsedResponse
-      if (favorites == null) return
+      // const {favorites} = parsedResponse
+      // if (favorites == null) return
 
-      dispatch({
-        type: set_favorite_movie_list,
-        payload: {data: favorites}
-      })
+      // dispatch({
+      //   type: set_favorite_movie_list,
+      //   payload: {data: favorites}
+      // })
     } catch (error) {
       const errorMessage = getErrorObjectMessage(
         error,
         `Removing movie ${id} from favorites has failed.`
       )
+
+      dispatch({
+        type: add_movie_to_favorites,
+        payload: {id}
+      })
 
       dispatch({
         type: create_notification,
