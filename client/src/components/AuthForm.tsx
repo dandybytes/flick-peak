@@ -1,4 +1,4 @@
-import {FC, SyntheticEvent, useState} from 'react'
+import {FC, ChangeEvent, FormEvent, useState} from 'react'
 import {Link} from 'react-router-dom'
 
 import './AuthForm.scss'
@@ -7,7 +7,7 @@ import LoadingIndicator from './common/LoadingIndicator'
 
 type AuthFormProps = {
   isLoginForm: boolean
-  handleSubmit: (event: SyntheticEvent) => void
+  handleSubmit: (event: FormEvent) => void
   isBusy: boolean
 }
 
@@ -35,7 +35,7 @@ const AuthForm: FC<AuthFormProps> = ({handleSubmit, isLoginForm, isBusy}) => {
             placeholder='name'
             className='form-input'
             value={name}
-            onChange={event => setName(event.target.value)}
+            onChange={(event: ChangeEvent<HTMLInputElement>) => setName(event.target.value)}
           />
         )}
         <input
@@ -44,7 +44,7 @@ const AuthForm: FC<AuthFormProps> = ({handleSubmit, isLoginForm, isBusy}) => {
           placeholder='email'
           className='form-input'
           value={email}
-          onChange={event => setEmail(event.target.value)}
+          onChange={(event: ChangeEvent<HTMLInputElement>) => setEmail(event.target.value)}
         />
         <input
           name='password'
@@ -52,7 +52,7 @@ const AuthForm: FC<AuthFormProps> = ({handleSubmit, isLoginForm, isBusy}) => {
           placeholder='password'
           className='form-input'
           value={password}
-          onChange={event => setPassword(event.target.value)}
+          onChange={(event: ChangeEvent<HTMLInputElement>) => setPassword(event.target.value)}
         />
         {!isLoginForm && (
           <input
@@ -61,7 +61,9 @@ const AuthForm: FC<AuthFormProps> = ({handleSubmit, isLoginForm, isBusy}) => {
             placeholder='confirm password'
             className='form-input'
             value={confirmedPassword}
-            onChange={event => setConfirmedPassword(event.target.value)}
+            onChange={(event: ChangeEvent<HTMLInputElement>) =>
+              setConfirmedPassword(event.target.value)
+            }
           />
         )}
         <button className='submit-button' type='submit' disabled={isBusy}>

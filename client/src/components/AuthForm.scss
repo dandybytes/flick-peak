@@ -5,12 +5,15 @@
   --auth-form-background-color: var(--color-dark);
   --auth-form-box-glow: 0 0 5px 5px rgba(210, 245, 235, 0.2);
   --auth-form-overlay-color: rgba(var(--rgb-dark), 0.9);
+  --auth-form-submit-button-background-color: var(--color-light);
+  --auth-form-submit-button-text-color: var(--color-dark);
 
   position: relative;
   width: clamp(20rem, 30rem, 80vw);
   margin: 1rem auto;
   padding: 5rem;
   border: 1px solid var(--auth-form-main-color);
+  background-color: var(--auth-form-background-color);
   opacity: 0.8;
 }
 
@@ -57,8 +60,8 @@
   padding: 0.75rem 3rem;
   border: none;
   border-radius: 1.5rem;
-  background-color: var(--auth-form-main-color);
-  color: var(--auth-form-background-color);
+  background-color: var(--auth-form-submit-button-background-color);
+  color: var(--auth-form-submit-button-text-color);
   font-size: 0.875rem;
   letter-spacing: 1px;
   text-transform: uppercase;
