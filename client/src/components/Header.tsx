@@ -42,6 +42,10 @@ const Header: React.FunctionComponent = () => {
       <NavBar />
 
       <div className='user'>
+        <div className='user-name'>
+          {isLoggedIn ? userData?.name ?? userData?.email ?? 'Anonymous' : null}
+        </div>
+
         <Tooltip overlay={<p>{isLoggedIn ? 'log out' : 'log in'}</p>} placement='bottom'>
           <div
             className='user-icon'

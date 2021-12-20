@@ -3,6 +3,7 @@
   --user-icon-color-initial: var(--color-primary);
   --user-icon-color-hover: var(--color-secondary);
   --user-icon-size: 1.5rem;
+  --user-name-color: var(--color-primary);
 
   width: 100vw;
   position: fixed;
@@ -28,8 +29,10 @@
   }
 
   .user {
-    display: grid;
-    place-items: center;
+    display: flex;
+    align-items: center;
+    width: min-content;
+    z-index: 1;
   }
 
   .user-icon {
@@ -52,5 +55,14 @@
         transform: scale(1.1);
       }
     }
+  }
+
+  .user-name {
+    display: inline-flex;
+    height: var(--user-icon-size);
+    width: min-content;
+    margin: 0 0.75rem;
+    color: var(--user-name-color);
+    white-space: nowrap;
   }
 }
