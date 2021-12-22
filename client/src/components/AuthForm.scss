@@ -1,6 +1,7 @@
 .form-container {
   --auth-form-main-rgb: var(--rgb-light);
   --auth-form-main-color: var(--color-light);
+  --auth-form-accent-rgb: var(--rgb-primary);
   --auth-form-accent-color: var(--color-primary);
   --auth-form-background-color: rgba(var(--rgb-dark), 0.75);
   --auth-form-box-glow: 0 0 5px 5px rgba(210, 245, 235, 0.2);
@@ -41,7 +42,7 @@
   padding: 0.75rem 1.5rem;
   background-color: transparent;
   border: 1px solid var(--auth-form-main-color);
-  color: var(--auth-form-accent-color);
+  color: var(--auth-form-main-color);
 
   &::placeholder {
     color: var(--auth-form-main-color);
@@ -53,6 +54,19 @@
     outline: none;
     border: 1px solid var(--auth-form-accent-color);
     box-shadow: 0 0 1rem var(--auth-form-accent-color);
+    color: var(--auth-form-accent-color);
+    animation: inputGlow 0.8s ease-out infinite alternate;
+  }
+}
+
+@keyframes inputGlow {
+  0% {
+    border-color: rgba(var(--auth-form-accent-rgb), 0.8);
+    box-shadow: 0 0 0.25rem rgba(var(--auth-form-accent-rgb), 0.2), inset 0 0 0.25rem rgba(0, 0, 0, 0.1);
+  }
+  100% {
+    border-color: rgba(var(--auth-form-accent-rgb), 1);
+    box-shadow: 0 0 1rem rgba(var(--auth-form-accent-rgb), 0.9), inset 0 0 0.5rem rgba(var(--auth-form-accent-rgb), 0.7);
   }
 }
 
