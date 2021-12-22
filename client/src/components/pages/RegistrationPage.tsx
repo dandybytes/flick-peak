@@ -2,6 +2,7 @@ import {SyntheticEvent, FunctionComponent} from 'react'
 import {useDispatch, useSelector} from 'react-redux'
 
 import './RegistrationPage.scss'
+import cinemaBackgroundImage from '../../assets/img/cinema-background-640-427-min.jpeg'
 
 import {createNotification, registerUser, RootState} from '../../state'
 
@@ -103,7 +104,7 @@ const RegistrationPage: FunctionComponent = () => {
   }
 
   return (
-    <PageContainer classNames='registration-page'>
+    <PageContainer classNames='registration-page' backgroundImage={cinemaBackgroundImage}>
       <AuthForm handleSubmit={handleSignUp} isLoginForm={false} isBusy={isFetching} />
     </PageContainer>
   )

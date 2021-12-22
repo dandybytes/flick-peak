@@ -2,7 +2,7 @@
   --auth-form-main-rgb: var(--rgb-light);
   --auth-form-main-color: var(--color-light);
   --auth-form-accent-color: var(--color-primary);
-  --auth-form-background-color: var(--color-dark);
+  --auth-form-background-color: rgba(var(--rgb-dark), 0.75);
   --auth-form-box-glow: 0 0 5px 5px rgba(210, 245, 235, 0.2);
   --auth-form-overlay-color: rgba(var(--rgb-dark), 0.9);
   --auth-form-submit-button-background-color: var(--color-light);
@@ -13,8 +13,9 @@
   margin: 1rem auto;
   padding: 5rem;
   border: 1px solid var(--auth-form-main-color);
+  // border-radius: 0.25rem;
   background-color: var(--auth-form-background-color);
-  opacity: 0.8;
+  box-shadow: 0 1rem 2rem rgb(0 0 0 / 40%);
 }
 
 .form-headline {
