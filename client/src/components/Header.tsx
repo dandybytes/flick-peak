@@ -47,7 +47,7 @@ const Header: React.FunctionComponent = () => {
         </div>
 
         <Tooltip overlay={<p>{isLoggedIn ? 'log out' : 'log in'}</p>} placement='bottom'>
-          <div
+          <button
             className='user-icon'
             onClick={() => {
               if (isLoggedIn) {
@@ -58,7 +58,7 @@ const Header: React.FunctionComponent = () => {
             }}
           >
             {isLoggedIn ? <ImExit /> : <FaUserCircle />}
-          </div>
+          </button>
         </Tooltip>
       </div>
     </header>

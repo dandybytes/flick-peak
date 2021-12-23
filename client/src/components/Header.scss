@@ -40,6 +40,8 @@
     width: var(--user-icon-size);
     min-width: var(--user-icon-size);
     z-index: 1;
+    background-color: transparent;
+    border: none;
     cursor: pointer;
 
     & svg {
