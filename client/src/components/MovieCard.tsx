@@ -1,4 +1,4 @@
-import {FC, memo, useEffect, useState} from 'react'
+import {FC, memo, useEffect} from 'react'
 import {Link} from 'react-router-dom'
 import {useDispatch, useSelector} from 'react-redux'
 import {motion} from 'framer-motion'
@@ -78,8 +78,6 @@ const MovieCard: FC<MovieCardProps> = memo(
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [movieID, movieDetailData])
 
-    const [isImageLoaded, setIsImageLoaded] = useState(false)
-
     const title = movieDetailData?.title ?? ''
     const date = movieDetailData?.release_date
     const year = date != null ? new Date(date).getFullYear() : null
@@ -111,18 +109,12 @@ const MovieCard: FC<MovieCardProps> = memo(
     const movieCardContent = (
       <>
         {imgURL?.length ? (
-          <>
-            <img
-              src={imgURL}
-              className={`movie-card-image ${isImageLoaded ? ' loaded' : ''}`}
-              loading='lazy'
-              alt={`${title} movie poster`}
-              onLoad={() => setIsImageLoaded(true)}
-            />
-            <div className={`movie-load-indicator ${isImageLoaded ? ' hidden' : ''}`}>
-              <LoadingIndicator />
-            </div>
-          </>
+          <img
+            src={imgURL}
+            className='movie-card-image'
+            loading='lazy'
+            alt={`${title} movie poster`}
+          />
         ) : (
           <div className='movie-card-placeholder'>
             <p>{title?.length > 0 ? title : `movie ID ${movieID}`}</p>
