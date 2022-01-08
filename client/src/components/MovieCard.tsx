@@ -102,8 +102,8 @@ const MovieCard: FC<MovieCardProps> = memo(
         return
       }
       isFavorite
-        ? dispatch(removeMovieFromFavorites(movieID, token))
-        : dispatch(addMovieToFavorites(movieID, token))
+        ? dispatch(removeMovieFromFavorites(movieID, token, idsFavoriteMovies))
+        : dispatch(addMovieToFavorites(movieID, token, idsFavoriteMovies))
     }
 
     const movieCardContent = (

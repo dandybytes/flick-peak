@@ -30,7 +30,7 @@ const Header: React.FunctionComponent = () => {
      */
     dispatch({
       type: set_favorite_movie_list,
-      payload: {data: []}
+      payload: {data: null}
     })
     dispatch(logUserOut())
   }

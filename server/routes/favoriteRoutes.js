@@ -67,15 +67,7 @@ router.route('/').get(authMiddleware, async (req, res) => {
     const userID = req?.user?._id
 
     const existingFavorites = await Favorite.findById(userID)
-    const favoriteMovies = existingFavorites?.movies
-
-    if (!favoriteMovies?.length) {
-      console.log(`No favorite movies found for user ${userID}`)
-      return res.status(404).json({
-        success: false,
-        message: `No favorite movies found.`
-      })
-    }
+    const favoriteMovies = existingFavorites?.movies ?? []
 
     return res.status(200).json({
       success: true,

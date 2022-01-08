@@ -1,10 +1,12 @@
 import {FunctionComponent, useEffect, useState} from 'react'
 import {Redirect, Route, Switch, useLocation} from 'react-router-dom'
+import {useDispatch, useSelector} from 'react-redux'
 import {AnimatePresence} from 'framer-motion'
 
 import './App.scss'
 
 import {isMobileDevice, isSmallScreen} from '../utils'
+import {fetchFavoriteMovies, RootState} from '../state'
 
 import NotificationContainer from './common/notifications/NotificationContainer'
 import Modal from './common/Modal'
@@ -23,12 +25,27 @@ import PrivateOnlyRoute from '../routes/PrivateOnlyRoute'
 
 const App: FunctionComponent = () => {
   const location = useLocation()
+  const dispatch = useDispatch()
+
+  const token = useSelector((state: RootState) => state?.user?.data?.token)
+  const favoriteMoviesAreFetching: boolean = useSelector(
+    (state: RootState) => state?.favorites?.fetching
+  )
+  const idsFavoriteMovies: string[] | null = useSelector(
+    (state: RootState) => state?.favorites?.data
+  )
 
   const [showModal, setShowModal] = useState(false)
 
   useEffect(() => {
     if (isMobileDevice() || isSmallScreen()) setShowModal(true)
   }, [])
+
+  useEffect(() => {
+    if (token && idsFavoriteMovies == null && !favoriteMoviesAreFetching) {
+      dispatch(fetchFavoriteMovies(token))
+    }
+  }, [dispatch, favoriteMoviesAreFetching, idsFavoriteMovies, token])
 
   return (
     <div className='app'>

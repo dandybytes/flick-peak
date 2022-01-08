@@ -43,7 +43,7 @@ export const fetchFavoriteMovies =
           payload: {message: errorMessage, type: 'error', lifeSpan: 10000}
         })
 
-        return
+        return null
       }
 
       const parsedResponse: FPFavoritesResponseData = await response.json()
@@ -54,6 +54,8 @@ export const fetchFavoriteMovies =
         type: fetch_favorite_movie_list_success,
         payload: {data: favorites}
       })
+
+      return favorites
     } catch (error) {
       const errorMessage = getErrorObjectMessage(error, 'Favorite movie fetch error.')
 
@@ -66,18 +68,34 @@ export const fetchFavoriteMovies =
         type: create_notification,
         payload: {message: errorMessage, type: 'error', lifeSpan: 10000}
       })
+
+      return null
     }
   }
 
 export const addMovieToFavorites =
-  (id: string, token: string) =>
+  (id: string, token: string, existingFavorites: null | string[]) =>
   async (dispatch: Dispatch<FavoriteMovieAction | NotificationAction>) => {
-    dispatch({
-      type: add_movie_to_favorites,
-      payload: {id}
-    })
-
     try {
+      if (existingFavorites == null) {
+        const favoriteMovies = await fetchFavoriteMovies(token)
+        if (favoriteMovies == null) {
+          return dispatch({
+            type: create_notification,
+            payload: {
+              message: 'Cannot synchronize with existing favorite movies',
+              type: 'error',
+              lifeSpan: 15000
+            }
+          })
+        }
+      }
+
+      dispatch({
+        type: add_movie_to_favorites,
+        payload: {id}
+      })
+
       const response = await fetch('/api/favorites', {
         method: 'POST',
         headers: {
@@ -128,14 +146,28 @@ export const addMovieToFavorites =
   }
 
 export const removeMovieFromFavorites =
-  (id: string, token: string) =>
+  (id: string, token: string, existingFavorites: null | string[]) =>
   async (dispatch: Dispatch<FavoriteMovieAction | NotificationAction>) => {
-    dispatch({
-      type: remove_movie_from_favorites,
-      payload: {id}
-    })
-
     try {
+      if (existingFavorites == null) {
+        const favoriteMovies = await fetchFavoriteMovies(token)
+        if (favoriteMovies == null) {
+          return dispatch({
+            type: create_notification,
+            payload: {
+              message: 'Cannot synchronize with existing favorite movies',
+              type: 'error',
+              lifeSpan: 15000
+            }
+          })
+        }
+      }
+
+      dispatch({
+        type: remove_movie_from_favorites,
+        payload: {id}
+      })
+
       const response = await fetch('/api/favorites', {
         method: 'PATCH',
         headers: {

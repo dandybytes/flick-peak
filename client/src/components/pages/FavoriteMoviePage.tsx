@@ -23,20 +23,22 @@ const FavoriteMoviePage: FunctionComponent = () => {
   )
 
   useEffect(() => {
-    if (token && !idsFavoriteMovies?.length) {
+    if (token && idsFavoriteMovies == null && !favoriteMoviesAreFetching) {
       dispatch(fetchFavoriteMovies(token))
     }
-  }, [dispatch, idsFavoriteMovies?.length, token])
+  }, [dispatch, favoriteMoviesAreFetching, idsFavoriteMovies, token])
 
   return (
     <PageContainer classNames='favorite-page'>
       {favoriteMoviesAreFetching ? (
         <LoadingIndicator />
-      ) : idsFavoriteMovies.length ? (
-        <MovieBoard movieIDs={idsFavoriteMovies} />
       ) : favoriteMovieError?.length ? (
         <ErrorMessageBox message={favoriteMovieError} />
-      ) : null}
+      ) : idsFavoriteMovies != null && idsFavoriteMovies?.length !== 0 ? (
+        <MovieBoard movieIDs={idsFavoriteMovies} />
+      ) : (
+        <ErrorMessageBox message='No movies marked as favorite yet.' />
+      )}
     </PageContainer>
   )
 }

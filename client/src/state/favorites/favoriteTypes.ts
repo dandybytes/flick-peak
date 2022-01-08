@@ -8,7 +8,7 @@ export const remove_movie_from_favorites = 'remove_movie_from_favorites'
 export type FavoriteMovieState = {
   fetching: boolean
   error: string
-  data: string[]
+  data: string[] | null
 }
 
 export interface SetFavoriteMovieListPayload {

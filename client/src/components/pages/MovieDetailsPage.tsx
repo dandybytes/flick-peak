@@ -100,7 +100,7 @@ const MovieDetailsPage: FC = () => {
 
   const budget = movieDetailData?.budget ? formattedCurrency(movieDetailData.budget) : null
 
-  const isFavorite = movieID != null && favoriteMovieData.includes(movieID)
+  const isFavorite = movieID != null && (favoriteMovieData ?? []).includes(movieID)
 
   const toggleFavorite = (movieID: string) => {
     if (!token) {
@@ -114,8 +114,8 @@ const MovieDetailsPage: FC = () => {
       return
     }
     isFavorite
-      ? dispatch(removeMovieFromFavorites(movieID, token))
-      : dispatch(addMovieToFavorites(movieID, token))
+      ? dispatch(removeMovieFromFavorites(movieID, token, favoriteMovieData))
+      : dispatch(addMovieToFavorites(movieID, token, favoriteMovieData))
   }
 
   if (!movieID) return <Redirect to={`${location.pathname}#${movieCategoryList[0]}`} />

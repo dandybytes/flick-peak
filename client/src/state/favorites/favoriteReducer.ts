@@ -17,7 +17,7 @@ import {
 const initialState: FavoriteMovieState = {
   fetching: false,
   error: '',
-  data: []
+  data: null
 }
 
 export const favoriteReducer = (
@@ -32,12 +32,13 @@ export const favoriteReducer = (
 
     case add_movie_to_favorites: {
       const {id} = action.payload as AddMovieToFavoritesActionPayload
-      return {...state, data: [...state.data, id]}
+      return {...state, data: [...(state.data ?? []), id]}
     }
 
     case remove_movie_from_favorites: {
       const {id} = action.payload as RemoveMovieFromFavoritesActionPayload
-      return {...state, data: state.data.filter(movieID => movieID !== id)}
+      if (!(state.data ?? []).includes(id)) return state
+      return {...state, data: (state.data ?? []).filter(movieID => movieID !== id)}
     }
 
     case fetch_favorite_movie_list_start: {

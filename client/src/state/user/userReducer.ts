@@ -61,7 +61,7 @@ export const userReducer = (state = initialState, action: UserAction): UserState
     }
 
     case user_logout: {
-      return {...state, data: null}
+      return {...initialState}
     }
 
     default:
