@@ -14,7 +14,7 @@ const FilmStrip = ({willGlowOnHover = true}: {willGlowOnHover?: boolean}) => (
         <div className='filmstrip-frame'></div>
         <div className='filmstrip-frame'>Flick</div>
         <div className='filmstrip-frame'></div>
-        <div className='filmstrip-frame'>Pick</div>
+        <div className='filmstrip-frame'>Peak</div>
         <div className='filmstrip-frame'></div>
         <div className='filmstrip-frame'>
           <img src={cinemaIcon} alt='cinema logo' />
@@ -22,7 +22,7 @@ const FilmStrip = ({willGlowOnHover = true}: {willGlowOnHover?: boolean}) => (
         <div className='filmstrip-frame'></div>
         <div className='filmstrip-frame'>Flick</div>
         <div className='filmstrip-frame'></div>
-        <div className='filmstrip-frame'>Pick</div>
+        <div className='filmstrip-frame'>Peak</div>
         <div className='filmstrip-frame'></div>
       </div>
 

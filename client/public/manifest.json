@@ -1,6 +1,6 @@
 {
-  "short_name": "Flick Peek",
-  "name": "Flick Peek: The Movie Explorer App",
+  "short_name": "Flick Peak",
+  "name": "Flick Peak: The Movie Explorer App",
   "icons": [
     {
       "src": "favicon.ico",
@@ -8,12 +8,12 @@
       "type": "image/x-icon"
     },
     {
-      "src": "flick-peek-192.png",
+      "src": "fpi-192.png",
       "type": "image/png",
       "sizes": "192x192"
     },
     {
-      "src": "flick-peek-512.png",
+      "src": "fpi-512.png",
       "type": "image/png",
       "sizes": "512x512"
     }

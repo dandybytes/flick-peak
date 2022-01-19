@@ -35,10 +35,10 @@ const App: FunctionComponent = () => {
     (state: RootState) => state?.favorites?.data
   )
 
-  const [showModal, setShowModal] = useState(false)
+  const [showIsMobileDeviceModal, setShowIsMobileDeviceModal] = useState(false)
 
   useEffect(() => {
-    if (isMobileDevice() || isSmallScreen()) setShowModal(true)
+    if (isMobileDevice() || isSmallScreen()) setShowIsMobileDeviceModal(true)
   }, [])
 
   useEffect(() => {
@@ -69,8 +69,8 @@ const App: FunctionComponent = () => {
 
       <NotificationContainer />
 
-      {showModal && (
-        <Modal hideModal={() => setShowModal(false)} status='warning'>
+      {showIsMobileDeviceModal && (
+        <Modal hideModal={() => setShowIsMobileDeviceModal(false)} status='warning'>
           <div
             style={{
               margin: '0 0 1em',

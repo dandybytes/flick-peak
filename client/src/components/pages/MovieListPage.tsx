@@ -82,7 +82,7 @@ const MovieListPage: FC = () => {
 
   /**
    * if no movies could be retrieved for the current query or selected category, make sure...
-   * ... there is at least a fallback list of movie from the "now playing" (i.e. current) category
+   * ... there is at least a fallback list of movies from the "now playing" (i.e. current) category
    */
   useEffect(() => {
     if (!movieList?.length && error?.length && !fallbackMovieList?.length) {
@@ -111,7 +111,7 @@ const MovieListPage: FC = () => {
         {!!movieList?.length && (
           <InfiniteGrid
             parentWidth={movieListContainerSize?.width ?? 0}
-            parentHeight={movieListContainerSize?.width ?? 0}
+            parentHeight={movieListContainerSize?.width ?? 0} // ?width --> height?
             itemList={movieList}
             itemWidth={352}
             itemHeight={512}
