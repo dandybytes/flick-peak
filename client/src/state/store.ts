@@ -25,7 +25,11 @@ const debounceDuration = 1000
 
 const saveToLocalStorage = (state: RootState) => {
   try {
-    localStorage.setItem(localStorageKey, JSON.stringify(state.user.data))
+    if (state.user.data != null) {
+      localStorage.setItem(localStorageKey, JSON.stringify(state.user.data))
+    } else {
+      localStorage.removeItem(localStorageKey)
+    }
   } catch (error) {
     console.error('saving to local storage failed: ', error)
   }
